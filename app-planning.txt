@@ -1,0 +1,65 @@
+AUTHENTICATION
+----------------------------------------
+Users can Login
+Users can register with username,password,email
+Users should be able to upload an avatar and change their credentials
+----------------------------------------
+
+APPLICATION
+----------------------------------------
+Application should have a landing page containing information about the application
+----------------------------------------
+
+COURSES
+----------------------------------------
+Application needs a page with all the available courses each course can have a name a photo and a description
+Application needs a page that displays the lectures of a course.
+Users should be able to search for the course or lecture they want.
+Application needs a component for each lecture of a course, each lecture can contain text, images, titles and quizes
+Each course should have a comment section and a rating.
+User needs to be able to leave comments and rate the course if he is logged in.
+Course data should contain course name, number of lectures, total number of quizes, creator name
+Lecture data should contain lecture name, course name, course id, pages number, lecture structure data, number of quizes, quizes, creator name    
+----------------------------------------
+
+QUIZES
+----------------------------------------
+Application needs a page with all available quizes
+Application needs a page for each quiz
+Users should be able to search for the quiz they want.
+Each quiz can have multiple questions, to begin each question should have 1 correct answer.
+At the end of the quiz the user can see his score.
+User score should be saved for each quiz.
+Each quiz can have a timer.
+Quiz data should include quizName, number of questions, questions, answers, 
+----------------------------------------
+
+USERS
+----------------------------------------
+Users should be able to see the number of quizes completed in their profile
+User data should contain full name, email, nationality, 
+----------------------------------------
+
+SETTINGS
+----------------------------------------
+App needs a dark-light mode
+----------------------------------------
+
+PAGES
+----------------------------------------
+/home
+/courses
+/quizes
+/quiz/:quizID
+/course/:courseID
+/course/:courseID/lectures
+/course/:courseID/lectures/:lectureID
+/settings
+/login
+/register
+
+???
+/createCourse
+/course/:courseID/createLecture
+/createQuiz
+
