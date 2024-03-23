@@ -5,6 +5,7 @@ import Courses from "../src/pages/Courses";
 import Quizes from "../src/pages/Quizes";
 import AppLayout from "./ui/AppLayout";
 import GlobalStyles from "./styles/GlobalStyles";
+
 function App() {
   return (
     <>
