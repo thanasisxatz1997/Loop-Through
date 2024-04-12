@@ -1,11 +1,11 @@
 import styled from "styled-components";
-import css from "styled-components";
+import { css } from "styled-components";
 const Row = styled.div`
   display: flex;
   ${(props) =>
     props.type === "horizontal" &&
     css`
-      justify-content: space-between;
+      justify-content: ${props.content};
       align-items: center;
     `}
 
@@ -16,5 +16,10 @@ const Row = styled.div`
       gap: 1.6rem;
     `}
 `;
+
+Row.defaultProps = {
+  type: "horizontal",
+  content: "space-between",
+};
 
 export default Row;

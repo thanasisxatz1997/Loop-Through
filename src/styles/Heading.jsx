@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import css from "styled-components";
+import { css } from "styled-components";
 
 const Heading = styled.h1`
   ${(props) =>
@@ -20,6 +20,15 @@ const Heading = styled.h1`
       font-size: 2rem;
       font-weight: 500;
     `}
+    ${(props) =>
+    props.userSelect === "false" &&
+    css`
+      user-select: none;
+    `}
 `;
+
+Heading.defaultProps = {
+  userSelect: "true",
+};
 
 export default Heading;

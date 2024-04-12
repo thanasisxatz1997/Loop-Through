@@ -5,6 +5,7 @@ import Courses from "../src/pages/Courses";
 import Quizes from "../src/pages/Quizes";
 import AppLayout from "./ui/AppLayout";
 import GlobalStyles from "./styles/GlobalStyles";
+import Settings from "../src/pages/Settings";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
             <Route path="login" element={<Login />}></Route>
             <Route path="courses" element={<Courses />}></Route>
             <Route path="quizes" element={<Quizes />}></Route>
+            <Route path="settings" element={<Settings />}></Route>
           </Route>
         </Routes>
       </BrowserRouter>

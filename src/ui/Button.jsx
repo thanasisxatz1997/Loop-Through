@@ -53,10 +53,25 @@ const variations = {
   `,
 };
 
+const shadows = {
+  none: css``,
+  small: css`
+    border-radius: var(--border-radius-sm);
+    box-shadow: var(--shadow-sm);
+  `,
+  medium: css`
+    border-radius: var(--border-radius-md);
+    box-shadow: var(--shadow-md);
+  `,
+  large: css`
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-lg);
+  `,
+};
+
 const Button = styled.button`
   border: none;
-  border-radius: var(--border-radius-sm);
-  box-shadow: var(--shadow-sm);
+  ${(props) => shadows[props.shadow]}
   ${(props) => sizes[props.size]}
   ${(props) => variations[props.variation]}
 `;
@@ -64,6 +79,7 @@ const Button = styled.button`
 Button.defaultProps = {
   variation: "primary",
   size: "medium",
+  shadow: "large",
 };
 
 export default Button;
