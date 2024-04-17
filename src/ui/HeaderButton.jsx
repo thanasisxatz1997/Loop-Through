@@ -1,13 +1,13 @@
-import Button from "./Button";
+import StyledButton from "../styles/StyledButton";
 import Row from "../styles/Row";
 
 function HeaderButton({ children }) {
   return (
-    <Button size="large" variation="transparent" shadow="none">
+    <StyledButton size="large" variation="transparent" shadow="none">
       <Row type="horizontal" content="start">
         {children}
       </Row>
-    </Button>
+    </StyledButton>
   );
 }
 

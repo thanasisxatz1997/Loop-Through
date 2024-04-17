@@ -21,9 +21,13 @@ function Header() {
   return (
     <StyledHeader>
       <Row type="horizontal">
-        <Heading as="h1" userSelect="false">
-          Loop Through
-        </Heading>
+        <Row>
+          <img src="/LoopThroughLogoResizedSmall.png" alt=""></img>
+          <Heading as="h1" userselect="false">
+            Loop Through
+          </Heading>
+        </Row>
+
         <HeaderRow>
           <NavLink to="/home">
             <HeaderButton>

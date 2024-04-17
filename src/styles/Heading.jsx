@@ -21,14 +21,14 @@ const Heading = styled.h1`
       font-weight: 500;
     `}
     ${(props) =>
-    props.userSelect === "false" &&
+    props.userselect === "false" &&
     css`
       user-select: none;
     `}
 `;
 
 Heading.defaultProps = {
-  userSelect: "true",
+  userselect: "true",
 };
 
 export default Heading;
