@@ -26,10 +26,8 @@ function Course() {
   ];
   const params = useParams();
   const courseId = params.id;
-  console.log(`This is the course with id: ${courseId}`);
   const activeLessonId = useActiveLessonParams();
   const hasActiveLesson = activeLessonId !== 0 && activeLessonId !== null;
-  console.log("lessonID: ", activeLessonId);
   return (
     <StyledCourseContainer>
       <LessonSidebar>

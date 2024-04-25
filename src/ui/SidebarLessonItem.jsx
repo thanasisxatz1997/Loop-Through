@@ -4,7 +4,6 @@ import StyledSidebarLessonItem from "../styles/StyledSidebarLessonItem";
 
 function SidebarLessonItem({ lesson, active }) {
   const navigate = useNavigate();
-  console.log(`Lesson with id ${lesson.id} has active status ${active}`);
   return (
     // <Link to={`${lesson.courseId}?lesson=${lesson.id}`} replace={true}>
     <StyledSidebarLessonItem
