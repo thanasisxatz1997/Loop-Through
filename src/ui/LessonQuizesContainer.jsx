@@ -6,7 +6,7 @@ function LessonQuizesContainer({ quizes }) {
     <StyledLessonQuizesContainer>
       <Row content="start" gap="1rem">
         {quizes.map((quiz) => (
-          <StyledButton>{quiz.title}</StyledButton>
+          <StyledButton key={quiz.title}>{quiz.title}</StyledButton>
         ))}
       </Row>
     </StyledLessonQuizesContainer>
