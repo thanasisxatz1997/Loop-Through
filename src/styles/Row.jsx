@@ -7,6 +7,7 @@ const Row = styled.div`
     css`
       justify-content: ${props.content};
       align-items: center;
+      gap: ${props.gap};
     `}
 
   ${(props) =>
@@ -20,6 +21,7 @@ const Row = styled.div`
 Row.defaultProps = {
   type: "horizontal",
   content: "space-between",
+  gap: "0",
 };
 
 export default Row;

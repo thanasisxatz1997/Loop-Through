@@ -12,6 +12,10 @@ const StyledCourseContainer = styled.div`
   grid-template-columns: 26rem 1fr;
   /* grid-row: 1; */
 `;
+const LessonContainer = styled.div`
+  padding: 3rem;
+  height: 100vh;
+`;
 
 function Course() {
   const lessons = [
@@ -37,11 +41,13 @@ function Course() {
           ></SidebarLessonItem>
         ))}
       </LessonSidebar>
-      {hasActiveLesson ? (
-        <LessonContent id={activeLessonId}></LessonContent>
-      ) : (
-        "There is no active lesson"
-      )}
+      <LessonContainer>
+        {hasActiveLesson ? (
+          <LessonContent id={activeLessonId}></LessonContent>
+        ) : (
+          "There is no active lesson"
+        )}
+      </LessonContainer>
     </StyledCourseContainer>
   );
 }
