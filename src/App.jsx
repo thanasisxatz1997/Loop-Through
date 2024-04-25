@@ -6,6 +6,8 @@ import Quizes from "../src/pages/Quizes";
 import AppLayout from "./ui/AppLayout";
 import GlobalStyles from "./styles/GlobalStyles";
 import Settings from "../src/pages/Settings";
+import Course from "./features/courses/Course";
+import Quiz from "./features/quizes/Quiz";
 
 function App() {
   return (
@@ -18,7 +20,9 @@ function App() {
             <Route path="home" element={<Home />}></Route>
             <Route path="login" element={<Login />}></Route>
             <Route path="courses" element={<Courses />}></Route>
+            <Route path="courses/:id" element={<Course />} />
             <Route path="quizes" element={<Quizes />}></Route>
+            <Route path="quizes/:id" element={<Quiz />} />
             <Route path="settings" element={<Settings />}></Route>
           </Route>
         </Routes>

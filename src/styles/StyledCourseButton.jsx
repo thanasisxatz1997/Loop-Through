@@ -6,11 +6,22 @@ const StyledCourseButton = styled.button`
   height: 10rem;
   padding-top: 0.5rem;
   padding-bottom: 0.1rem;
-  background-color: #e7e5e5c8;
+  background-color: var(--color-grey-0);
   width: 100%;
   height: 100%;
-  box-shadow: 5px 8px 12px 3px rgba(0, 0, 0, 0.36);
+  box-shadow: 5px 8px 12px 3px var(--color-grey-700);
   border: none;
+  animation: flip-in-hor-bottom 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+  @keyframes flip-in-hor-bottom {
+    0% {
+      transform: rotateX(80deg);
+      opacity: 0;
+    }
+    100% {
+      transform: rotateX(0);
+      opacity: 1;
+    }
+  }
 `;
 
 export default StyledCourseButton;

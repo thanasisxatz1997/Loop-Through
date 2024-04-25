@@ -2,9 +2,11 @@ import styled from "styled-components";
 import TextModal from "../styles/TextModal";
 
 const StyledHomeContainer = styled.div`
-  background-image: url("/homeBackgroundImage.jpg");
+  background-image: url("/LoopThroughlogo.jpeg");
   background-repeat: no-repeat;
-  background-size: 100% 100%;
+  background-position: center;
+  background-color: #79bbdd;
+  /* background-size: 100% 100%; */
   min-height: 100vh;
   display: flex;
   justify-content: space-between;
@@ -22,10 +24,8 @@ function Home() {
       </TextModal>
 
       <TextModal width="200px" height="200px">
-        <p>
-          Are you confident in your skills? You can become a teacher by
-          uploading a course yourself!
-        </p>
+        Are you confident in your skills? You can become a teacher by uploading
+        a course yourself!
       </TextModal>
     </StyledHomeContainer>
   );

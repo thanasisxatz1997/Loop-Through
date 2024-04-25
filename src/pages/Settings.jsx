@@ -4,12 +4,15 @@ import Row from "../styles/Row";
 import StyledButton from "../styles/StyledButton";
 
 const StyledSettingsContainer = styled.div`
-  background: radial-gradient(
+  /* background: radial-gradient(
     circle,
-    #7ca3d68a 0%,
+    #29364789 0%,
     #7ca3d68a 50%,
     #87a4c98a 100%
-  );
+  ); */
+  background-color: var(--bg-color-light-0);
+  /* background-color: #131f2e; */
+
   height: 100%;
   padding: 3rem;
 `;

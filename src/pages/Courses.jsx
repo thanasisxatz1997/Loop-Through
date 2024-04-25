@@ -1,14 +1,16 @@
 import styled from "styled-components";
 import Sidebar from "../ui/Sidebar";
-import CourseButton from "../ui/CourseButton";
+import CourseButton from "../features/courses/CourseButton";
 
 const StyledCoursesContainer = styled.div`
-  background: radial-gradient(
+  /* background: radial-gradient(
     circle,
     #7ca3d68a 0%,
     #7ca3d68a 50%,
     #87a4c98a 100%
-  );
+  ); */
+  background-color: var(--bg-color-light-0);
+
   display: grid;
   height: 100%;
   grid-template-rows: auto 1fr;
