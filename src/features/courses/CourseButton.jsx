@@ -1,6 +1,6 @@
-import StyledCourseButton from "../../styles/StyledCourseButton";
-import Heading from "../../styles/Heading";
-import Row from "../../styles/Row";
+import StyledCourseButton from "../styles/StyledCourseButton";
+import Heading from "../styles/Heading";
+import Row from "../styles/Row";
 function CourseButton({ title, description, author }) {
   return (
     <StyledCourseButton>

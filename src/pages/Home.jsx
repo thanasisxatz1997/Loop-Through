@@ -8,6 +8,7 @@ const StyledHomeContainer = styled.div`
   background-color: #79bbdd;
   /* background-size: 100% 100%; */
   min-height: 100vh;
+  object-fit: contain;
   display: flex;
   justify-content: space-between;
 `;

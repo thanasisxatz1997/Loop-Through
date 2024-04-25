@@ -30,20 +30,33 @@ const StyledCoursesMainContainer = styled.main`
 `;
 
 function Courses() {
+  const availableCourses = [
+    {
+      id: 1,
+      title: "react",
+      description: "A good React course!",
+      author: "Thanasis Chatziathanasiou",
+    },
+    {
+      id: 2,
+      title: "Html",
+      description: "A good html course!",
+      author: "Thanasis Chatziathanasiou",
+    },
+  ];
   return (
     <StyledCoursesContainer>
       <Sidebar></Sidebar>
       <StyledCoursesMainContainer>
-        <CourseButton
-          title={"React!"}
-          description={"A good React course!"}
-          author="Thanasis Chatziathanasiou"
-        ></CourseButton>
-        <CourseButton
-          title={"Html!"}
-          description={"A good html course!"}
-          author="Thanasis Chatziathanasiou"
-        ></CourseButton>
+        {availableCourses.map((course) => (
+          <CourseButton
+            key={course.id}
+            id={course.id}
+            title={course.title}
+            description={course.description}
+            author={course.author}
+          ></CourseButton>
+        ))}
       </StyledCoursesMainContainer>
     </StyledCoursesContainer>
   );
