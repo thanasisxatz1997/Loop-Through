@@ -3,6 +3,7 @@ import styled from "styled-components";
 import LessonSidebar from "../ui/LessonSidebar";
 import SidebarLessonItem from "../ui/SidebarLessonItem";
 import { useActiveLessonParams } from "../hooks/useActiveLessonParams";
+import LessonContent from "../ui/LessonContent";
 
 const StyledCourseContainer = styled.div`
   display: grid;
@@ -36,9 +37,11 @@ function Course() {
           ></SidebarLessonItem>
         ))}
       </LessonSidebar>
-      {hasActiveLesson
-        ? `Lesson number ${activeLessonId}`
-        : "There is no active lesson"}
+      {hasActiveLesson ? (
+        <LessonContent id={activeLessonId}></LessonContent>
+      ) : (
+        "There is no active lesson"
+      )}
     </StyledCourseContainer>
   );
 }
