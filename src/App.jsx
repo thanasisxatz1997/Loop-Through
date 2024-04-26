@@ -7,6 +7,7 @@ import GlobalStyles from "./styles/GlobalStyles";
 import Settings from "../src/pages/Settings";
 import Courses from "../src/pages/Courses";
 import Course from "../src/pages/Course";
+import Quiz from "./features/quizes/components/Quiz";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
             <Route path="courses/:id" element={<Course />} />
             <Route path="quizes" element={<Quizes />}></Route>
             <Route path="quizes/:id" element={<Quizes />} />
+            <Route path="quiz/:id" element={<Quiz />} />
             <Route path="settings" element={<Settings />}></Route>
             <Route path="course/:id" element={<Course />}></Route>
           </Route>
