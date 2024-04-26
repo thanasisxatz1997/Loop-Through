@@ -2,15 +2,16 @@ export const lessonContentElements = [
   { id: 1, type: "t", content: "This is a title", size: "1" },
   { id: 2, type: "p", content: "This is a paragraph" },
   { id: 3, type: "p", content: "This is another paragraph" },
-  { id: 4, type: "t", content: "This is another title" },
+  { id: 4, type: "t", content: "This is another title", size: "h3" },
   {
     id: 5,
     type: "i",
-    content: "",
+    content:
+      "https://i.kym-cdn.com/entries/icons/facebook/000/049/273/cover11.jpg",
     sizeX: "auto",
     sizeY: "auto",
   },
-  { id: 6, type: "t", content: "God damn it im good at this" },
+  { id: 6, type: "t", content: "God damn it im good at this", size: "h3" },
 ];
 
 export const lessonQuizes = [

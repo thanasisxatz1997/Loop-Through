@@ -4,6 +4,9 @@ import LessonSidebar from "../ui/LessonSidebar";
 import SidebarLessonItem from "../ui/SidebarLessonItem";
 import { useActiveLessonParams } from "../hooks/useActiveLessonParams";
 import LessonContent from "../ui/LessonContent";
+import StarRating from "../ui/StarRating";
+import Row from "../styles/Row";
+import Heading from "../styles/Heading";
 
 const StyledCourseContainer = styled.div`
   display: grid;
@@ -15,6 +18,16 @@ const StyledCourseContainer = styled.div`
 const LessonContainer = styled.div`
   padding: 3rem;
   height: 100vh;
+`;
+
+const RatingContainer = styled.div`
+  align-self: center;
+  justify-self: center;
+  align-items: center;
+  justify-items: center;
+  text-align: center;
+  margin-top: 3rem;
+  /* width: 100%; */
 `;
 
 function Course() {
@@ -38,6 +51,12 @@ function Course() {
             active={lesson.id === activeLessonId ? "true" : "false"}
           ></SidebarLessonItem>
         ))}
+        <Row type="vertical" content="end">
+          <RatingContainer>
+            <Heading as="h3">Rate this course!</Heading>
+            <StarRating size="30" color="var(--color-grey-900)"></StarRating>
+          </RatingContainer>
+        </Row>
       </LessonSidebar>
       <LessonContainer>
         {hasActiveLesson ? (
