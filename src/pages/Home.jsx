@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import TextModal from "../styles/TextModal";
+import Accordion from "../ui/Accordion";
 
 const StyledHomeContainer = styled.div`
   background-image: url("/LoopThroughlogo.jpeg");
