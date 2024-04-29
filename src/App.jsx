@@ -8,6 +8,8 @@ import Settings from "../src/pages/Settings";
 import Courses from "../src/pages/Courses";
 import Course from "../src/pages/Course";
 import Quiz from "./features/quizes/components/Quiz";
+import User from "./pages/User";
+import AboutUs from "./pages/AboutUs";
 
 function App() {
   return (
@@ -26,6 +28,8 @@ function App() {
             <Route path="quiz/:id" element={<Quiz />} />
             <Route path="settings" element={<Settings />}></Route>
             <Route path="course/:id" element={<Course />}></Route>
+            <Route path="user" element={<User />}></Route>
+            <Route path="info" element={<AboutUs />}></Route>
           </Route>
         </Routes>
       </BrowserRouter>

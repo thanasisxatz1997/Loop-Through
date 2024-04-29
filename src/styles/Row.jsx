@@ -16,12 +16,29 @@ const Row = styled.div`
       flex-direction: column;
       gap: 1.6rem;
     `}
+    ${(props) =>
+    props.padding !== "" &&
+    css`
+      padding: ${props.padding};
+    `}
+    ${(props) =>
+    props.margin !== "" &&
+    css`
+      margin: ${props.margin};
+    `}
+    ${(props) =>
+    props.gap !== "" &&
+    css`
+      gap: ${props.gap};
+    `}
 `;
 
 Row.defaultProps = {
   type: "horizontal",
   content: "space-between",
-  gap: "0",
+  gap: "",
+  padding: "",
+  margin: "",
 };
 
 export default Row;

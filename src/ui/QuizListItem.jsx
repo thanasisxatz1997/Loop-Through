@@ -2,7 +2,7 @@ import styled, { css } from "styled-components";
 import Heading from "../styles/Heading";
 import Row from "../styles/Row";
 import StyledButton from "../styles/StyledButton";
-
+import { Link } from "react-router-dom";
 const StyledQuizListItem = styled.li`
   background-color: var(--color-grey-100);
   border: solid 1px;
@@ -38,7 +38,7 @@ function QuizListItem({ title, delay }) {
           <Heading as={"h3"}>{title}</Heading>
         </TextContainer>
         <StyledButton size="fill" borderRadius="0px 5px 5px 0px">
-          start
+          <Link to={`/quiz/:1`}>start</Link>
         </StyledButton>
       </Row>
     </StyledQuizListItem>

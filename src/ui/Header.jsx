@@ -9,6 +9,8 @@ import {
   HiAcademicCap,
   HiMiniCog6Tooth,
   HiPencilSquare,
+  HiMiniUser,
+  HiMiniQuestionMarkCircle,
 } from "react-icons/hi2";
 import HeaderRow from "../styles/HeaderRow";
 
@@ -47,10 +49,22 @@ function Header() {
               <HiPencilSquare size={30}></HiPencilSquare>
             </HeaderButton>
           </NavLink>
-          <NavLink to="/Settings">
+          <NavLink to="/info">
+            <HeaderButton>
+              <h3>About Us</h3>
+              <HiMiniQuestionMarkCircle size={30}></HiMiniQuestionMarkCircle>
+            </HeaderButton>
+          </NavLink>
+          <NavLink to="/settings">
             <HeaderButton>
               <h3>Settings</h3>
               <HiMiniCog6Tooth size={30}></HiMiniCog6Tooth>
+            </HeaderButton>
+          </NavLink>
+          <NavLink to="/user">
+            <HeaderButton>
+              <h3>Sign In</h3>
+              <HiMiniUser size={30}></HiMiniUser>
             </HeaderButton>
           </NavLink>
         </HeaderRow>

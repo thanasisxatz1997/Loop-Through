@@ -16,9 +16,11 @@ body {
   display: flex;
   flex-direction: column;
   gap: 24px;
+  background-color: w;
 }
 
 .item {
+  background-color: white;
   box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
   padding: 20px 24px;
   padding-right: 48px;

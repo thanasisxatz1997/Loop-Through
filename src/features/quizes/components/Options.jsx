@@ -3,6 +3,7 @@ import { useQuiz } from "../contexts/QuizContext";
 
 const StyledOption = styled.button`
   border: solid 1px;
+  min-height: 58px;
 `;
 
 function Options({ question }) {

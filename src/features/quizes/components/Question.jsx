@@ -4,6 +4,7 @@ import Options from "./Options";
 
 const StyledQuestionContainer = styled.div`
   align-self: center;
+  min-height: 350px;
 `;
 
 function Question() {
