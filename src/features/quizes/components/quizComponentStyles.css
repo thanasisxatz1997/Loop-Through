@@ -131,16 +131,18 @@ progress {
   font-family: inherit;
   color: inherit;
   font-size: 2rem;
-  border: 2px solid var(--color-dark);
-  background-color: var(--color-dark);
+  border: 2px solid var(--color-grey-800);
+  background-color: var(--color-grey-100);
+  color: var(--color-grey-800);
   padding: 1.2rem 2.4rem;
   cursor: pointer;
   border-radius: 100px;
   transition: 0.3s;
+  border: solid 1px;
 }
 
 .btn:not([disabled]):hover {
-  background-color: var(--color-darkest);
+  background-color: var(--color-grey-300);
 }
 
 .btn-option:not([disabled]):hover {
@@ -204,14 +206,14 @@ progress {
   font-size: 1.4rem;
 }
 
-.timer {
+/* .timer {
   float: left;
   font-size: 1.8rem;
   color: var(--color-medium);
   border: 2px solid var(--color-dark);
   padding: 1.35rem 2.8rem;
   border-radius: 100px;
-}
+} */
 
 .loader {
   width: 50px;

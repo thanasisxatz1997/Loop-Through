@@ -1,8 +1,9 @@
 import styled from "styled-components";
 import { useQuiz } from "../contexts/QuizContext";
+import Heading from "../../../styles/Heading";
 
 const StyledProgressHeader = styled.header`
-  margin: 2rem 15%;
+  /* margin: 2rem 15%; */
   margin-bottom: 4rem;
   display: grid;
   justify-content: space-between;
@@ -36,13 +37,13 @@ function Progress() {
         max={numQuestions}
         value={index + Number(answer !== null)}
       />
-      <p>
+      <Heading as="h3">
         Question
-        <strong>{index + Number(answer !== null)}</strong> / {numQuestions}
-      </p>
-      <p>
+        <strong> {index + Number(answer !== null)}</strong> / {numQuestions}
+      </Heading>
+      <Heading as="h3">
         <strong>{points}</strong> / {maxPossiblePoints}
-      </p>
+      </Heading>
     </StyledProgressHeader>
   );
 }

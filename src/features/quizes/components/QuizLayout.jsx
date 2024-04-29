@@ -11,12 +11,21 @@ import Footer from "./Footer";
 import Timer from "./Timer";
 import { useQuiz } from "../contexts/QuizContext";
 import Row from "../../../styles/Row";
+import styled from "styled-components";
+
+const StyledQuizLayout = styled.div`
+  border: solid 1px;
+  padding: 5rem;
+  border-radius: 20px;
+  background-color: var(--color-grey-100);
+  box-shadow: 5px 8px 12px 3px var(--color-grey-700);
+`;
 
 function QuizLayout() {
   const { status } = useQuiz();
 
   return (
-    <div className="app">
+    <StyledQuizLayout>
       <Header />
       <Main>
         {status === "loading" && <Loader />}
@@ -34,7 +43,7 @@ function QuizLayout() {
         )}
         {status === "finished" && <FinishScreen />}
       </Main>
-    </div>
+    </StyledQuizLayout>
   );
 }
 

@@ -8,8 +8,9 @@ import styled from "styled-components";
 // root.render(<React.StrictMode></React.StrictMode>);
 
 const QuizContainer = styled.div`
-  background-color: var(--color-grey-100);
+  background-color: var(--bg-color-light-0);
   height: 100%;
+  padding: 5rem 2rem;
 `;
 
 function Quiz() {

@@ -1,4 +1,9 @@
+import styled from "styled-components";
 import { useQuiz } from "../contexts/QuizContext";
+
+const StyledNextButton = styled.button`
+  /* background-color: var(--color-grey-400); */
+`;
 
 function NextButton() {
   const { dispatch, answer, index, numQuestions } = useQuiz();
@@ -15,12 +20,12 @@ function NextButton() {
   }
   if (index === numQuestions - 1) {
     return (
-      <button
+      <StyledNextButton
         className="btn btn-ui"
         onClick={() => dispatch({ type: "finish" })}
       >
         Finish
-      </button>
+      </StyledNextButton>
     );
   }
 }

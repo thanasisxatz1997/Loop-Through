@@ -1,7 +1,8 @@
 import styled from "styled-components";
 
 const StyledFooter = styled.footer`
-  margin: 2rem 15%;
+  /* margin: 2rem 15%; */
+  justify-self: end;
 `;
 
 function Footer({ children }) {
