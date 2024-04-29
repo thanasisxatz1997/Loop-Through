@@ -25,10 +25,16 @@ const Heading = styled.h1`
     css`
       user-select: none;
     `}
+    ${(props) =>
+    props.textAlign === "center" &&
+    css`
+      text-align: center;
+    `}
 `;
 
 Heading.defaultProps = {
   userselect: "true",
+  textAlign: "",
 };
 
 export default Heading;

@@ -100,7 +100,7 @@ h4 {
   align-items: center;
 }
 
-.progress {
+/* .progress {
   margin-bottom: 4rem;
   display: grid;
   justify-content: space-between;
@@ -124,7 +124,7 @@ progress {
 ::-webkit-progress-value {
   background-color: var(--color-theme);
   border-radius: 100px;
-}
+} */
 
 .btn {
   display: block;

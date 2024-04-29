@@ -10,6 +10,7 @@ import FinishScreen from "./FinishScreen";
 import Footer from "./Footer";
 import Timer from "./Timer";
 import { useQuiz } from "../contexts/QuizContext";
+import Row from "../../../styles/Row";
 
 function QuizLayout() {
   const { status } = useQuiz();
@@ -22,14 +23,14 @@ function QuizLayout() {
         {status === "error" && <Error />}
         {status === "ready" && <StartScreen />}
         {status === "active" && (
-          <>
+          <Row type="vertical">
             <Progress />
             <Question />
             <Footer>
               <Timer />
               <NextButton />
             </Footer>
-          </>
+          </Row>
         )}
         {status === "finished" && <FinishScreen />}
       </Main>

@@ -1,4 +1,9 @@
+import styled from "styled-components";
 import { useQuiz } from "../contexts/QuizContext";
+
+const StyledOption = styled.button`
+  border: solid 1px;
+`;
 
 function Options({ question }) {
   const { dispatch, answer } = useQuiz();
@@ -6,7 +11,7 @@ function Options({ question }) {
   return (
     <div className="options">
       {question.options.map((option, index) => (
-        <button
+        <StyledOption
           className={`btn btn-option ${index === answer ? "answer" : ""} ${
             hasAnswer &&
             (index === question.correctOption ? "correct" : "wrong")
@@ -16,7 +21,7 @@ function Options({ question }) {
           disabled={hasAnswer}
         >
           {option}
-        </button>
+        </StyledOption>
       ))}
     </div>
   );
