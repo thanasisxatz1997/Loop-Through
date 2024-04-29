@@ -11,7 +11,6 @@ const StyledUserContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: ;
 `;
 
 const StyledFormSelector = styled.div`
@@ -27,8 +26,8 @@ function User() {
         height="90px"
         margin="200px 20px"
         position="absolute"
-        top="3rem"
-        left="2rem"
+        top="3%"
+        left="2%"
       >
         Start learning now! Create an account and start your first course.
       </TextModal>
