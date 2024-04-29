@@ -20,6 +20,12 @@ const sizes = {
     padding: 1.2rem 2.4rem;
     font-weight: 500;
   `,
+  fill: css`
+    font-size: 1.6rem;
+    font-weight: 500;
+    align-self: stretch;
+    padding: 1rem;
+  `,
 };
 
 const variations = {
@@ -74,12 +80,18 @@ const Button = styled.button`
   ${(props) => shadows[props.shadow]}
   ${(props) => sizes[props.size]}
   ${(props) => variations[props.variation]}
+  ${(props) =>
+    props.borderRadius !== "" &&
+    css`
+      border-radius: ${props.borderRadius};
+    `}
 `;
 
 Button.defaultProps = {
   variation: "primary",
   size: "medium",
   shadow: "large",
+  borderRadius: "",
 };
 
 export default Button;

@@ -6,8 +6,8 @@ import StyledButton from "../styles/StyledButton";
 const StyledQuizListItem = styled.li`
   background-color: var(--color-grey-100);
   border: solid 1px;
-  border-radius: 5px;
-  padding: 1rem;
+  border-radius: 10px;
+  /* padding: 1rem; */
   margin-bottom: 0.5rem;
   border-color: var(--color-grey-400);
   ${(props) => css`
@@ -26,12 +26,20 @@ const StyledQuizListItem = styled.li`
   }
 `;
 
+const TextContainer = styled.div`
+  padding: 1rem;
+`;
+
 function QuizListItem({ title, delay }) {
   return (
     <StyledQuizListItem delay={delay}>
       <Row content="space-between">
-        <Heading as={"h3"}>{title}</Heading>
-        <StyledButton size="small">start</StyledButton>
+        <TextContainer>
+          <Heading as={"h3"}>{title}</Heading>
+        </TextContainer>
+        <StyledButton size="fill" borderRadius="0px 5px 5px 0px">
+          start
+        </StyledButton>
       </Row>
     </StyledQuizListItem>
   );
