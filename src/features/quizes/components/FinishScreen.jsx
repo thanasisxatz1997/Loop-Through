@@ -1,3 +1,4 @@
+import Row from "../../../styles/Row";
 import { useQuiz } from "../contexts/QuizContext";
 
 function FinishScreen() {
@@ -9,19 +10,21 @@ function FinishScreen() {
   else if (percentage >= 50 && percentage < 100) emoji = "🥉";
 
   return (
-    <>
+    <Row type="vertical">
       <p className="result">
         <span>{emoji}</span>You scored <strong>{points}</strong> out of{" "}
         {maxPossiblePoints} ({Math.ceil(percentage)}%)
       </p>
       <p className="highscore">(Highscore: {highscore} points)</p>
-      <button
-        className="btn btn-ui"
-        onClick={() => dispatch({ type: "restart" })}
-      >
-        Restart quiz
-      </button>
-    </>
+      <Row content="end">
+        <button
+          className="btn btn-ui"
+          onClick={() => dispatch({ type: "restart" })}
+        >
+          Restart quiz
+        </button>
+      </Row>
+    </Row>
   );
 }
 

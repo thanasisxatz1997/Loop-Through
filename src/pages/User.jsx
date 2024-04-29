@@ -3,6 +3,7 @@ import Row from "../styles/Row";
 import StyledButton from "../styles/StyledButton";
 import SignInForm from "../features/authentication/SignInForm";
 import RegisterForm from "../features/authentication/RegisterForm";
+import TextModal from "../styles/TextModal";
 
 const StyledUserContainer = styled.div`
   background-color: var(--bg-color-light-0);
@@ -10,6 +11,7 @@ const StyledUserContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  background-color: ;
 `;
 
 const StyledFormSelector = styled.div`
@@ -20,6 +22,16 @@ const StyledFormSelector = styled.div`
 function User() {
   return (
     <StyledUserContainer>
+      <TextModal
+        width="400px"
+        height="90px"
+        margin="200px 20px"
+        position="absolute"
+        top="3rem"
+        left="2rem"
+      >
+        Start learning now! Create an account and start your first course.
+      </TextModal>
       <Row type="vertical" gap="0">
         <Row>
           <StyledFormSelector>

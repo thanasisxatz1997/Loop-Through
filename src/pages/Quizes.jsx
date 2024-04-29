@@ -45,6 +45,7 @@ function Quizes() {
         <StyledQuizList>
           {tempQuizes.map((quiz, i) => (
             <QuizListItem
+              key={i}
               title={quiz.title}
               delay={`0.${i * 3}s`}
             ></QuizListItem>

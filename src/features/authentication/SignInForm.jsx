@@ -7,6 +7,7 @@ const StyledSignInForm = styled.form`
   background-color: var(--color-grey-100);
   padding: 3rem;
   border-radius: 0px 10px 10px 10px;
+  box-shadow: 5px 8px 12px 0px var(--color-grey-700);
 `;
 
 const StyledFormLabel = styled.label`

@@ -23,13 +23,31 @@ const TextModal = styled.div`
       transform: translateY(0px);
     }
   }
+  ${(props) =>
+    props.position === "absolute" &&
+    css`
+      position: absolute;
+      top: ${props.top};
+      right: ${props.right};
+      left: ${props.left};
+      bottom: ${props.bottom};
+    `}
+  @media only screen and (max-width: ${(props) => props.maxwidth}) {
+    display: none;
+  }
 `;
 
 TextModal.defaultProps = {
+  maxwidth: "1320px",
   width: "20vh",
   height: "20vh",
   margin: "5px",
   padding: "15px",
+  position: "",
+  top: "0",
+  right: "0",
+  left: "0",
+  bottom: "",
 };
 
 export default TextModal;
