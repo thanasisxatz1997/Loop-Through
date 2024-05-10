@@ -36,12 +36,16 @@ function Courses() {
       title: "react",
       description: "A good React course!",
       author: "Thanasis Chatziathanasiou",
+      image:
+        "https://assets.leetcode.com/explore/cards/top-151-interview-questions/img",
     },
     {
       id: 2,
       title: "Html",
       description: "A good html course!",
       author: "Thanasis Chatziathanasiou",
+      image:
+        "https://assets.leetcode.com/explore/cards/leetcodes-interview-crash-course-data-structures-and-algorithms/img-1663091244.png",
     },
   ];
   return (
@@ -55,6 +59,7 @@ function Courses() {
             title={course.title}
             description={course.description}
             author={course.author}
+            image={course.image}
           ></CourseButton>
         ))}
       </StyledCoursesMainContainer>

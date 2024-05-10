@@ -7,6 +7,11 @@ const StyledCourseButton = styled.button`
   padding-top: 0.5rem;
   padding-bottom: 0.1rem;
   background-color: var(--color-grey-0);
+  color: var(--color-grey-100);
+
+  background-image: url(${(props) => props.backgroundImage});
+  background-size: 350px 200px;
+  background-position: right center;
   width: 100%;
   height: 100%;
   box-shadow: 5px 8px 12px 3px var(--color-grey-700);
@@ -23,5 +28,12 @@ const StyledCourseButton = styled.button`
     }
   }
 `;
+
+StyledCourseButton.defaultProps = {
+  backgroundImage:
+    "https://assets.leetcode.com/explore/cards/leetcodes-interview-crash-course-data-structures-and-algorithms/img-1663091244.png",
+  // backgroundImage:
+  //   "https://assets.leetcode.com/explore/cards/top-151-interview-questions/img",
+};
 
 export default StyledCourseButton;

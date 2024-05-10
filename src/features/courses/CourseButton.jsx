@@ -6,9 +6,9 @@ import Row from "../../styles/Row";
 
 import { Link } from "react-router-dom";
 
-function CourseButton({ id, title, description, author }) {
+function CourseButton({ id, title, description, author, image }) {
   return (
-    <StyledCourseButton>
+    <StyledCourseButton backgroundImage={image}>
       <Link to={`/course/:${id}`}>
         <Row type="vertical">
           <Heading as="h2">{title}</Heading>
