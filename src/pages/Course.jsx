@@ -11,6 +11,8 @@ import CourseCreate from "../features/courses/CourseCreatePage";
 import { createContext, useContext, useState } from "react";
 import StyledSidebarLessonItem from "../styles/StyledSidebarLessonItem";
 import { HiMiniPlusCircle } from "react-icons/hi2";
+import Modal from "../ui/Modal";
+import CreateLessonForm from "../features/courses/CreateLessonForm";
 
 const StyledCourseContainer = styled.div`
   display: grid;
@@ -49,6 +51,18 @@ function Course() {
   const courseId = params.id;
   const activeLessonId = useActiveLessonParams();
   const hasActiveLesson = activeLessonId !== 0 && activeLessonId !== null;
+  const navigate = useNavigate();
+
+  function createLesson(newLesson) {
+    console.log("New lesson created");
+    setLessons((lessons) => [
+      ...lessons,
+      { id: 5, courseId: 1, title: "Fifth lesson!" },
+    ]);
+    navigate(`/course/${courseId}?lesson=${newLesson.id}`, {
+      replace: true,
+    });
+  }
 
   if (courseId === ":-1") return <CourseCreate></CourseCreate>;
 
@@ -63,7 +77,17 @@ function Course() {
               active={lesson.id === activeLessonId ? "true" : "false"}
             ></SidebarLessonItem>
           ))}
-          {editable && <SidebarCreateLessonItem></SidebarCreateLessonItem>}
+          {editable && (
+            <Modal>
+              <Modal.Open opens="newLessonModal">
+                <SidebarCreateLessonItem></SidebarCreateLessonItem>
+              </Modal.Open>
+              <Modal.Window name="newLessonModal">
+                <CreateLessonForm></CreateLessonForm>
+              </Modal.Window>
+            </Modal>
+          )}
+
           <Row type="vertical" content="end">
             <RatingContainer>
               <Heading as="h3">Rate this course!</Heading>
@@ -83,33 +107,26 @@ function Course() {
   );
 }
 
-function SidebarCreateLessonItem() {
+function SidebarCreateLessonItem({ onClick }) {
   const { courseId, setLessons } = useContext(CourseContext);
-  const navigate = useNavigate();
   const newLesson = { id: 5, courseId: 1, title: "Fifth lesson!" };
 
-  function createLesson() {
-    console.log("New lesson created");
-    setLessons((lessons) => [
-      ...lessons,
-      { id: 5, courseId: 1, title: "Fifth lesson!" },
-    ]);
-    navigate(`/course/${courseId}?lesson=${newLesson.id}`, {
-      replace: true,
-    });
-  }
+  // function createLesson() {
+  //   console.log("New lesson created");
+  //   setLessons((lessons) => [
+  //     ...lessons,
+  //     { id: 5, courseId: 1, title: "Fifth lesson!" },
+  //   ]);
+  //   navigate(`/course/${courseId}?lesson=${newLesson.id}`, {
+  //     replace: true,
+  //   });
+  // }
 
   return (
-    // <Link to={`${lesson.courseId}?lesson=${lesson.id}`} replace={true}>
-    <StyledSidebarLessonItem
-      onClick={() => {
-        createLesson(newLesson);
-      }}
-    >
+    <StyledSidebarLessonItem onClick={onClick}>
       <HiMiniPlusCircle size={30}></HiMiniPlusCircle>
       <Heading as="h3">New lesson.</Heading>
     </StyledSidebarLessonItem>
-    // </Link>
   );
 }
 
