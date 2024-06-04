@@ -55,11 +55,13 @@ function Course() {
 
   function createLesson(newLesson) {
     console.log("New lesson created");
+    const newId = lessons.reduce((prev, cur, i) => i + 1) + 1;
+    console.log("newId:", newId);
     setLessons((lessons) => [
       ...lessons,
-      { id: 5, courseId: 1, title: "Fifth lesson!" },
+      { id: newId, courseId: 1, title: newLesson },
     ]);
-    navigate(`/course/${courseId}?lesson=${newLesson.id}`, {
+    navigate(`/course/${courseId}?lesson=${newId}`, {
       replace: true,
     });
   }
@@ -83,7 +85,9 @@ function Course() {
                 <SidebarCreateLessonItem></SidebarCreateLessonItem>
               </Modal.Open>
               <Modal.Window name="newLessonModal">
-                <CreateLessonForm></CreateLessonForm>
+                <CreateLessonForm
+                  createLesson={createLesson}
+                ></CreateLessonForm>
               </Modal.Window>
             </Modal>
           )}
@@ -91,7 +95,7 @@ function Course() {
           <Row type="vertical" content="end">
             <RatingContainer>
               <Heading as="h3">Rate this course!</Heading>
-              <StarRating size="30" color="var(--color-grey-900)"></StarRating>
+              <StarRating size={30} color="var(--color-grey-900)"></StarRating>
             </RatingContainer>
           </Row>
         </LessonSidebar>

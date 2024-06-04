@@ -2,25 +2,42 @@ import styled from "styled-components";
 import Heading from "../../styles/Heading";
 import StyledButton from "../../styles/StyledButton";
 import Row from "../../styles/Row";
+import { useState } from "react";
 
 const StyledFormLabel = styled.label`
   margin-right: 5px;
 `;
 const StyledFormTextInput = styled.input`
+  padding: 2px;
+  font-size: large;
   border: solid 1px;
 `;
-function CreateLessonForm() {
+function CreateLessonForm({ createLesson, onCloseModal }) {
+  const [lessonName, setLessonName] = useState("");
   return (
     <div>
       <StyledFormLabel>
-        <Heading as="h3">{`New lesson Name:`}</Heading>
+        <Heading as="h2">{`New lesson`}</Heading>
       </StyledFormLabel>
-      <Row margin="1rem 0rem">
-        <StyledFormTextInput placeholder=" Enter Lesson Name"></StyledFormTextInput>
+      <Row margin="0rem 0rem">
+        <StyledFormTextInput
+          placeholder=" Enter Lesson Name"
+          value={lessonName}
+          onChange={(e) => setLessonName(e.target.value)}
+        ></StyledFormTextInput>
       </Row>
       <Row margin="1rem 0rem">
-        <StyledButton>Create</StyledButton>
-        <StyledButton variation="danger">Cancel</StyledButton>
+        <StyledButton
+          onClick={() => {
+            createLesson(lessonName);
+            onCloseModal();
+          }}
+        >
+          Create
+        </StyledButton>
+        <StyledButton variation="danger" onClick={onCloseModal}>
+          Cancel
+        </StyledButton>
       </Row>
       <Row></Row>
     </div>
