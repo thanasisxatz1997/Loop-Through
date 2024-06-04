@@ -22,6 +22,7 @@ function CreateLessonForm() {
         <StyledButton>Create</StyledButton>
         <StyledButton variation="danger">Cancel</StyledButton>
       </Row>
+      <Row></Row>
     </div>
   );
 }
