@@ -45,15 +45,13 @@ function Course() {
   ]);
 
   const editable = true;
-
   const params = useParams();
   const courseId = params.id;
-  console.log("courseId: ", courseId);
-  console.log(courseId === "-1");
-
   const activeLessonId = useActiveLessonParams();
   const hasActiveLesson = activeLessonId !== 0 && activeLessonId !== null;
+
   if (courseId === ":-1") return <CourseCreate></CourseCreate>;
+
   return (
     <CourseContext.Provider value={{ lessons, setLessons, courseId }}>
       <StyledCourseContainer>
@@ -89,6 +87,7 @@ function SidebarCreateLessonItem() {
   const { courseId, setLessons } = useContext(CourseContext);
   const navigate = useNavigate();
   const newLesson = { id: 5, courseId: 1, title: "Fifth lesson!" };
+
   function createLesson() {
     console.log("New lesson created");
     setLessons((lessons) => [
@@ -99,6 +98,7 @@ function SidebarCreateLessonItem() {
       replace: true,
     });
   }
+
   return (
     // <Link to={`${lesson.courseId}?lesson=${lesson.id}`} replace={true}>
     <StyledSidebarLessonItem
