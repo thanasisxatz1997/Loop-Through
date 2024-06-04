@@ -4,6 +4,7 @@ import StyledButton from "../styles/StyledButton";
 import SignInForm from "../features/authentication/SignInForm";
 import RegisterForm from "../features/authentication/RegisterForm";
 import TextModal from "../styles/TextModal";
+import AuthOptions from "../features/authentication/AuthOptions";
 
 const StyledUserContainer = styled.div`
   background-color: var(--bg-color-light-0);
@@ -31,32 +32,25 @@ function User() {
       >
         Start learning now! Create an account and start your first course.
       </TextModal>
-      <Row type="vertical" gap="0">
-        <Row>
-          <StyledFormSelector>
-            <Row>
-              <StyledButton
-                size="fill"
-                borderRadius="9px 0px 0px 0px"
-                selectedOptionButton="true"
-                optionButton="true"
-                disabled
-              >
-                Sign In
-              </StyledButton>
-              <StyledButton
-                size="fill"
-                borderRadius="0px 9px 0px 0px"
-                optionButton="true"
-              >
-                Register
-              </StyledButton>
-            </Row>
-          </StyledFormSelector>
+      <AuthOptions>
+        <Row type="vertical" gap="0">
+          <Row>
+            <StyledFormSelector>
+              <Row>
+                <AuthOptions.Selector />
+              </Row>
+            </StyledFormSelector>
+          </Row>
+          {/* <SignInForm></SignInForm> */}
+          {/* <RegisterForm></RegisterForm> */}
+          <AuthOptions.FormWindow name="signIn">
+            <SignInForm />
+          </AuthOptions.FormWindow>
+          <AuthOptions.FormWindow name="register">
+            <RegisterForm />
+          </AuthOptions.FormWindow>
         </Row>
-        {/* <SignInForm></SignInForm> */}
-        <RegisterForm></RegisterForm>
-      </Row>
+      </AuthOptions>
     </StyledUserContainer>
   );
 }

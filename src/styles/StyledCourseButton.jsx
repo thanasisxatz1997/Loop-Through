@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 const StyledCourseButton = styled.button`
   border-radius: 10%;
@@ -9,7 +9,14 @@ const StyledCourseButton = styled.button`
   background-color: var(--color-grey-0);
   color: var(--color-grey-100);
 
-  background-image: url(${(props) => props.backgroundImage});
+  ${(props) =>
+    props.backgroundImage === "none"
+      ? css`
+          background-color: var(--color-grey-500);
+        `
+      : css`
+          background-image: url(${(props) => props.backgroundImage});
+        `}
   background-size: 350px 200px;
   background-position: right center;
   width: 100%;
@@ -30,10 +37,10 @@ const StyledCourseButton = styled.button`
 `;
 
 StyledCourseButton.defaultProps = {
-  backgroundImage:
-    "https://assets.leetcode.com/explore/cards/leetcodes-interview-crash-course-data-structures-and-algorithms/img-1663091244.png",
+  backgroundImage: "none",
   // backgroundImage:
   //   "https://assets.leetcode.com/explore/cards/top-151-interview-questions/img",
+  // "https://assets.leetcode.com/explore/cards/leetcodes-interview-crash-course-data-structures-and-algorithms/img-1663091244.png",
 };
 
 export default StyledCourseButton;
