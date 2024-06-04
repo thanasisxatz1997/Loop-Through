@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import Sidebar from "../ui/Sidebar";
 import CourseButton from "../features/courses/CourseButton";
-
+import StyledButton from "../styles/StyledButton";
 const StyledCoursesContainer = styled.div`
   /* background: radial-gradient(
     circle,
@@ -62,6 +62,7 @@ function Courses() {
             image={course.image}
           ></CourseButton>
         ))}
+        <StyledButton>Create a new Course!</StyledButton>
       </StyledCoursesMainContainer>
     </StyledCoursesContainer>
   );

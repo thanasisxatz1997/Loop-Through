@@ -7,11 +7,11 @@ export const lessonContentElements = [
     id: 5,
     type: "i",
     content:
-      "https://i.kym-cdn.com/entries/icons/facebook/000/049/273/cover11.jpg",
+      "https://assets.leetcode.com/explore/cards/leetcodes-interview-crash-course-data-structures-and-algorithms/img-1663091244.png",
     sizeX: "auto",
     sizeY: "auto",
   },
-  { id: 6, type: "t", content: "God damn it im good at this", size: "h3" },
+  { id: 6, type: "t", content: "Last title", size: "h3" },
 ];
 
 export const lessonQuizes = [
