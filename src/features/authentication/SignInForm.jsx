@@ -23,7 +23,7 @@ const StyledHref = styled.a`
 function SignInForm() {
   return (
     <StyledSignInForm>
-      <Heading textAlign="center">Sign in!</Heading>
+      <Heading textalign="center">Sign in!</Heading>
       <Row margin="1rem 0rem">
         <StyledFormLabel>
           <Heading as="h3">{`Username/Email:`}</Heading>

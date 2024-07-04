@@ -13,6 +13,14 @@ import StyledSidebarLessonItem from "../styles/StyledSidebarLessonItem";
 import { HiMiniPlusCircle } from "react-icons/hi2";
 import Modal from "../ui/Modal";
 import CreateLessonForm from "../features/courses/CreateLessonForm";
+import {
+  createLesson,
+  getLessonsByCourseId,
+  getLessonsById,
+} from "../services/apiLessons";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import Spinner from "../ui/Spinner";
+import toast from "react-hot-toast";
 
 const StyledCourseContainer = styled.div`
   display: grid;
@@ -39,37 +47,67 @@ const RatingContainer = styled.div`
 const CourseContext = createContext();
 
 function Course() {
-  const [lessons, setLessons] = useState([
-    { id: 1, courseId: 1, title: "First lesson!" },
-    { id: 2, courseId: 1, title: "Second lesson!" },
-    { id: 3, courseId: 1, title: "Third lesson!" },
-    { id: 4, courseId: 1, title: "Fourth lesson!" },
-  ]);
+  // const [lessons, setLessons] = useState([
+  //   { id: 1, courseId: 1, title: "First lesson!" },
+  //   { id: 2, courseId: 1, title: "Second lesson!" },
+  //   { id: 3, courseId: 1, title: "Third lesson!" },
+  //   { id: 4, courseId: 1, title: "Fourth lesson!" },
+  // ]);
+
+  const queryClient = useQueryClient();
+  const { mutate: createNewLesson, isLoading: isCreating } = useMutation({
+    mutationFn: createLesson,
+    onSuccess: () => {
+      toast.success("New lesson successfully created.");
+      queryClient.invalidateQueries({ queryKey: ["lessons"] });
+    },
+    onError: (err) => {
+      toast.error(err.message);
+    },
+  });
 
   const editable = true;
   const params = useParams();
-  const courseId = params.id;
+  const courseId = params.id.slice(1);
+  console.log("courseId=", courseId);
   const activeLessonId = useActiveLessonParams();
   const hasActiveLesson = activeLessonId !== 0 && activeLessonId !== null;
   const navigate = useNavigate();
+  // const lessons = getLessonsById(courseId);
+  const {
+    isLoading,
+    data: lessons,
+    error,
+  } = useQuery({
+    queryKey: ["lessons"],
+    queryFn: () => getLessonsByCourseId(courseId),
+  });
 
-  function createLesson(newLesson) {
-    console.log("New lesson created");
-    const newId = lessons.reduce((prev, cur, i) => i + 1) + 1;
-    console.log("newId:", newId);
-    setLessons((lessons) => [
-      ...lessons,
-      { id: newId, courseId: 1, title: newLesson },
-    ]);
-    navigate(`/course/${courseId}?lesson=${newId}`, {
+  function onCreateLesson(name) {
+    const newLesson = {
+      courseId: `${courseId}`,
+      name: `${name}`,
+      description: "A new Lesson",
+      content: [],
+      quizzes: [],
+    };
+    console.log("trying to create it");
+    const newLessonData = createNewLesson(newLesson);
+    console.log("New lesson being created");
+    console.log("the new data: ", newLessonData);
+    navigate(`/course/${courseId}?lesson=${newLessonData.id}`, {
       replace: true,
     });
   }
 
+  if (isLoading) return <Spinner></Spinner>;
+  if (error) console.log(error);
+  console.log("Done loading");
+  console.log(lessons);
   if (courseId === ":-1") return <CourseCreate></CourseCreate>;
-
+  console.log("Now lessons are: ", lessons);
   return (
-    <CourseContext.Provider value={{ lessons, setLessons, courseId }}>
+    <CourseContext.Provider value={{ lessons, courseId }}>
       <StyledCourseContainer>
         <LessonSidebar>
           {lessons.map((lesson) => (
@@ -86,7 +124,9 @@ function Course() {
               </Modal.Open>
               <Modal.Window name="newLessonModal">
                 <CreateLessonForm
-                  createLesson={createLesson}
+                  createLesson={createNewLesson}
+                  courseId={courseId}
+                  lessonNumber={lessons.length + 1}
                 ></CreateLessonForm>
               </Modal.Window>
             </Modal>
@@ -112,8 +152,8 @@ function Course() {
 }
 
 function SidebarCreateLessonItem({ onClick }) {
-  const { courseId, setLessons } = useContext(CourseContext);
-  const newLesson = { id: 5, courseId: 1, title: "Fifth lesson!" };
+  // const { courseId, setLessons } = useContext(CourseContext);
+  // const newLesson = { id: 5, courseId: 1, title: "Fifth lesson!" };
 
   // function createLesson() {
   //   console.log("New lesson created");
@@ -125,7 +165,6 @@ function SidebarCreateLessonItem({ onClick }) {
   //     replace: true,
   //   });
   // }
-
   return (
     <StyledSidebarLessonItem onClick={onClick}>
       <HiMiniPlusCircle size={30}></HiMiniPlusCircle>

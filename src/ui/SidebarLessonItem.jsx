@@ -4,6 +4,8 @@ import StyledSidebarLessonItem from "../styles/StyledSidebarLessonItem";
 
 function SidebarLessonItem({ lesson, active }) {
   const navigate = useNavigate();
+  console.log("Lesson here: ", lesson);
+  console.log("Is active?", active);
   return (
     // <Link to={`${lesson.courseId}?lesson=${lesson.id}`} replace={true}>
     <StyledSidebarLessonItem
@@ -18,7 +20,7 @@ function SidebarLessonItem({ lesson, active }) {
             })
       }
     >
-      <Heading as="h3">{lesson.title}</Heading>
+      <Heading as="h3">{lesson?.title ? lesson.title : "no title"}</Heading>
     </StyledSidebarLessonItem>
     // </Link>
   );

@@ -17,7 +17,7 @@ const StyledFormTextInput = styled.input``;
 function RegisterForm() {
   return (
     <StyledSignInForm>
-      <Heading textAlign="center">Register!</Heading>
+      <Heading textalign="center">Register!</Heading>
       <Row margin="1rem 0rem">
         <StyledFormLabel>
           <Heading as="h3">{`Username:`}</Heading>

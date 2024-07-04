@@ -3,6 +3,10 @@ import Sidebar from "../ui/Sidebar";
 import CourseButton from "../features/courses/CourseButton";
 import StyledButton from "../styles/StyledButton";
 import CreateCourseButton from "../features/courses/CreateCourseButton";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import toast from "react-hot-toast";
+import { getCourses } from "../services/apiCourses";
+import Spinner from "../ui/Spinner";
 const StyledCoursesContainer = styled.div`
   /* background: radial-gradient(
     circle,
@@ -31,7 +35,17 @@ const StyledCoursesMainContainer = styled.main`
 `;
 
 function Courses() {
-  const availableCourses = [
+  const queryClient = useQueryClient();
+  const {
+    isLoading,
+    data: courses,
+    error,
+  } = useQuery({
+    queryKey: ["courses"],
+    queryFn: getCourses,
+  });
+
+  const testCourses = [
     {
       id: 1,
       title: "react",
@@ -49,17 +63,22 @@ function Courses() {
         "https://assets.leetcode.com/explore/cards/leetcodes-interview-crash-course-data-structures-and-algorithms/img-1663091244.png",
     },
   ];
+  if (isLoading) return <Spinner></Spinner>;
+  else console.log("done loading");
+  if (error) console.log(error);
+  console.log(courses);
+  const availableCourses = courses;
   return (
     <StyledCoursesContainer>
       <Sidebar></Sidebar>
       <StyledCoursesMainContainer>
-        {availableCourses.map((course) => (
+        {courses.map((course) => (
           <CourseButton
             key={course.id}
             id={course.id}
-            title={course.title}
+            title={course.name}
             description={course.description}
-            author={course.author}
+            author={course.authorName}
             image={course.image}
           ></CourseButton>
         ))}

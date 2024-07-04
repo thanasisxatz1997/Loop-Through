@@ -10,10 +10,19 @@ import Course from "../src/pages/Course";
 import Quiz from "./features/quizes/components/Quiz";
 import User from "./pages/User";
 import AboutUs from "./pages/AboutUs";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 0,
+    },
+  },
+});
 
 function App() {
   return (
-    <>
+    <QueryClientProvider client={queryClient}>
       <GlobalStyles />
       <BrowserRouter>
         <Routes>
@@ -33,7 +42,7 @@ function App() {
           </Route>
         </Routes>
       </BrowserRouter>
-    </>
+    </QueryClientProvider>
   );
 }
 

@@ -10,12 +10,12 @@ const StyledCourseButton = styled.button`
   color: var(--color-grey-100);
 
   ${(props) =>
-    props.backgroundImage === "none"
+    props.backgroundimage === "none"
       ? css`
           background-color: var(--color-grey-500);
         `
       : css`
-          background-image: url(${(props) => props.backgroundImage});
+          background-image: url(${(props) => props.backgroundimage});
         `}
   background-size: 350px 200px;
   background-position: right center;
@@ -37,7 +37,7 @@ const StyledCourseButton = styled.button`
 `;
 
 StyledCourseButton.defaultProps = {
-  backgroundImage: "none",
+  backgroundimage: "none",
   // backgroundImage:
   //   "https://assets.leetcode.com/explore/cards/top-151-interview-questions/img",
   // "https://assets.leetcode.com/explore/cards/leetcodes-interview-crash-course-data-structures-and-algorithms/img-1663091244.png",

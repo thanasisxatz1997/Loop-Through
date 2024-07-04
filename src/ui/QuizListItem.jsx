@@ -37,7 +37,7 @@ function QuizListItem({ title, delay }) {
         <TextContainer>
           <Heading as={"h3"}>{title}</Heading>
         </TextContainer>
-        <StyledButton size="fill" borderRadius="0px 5px 5px 0px">
+        <StyledButton size="fill" borderradius="0px 5px 5px 0px">
           <Link to={`/quiz/:1`}>start</Link>
         </StyledButton>
       </Row>

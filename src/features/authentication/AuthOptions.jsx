@@ -30,9 +30,9 @@ function Selector({ children }) {
     <Row>
       <StyledButton
         size="fill"
-        borderRadius="9px 0px 0px 0px"
-        selectedOptionButton={openName === "signIn" ? "true" : "false"}
-        optionButton="true"
+        borderradius="9px 0px 0px 0px"
+        selectedoptionbutton={openName === "signIn" ? "true" : "false"}
+        optionbutton="true"
         disabled={openName === "signIn"}
         onClick={() => open("signIn")}
       >
@@ -40,9 +40,9 @@ function Selector({ children }) {
       </StyledButton>
       <StyledButton
         size="fill"
-        borderRadius="0px 9px 0px 0px"
-        selectedOptionButton={openName === "register" ? "true" : "false"}
-        optionButton="true"
+        borderradius="0px 9px 0px 0px"
+        selectedoptionbutton={openName === "register" ? "true" : "false"}
+        optionbutton="true"
         disabled={openName === "register"}
         onClick={() => open("register")}
       >

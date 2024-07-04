@@ -12,8 +12,14 @@ const StyledFormTextInput = styled.input`
   font-size: large;
   border: solid 1px;
 `;
-function CreateLessonForm({ createLesson, onCloseModal }) {
+function CreateLessonForm({
+  createLesson,
+  courseId,
+  lessonNumber,
+  onCloseModal,
+}) {
   const [lessonName, setLessonName] = useState("");
+  console.log("in form: ", courseId, lessonNumber);
   return (
     <div>
       <StyledFormLabel>
@@ -29,7 +35,8 @@ function CreateLessonForm({ createLesson, onCloseModal }) {
       <Row margin="1rem 0rem">
         <StyledButton
           onClick={() => {
-            createLesson(lessonName);
+            console.log("clicking with : ", lessonName, courseId, lessonNumber);
+            createLesson({ lessonName, courseId, lessonNumber });
             onCloseModal();
           }}
         >

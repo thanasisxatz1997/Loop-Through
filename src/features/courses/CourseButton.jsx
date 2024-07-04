@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 
 function CourseButton({ id, title, description, author, image }) {
   return (
-    <StyledCourseButton backgroundImage={image}>
+    <StyledCourseButton backgroundimage={image}>
       <Link to={`/course/:${id}`}>
         <Row type="vertical">
           <Heading as="h2">{title}</Heading>

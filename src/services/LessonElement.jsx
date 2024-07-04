@@ -8,7 +8,7 @@ function LessonElement({ element }) {
       return <p style={{ textAlign: "center" }}>{content}</p>;
     case "t":
       return (
-        <Heading as="h3" style={{ textAlign: "center" }}>
+        <Heading as="h3" style={{ textalign: "center" }}>
           {content}
         </Heading>
       );

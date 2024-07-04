@@ -81,7 +81,7 @@ const Button = styled.button`
   ${(props) => sizes[props.size]}
   ${(props) => variations[props.variation]}
   ${(props) =>
-    props.selectedOptionButton === "true" &&
+    props.selectedoptionbutton === "true" &&
     css`
       background-color: var(--color-grey-100);
       color: var(--color-grey-700);
@@ -90,12 +90,12 @@ const Button = styled.button`
       }
     `}
   ${(props) =>
-    props.borderRadius !== "" &&
+    props.borderradius !== "" &&
     css`
-      border-radius: ${props.borderRadius};
+      border-radius: ${props.borderradius};
     `}
     ${(props) =>
-    props.optionButton === "true" &&
+    props.optionbutton === "true" &&
     css`
       box-sizing: border-box;
     `}
@@ -105,9 +105,9 @@ Button.defaultProps = {
   variation: "primary",
   size: "medium",
   shadow: "large",
-  borderRadius: "",
-  selectedOptionButton: "false",
-  optionButton: "",
+  borderradius: "",
+  selectedoptionbutton: "false",
+  optionbutton: "",
 };
 
 export default Button;
