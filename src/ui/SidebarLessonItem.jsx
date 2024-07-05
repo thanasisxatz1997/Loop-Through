@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import StyledSidebarLessonItem from "../styles/StyledSidebarLessonItem";
 
 function SidebarLessonItem({ lesson, active }) {
+  console.log("lesson is : ", lesson);
   const navigate = useNavigate();
   console.log("Lesson here: ", lesson);
   console.log("Is active?", active);
@@ -20,7 +21,7 @@ function SidebarLessonItem({ lesson, active }) {
             })
       }
     >
-      <Heading as="h3">{lesson?.title ? lesson.title : "no title"}</Heading>
+      <Heading as="h3">{lesson?.name ? lesson.name : "no title"}</Heading>
     </StyledSidebarLessonItem>
     // </Link>
   );
