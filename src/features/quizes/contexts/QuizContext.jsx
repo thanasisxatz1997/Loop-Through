@@ -1,4 +1,5 @@
 import { useContext, createContext, useReducer, useEffect } from "react";
+import { apiUrl } from "../../../services/mongoApi";
 
 const QuizContext = createContext();
 
@@ -76,12 +77,13 @@ function QuizProvider({ children }) {
   );
 
   useEffect(function () {
+    // "https://my-json-server.typicode.com/thanasisxatz1997/FakeServer/questions"
     async function fetchData() {
-      await fetch(
-        "https://my-json-server.typicode.com/thanasisxatz1997/FakeServer/questions"
-      )
+      await fetch(`${apiUrl}/quizzes/quizById?id=${"668b14caf04dd0aa3c34090b"}`)
         .then((res) => res.json())
-        .then((data) => dispatch({ type: "dataReceived", payload: data }))
+        .then((data) =>
+          dispatch({ type: "dataReceived", payload: data.questions })
+        )
         .catch((err) => dispatch({ type: "dataFailed" }));
     }
     fetchData();
