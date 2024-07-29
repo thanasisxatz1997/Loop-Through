@@ -16,7 +16,7 @@ import CreateLessonForm from "../features/courses/CreateLessonForm";
 import {
   createLesson,
   getLessonsByCourseId,
-  getLessonsById,
+  getLessonById,
 } from "../services/apiLessons";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import Spinner from "../ui/Spinner";
@@ -44,7 +44,7 @@ const RatingContainer = styled.div`
   /* width: 100%; */
 `;
 
-const CourseContext = createContext();
+export const CourseContext = createContext();
 
 function Course() {
   // const [lessons, setLessons] = useState([
@@ -66,11 +66,24 @@ function Course() {
     },
   });
 
+  const { mutate: getActiveLesson, isLoading: isGettingActiveLesson } =
+    useMutation({
+      mutationFn: getLessonById,
+      onSuccess: () => {
+        toast.success("Active lesson Loaded.");
+        queryClient.invalidateQueries({ queryKey: ["activeLesson"] });
+      },
+      onError: (err) => {
+        toast.error(err.message);
+      },
+    });
+
   const editable = true;
   const params = useParams();
   const courseId = params.id.slice(1);
   console.log("courseId=", courseId);
   const activeLessonId = useActiveLessonParams();
+  console.log("active lesson in course: ", activeLessonId);
   const hasActiveLesson = activeLessonId !== 0 && activeLessonId !== null;
   const navigate = useNavigate();
   // const lessons = getLessonsById(courseId);
@@ -83,29 +96,16 @@ function Course() {
     queryFn: () => getLessonsByCourseId(courseId),
   });
 
-  function onCreateLesson(name) {
-    const newLesson = {
-      courseId: `${courseId}`,
-      name: `${name}`,
-      description: "A new Lesson",
-      content: [],
-      quizzes: [],
-    };
-    console.log("trying to create it");
-    const newLessonData = createNewLesson(newLesson);
-    console.log("New lesson being created");
-    console.log("the new data: ", newLessonData);
-    navigate(`/course/${courseId}?lesson=${newLessonData.id}`, {
-      replace: true,
-    });
-  }
-
   if (isLoading) return <Spinner></Spinner>;
   if (error) console.log(error);
   console.log("Done loading");
   console.log(lessons);
   if (courseId === ":-1") return <CourseCreate></CourseCreate>;
   console.log("Now lessons are: ", lessons);
+  const activeLesson = lessons.filter(
+    (lesson) => lesson.id === activeLessonId
+  )[0];
+
   return (
     <CourseContext.Provider value={{ lessons, courseId }}>
       <StyledCourseContainer>
@@ -141,7 +141,7 @@ function Course() {
         </LessonSidebar>
         <LessonContainer>
           {hasActiveLesson ? (
-            <LessonContent id={activeLessonId}></LessonContent>
+            <LessonContent lesson={activeLesson}></LessonContent>
           ) : (
             "There is no active lesson"
           )}
