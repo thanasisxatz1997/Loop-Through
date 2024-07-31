@@ -21,6 +21,7 @@ import {
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import Spinner from "../ui/Spinner";
 import toast from "react-hot-toast";
+import CreateCourseForm from "../features/courses/CreateCourseForm";
 
 const StyledCourseContainer = styled.div`
   display: grid;
@@ -47,15 +48,8 @@ const RatingContainer = styled.div`
 export const CourseContext = createContext();
 
 function Course() {
-  // const [lessons, setLessons] = useState([
-  //   { id: 1, courseId: 1, title: "First lesson!" },
-  //   { id: 2, courseId: 1, title: "Second lesson!" },
-  //   { id: 3, courseId: 1, title: "Third lesson!" },
-  //   { id: 4, courseId: 1, title: "Fourth lesson!" },
-  // ]);
-
   const queryClient = useQueryClient();
-  const { mutate: createNewLesson, isLoading: isCreating } = useMutation({
+  const { mutate: createNewLesson, isLoading: isCreatingLesson } = useMutation({
     mutationFn: createLesson,
     onSuccess: () => {
       toast.success("New lesson successfully created.");
@@ -86,7 +80,6 @@ function Course() {
   console.log("active lesson in course: ", activeLessonId);
   const hasActiveLesson = activeLessonId !== 0 && activeLessonId !== null;
   const navigate = useNavigate();
-  // const lessons = getLessonsById(courseId);
   const {
     isLoading,
     data: lessons,
@@ -152,19 +145,6 @@ function Course() {
 }
 
 function SidebarCreateLessonItem({ onClick }) {
-  // const { courseId, setLessons } = useContext(CourseContext);
-  // const newLesson = { id: 5, courseId: 1, title: "Fifth lesson!" };
-
-  // function createLesson() {
-  //   console.log("New lesson created");
-  //   setLessons((lessons) => [
-  //     ...lessons,
-  //     { id: 5, courseId: 1, title: "Fifth lesson!" },
-  //   ]);
-  //   navigate(`/course/${courseId}?lesson=${newLesson.id}`, {
-  //     replace: true,
-  //   });
-  // }
   return (
     <StyledSidebarLessonItem onClick={onClick}>
       <HiMiniPlusCircle size={30}></HiMiniPlusCircle>

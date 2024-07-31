@@ -5,8 +5,11 @@ import StyledButton from "../styles/StyledButton";
 import CreateCourseButton from "../features/courses/CreateCourseButton";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
-import { getCourses } from "../services/apiCourses";
+import { createCourse, getCourses } from "../services/apiCourses";
 import Spinner from "../ui/Spinner";
+import Modal from "../ui/Modal";
+import CreateLessonForm from "../features/courses/CreateLessonForm";
+import CreateCourseForm from "../features/courses/CreateCourseForm";
 const StyledCoursesContainer = styled.div`
   /* background: radial-gradient(
     circle,
@@ -27,15 +30,47 @@ const StyledCoursesMainContainer = styled.main`
   display: grid;
   padding: 3rem;
   gap: 2rem;
-  grid-template-columns: repeat(3, 200px);
+  grid-template-rows: auto;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   justify-items: center;
   align-items: center;
   grid-auto-rows: 200px;
   grid-auto-columns: 200px;
 `;
 
+const testCourses = [
+  {
+    id: 1,
+    title: "react",
+    description: "A good React course!",
+    author: "Thanasis Chatziathanasiou",
+    image:
+      "https://assets.leetcode.com/explore/cards/top-151-interview-questions/img",
+  },
+  {
+    id: 2,
+    title: "Html",
+    description: "A good html course!",
+    author: "Thanasis Chatziathanasiou",
+    image:
+      "https://assets.leetcode.com/explore/cards/leetcodes-interview-crash-course-data-structures-and-algorithms/img-1663091244.png",
+  },
+];
+
 function Courses() {
   const queryClient = useQueryClient();
+
+  const { mutate: createNewCourse, isLoading: isCreatingCourse } = useMutation({
+    mutationFn: createCourse,
+    onSuccess: () => {
+      toast.success("New course successfully created.");
+      queryClient.invalidateQueries({ queryKey: ["courses"] });
+    },
+    onError: (err) => {
+      toast.error(err.message);
+    },
+  });
+
   const {
     isLoading,
     data: courses,
@@ -45,29 +80,10 @@ function Courses() {
     queryFn: getCourses,
   });
 
-  const testCourses = [
-    {
-      id: 1,
-      title: "react",
-      description: "A good React course!",
-      author: "Thanasis Chatziathanasiou",
-      image:
-        "https://assets.leetcode.com/explore/cards/top-151-interview-questions/img",
-    },
-    {
-      id: 2,
-      title: "Html",
-      description: "A good html course!",
-      author: "Thanasis Chatziathanasiou",
-      image:
-        "https://assets.leetcode.com/explore/cards/leetcodes-interview-crash-course-data-structures-and-algorithms/img-1663091244.png",
-    },
-  ];
   if (isLoading) return <Spinner></Spinner>;
   else console.log("done loading");
   if (error) console.log(error);
-  console.log(courses);
-  const availableCourses = courses;
+  console.log("Courses now are:", courses);
   return (
     <StyledCoursesContainer>
       <Sidebar></Sidebar>
@@ -82,8 +98,14 @@ function Courses() {
             image={course.image}
           ></CourseButton>
         ))}
-
-        <CreateCourseButton>Create a new Course!</CreateCourseButton>
+        <Modal>
+          <Modal.Open opens="newCourseModal">
+            <CreateCourseButton>Create a new Course!</CreateCourseButton>
+          </Modal.Open>
+          <Modal.Window name="newCourseModal">
+            <CreateCourseForm createCourse={createNewCourse}></CreateCourseForm>
+          </Modal.Window>
+        </Modal>
       </StyledCoursesMainContainer>
     </StyledCoursesContainer>
   );

@@ -5,10 +5,12 @@ import Heading from "../../styles/Heading";
 import Row from "../../styles/Row";
 
 import { Link } from "react-router-dom";
+import { PiHandbagSimple } from "react-icons/pi";
 
 function CourseButton({ id, title, description, author, image }) {
+  const hasImage = image !== "" && image;
   return (
-    <StyledCourseButton backgroundimage={image}>
+    <StyledCourseButton backgroundimage={hasImage ? image : "none"}>
       <Link to={`/course/:${id}`}>
         <Row type="vertical">
           <Heading as="h2">{title}</Heading>
