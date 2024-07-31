@@ -12,6 +12,14 @@ const StyledFormTextInput = styled.input`
   font-size: large;
   border: solid 1px;
 `;
+const StyledFormTextArea = styled.textarea`
+  margin-top: 1rem;
+  padding: 2px;
+  font-size: large;
+  border: solid 1px;
+  width: 100%;
+  resize: none;
+`;
 function CreateCourseForm({ createCourse, onCloseModal }) {
   const [courseName, setCourseName] = useState("");
   const [courseDescription, setCourseDescription] = useState("");
@@ -24,10 +32,22 @@ function CreateCourseForm({ createCourse, onCloseModal }) {
       </StyledFormLabel>
       <Row margin="0rem 0rem">
         <StyledFormTextInput
-          placeholder=" Enter Course Name"
+          placeholder="Name:"
           value={courseName}
           onChange={(e) => setCourseName(e.target.value)}
         ></StyledFormTextInput>
+      </Row>
+      <Row margin="0rem 0rem">
+        <StyledFormTextArea
+          placeholder="Description:"
+          value={courseDescription}
+          onChange={(e) => setCourseDescription(e.target.value)}
+        ></StyledFormTextArea>
+      </Row>
+      <Row margin="1rem 0rem" content="flex-start" gap="1rem">
+        <StyledButton variation="secondary" size="small">
+          Upload image
+        </StyledButton>
       </Row>
       <Row margin="1rem 0rem">
         <StyledButton
