@@ -3,6 +3,7 @@ import Heading from "../../styles/Heading";
 import StyledButton from "../../styles/StyledButton";
 import Row from "../../styles/Row";
 import { useState } from "react";
+import FileInput from "../../styles/FileInput";
 
 const StyledFormLabel = styled.label`
   margin-right: 5px;
@@ -23,7 +24,7 @@ const StyledFormTextArea = styled.textarea`
 function CreateCourseForm({ createCourse, onCloseModal }) {
   const [courseName, setCourseName] = useState("");
   const [courseDescription, setCourseDescription] = useState("");
-  const [courseImage, setCourseImage] = useState("");
+  const [courseImage, setCourseImage] = useState({});
 
   return (
     <div>
@@ -45,15 +46,18 @@ function CreateCourseForm({ createCourse, onCloseModal }) {
         ></StyledFormTextArea>
       </Row>
       <Row margin="1rem 0rem" content="flex-start" gap="1rem">
-        <StyledButton variation="secondary" size="small">
-          Upload image
-        </StyledButton>
+        <FileInput
+          id="image"
+          accept="image/*"
+          onChange={(e) => setCourseImage(e.target.files[0])}
+        ></FileInput>
       </Row>
       <Row margin="1rem 0rem">
         <StyledButton
+          variation="success"
           onClick={() => {
-            console.log("clicking with : ", courseName);
-            createCourse({ courseName });
+            console.log("clicking with : ", courseName, "image: ", courseImage);
+            createCourse({ courseName, courseDescription, courseImage });
             onCloseModal();
           }}
         >
