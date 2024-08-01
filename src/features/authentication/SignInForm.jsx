@@ -2,6 +2,8 @@ import styled from "styled-components";
 import Heading from "../../styles/Heading";
 import Row from "../../styles/Row";
 import StyledButton from "../../styles/StyledButton";
+import { login } from "../../services/apiAuth";
+import { useState } from "react";
 
 const StyledSignInForm = styled.form`
   background-color: var(--color-grey-100);
@@ -21,20 +23,35 @@ const StyledHref = styled.a`
 `;
 
 function SignInForm() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  function handleSubmit(e) {
+    e.preventDefault();
+    if (!email || !password) return;
+    login({ email, password });
+  }
   return (
-    <StyledSignInForm>
+    <StyledSignInForm onSubmit={handleSubmit}>
       <Heading textalign="center">Sign in!</Heading>
       <Row margin="1rem 0rem">
         <StyledFormLabel>
           <Heading as="h3">{`Username/Email:`}</Heading>
         </StyledFormLabel>
-        <StyledFormTextInput placeholder=" Username"></StyledFormTextInput>
+        <StyledFormTextInput
+          placeholder=" Username"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        ></StyledFormTextInput>
       </Row>
       <Row margin="1rem 0rem">
         <StyledFormLabel>
           <Heading as="h3">{`Password:`}</Heading>
         </StyledFormLabel>
-        <StyledFormTextInput placeholder=" ********"></StyledFormTextInput>
+        <StyledFormTextInput
+          placeholder=" ********"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        ></StyledFormTextInput>
       </Row>
       <Row margin="1rem 0rem" content="end">
         <StyledHref href="/">Forgot your password?</StyledHref>
