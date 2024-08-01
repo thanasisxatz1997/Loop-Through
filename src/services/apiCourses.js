@@ -16,27 +16,29 @@ export async function getCourses() {
   }
 }
 
-export async function createCourse({
-  courseName,
-  courseDescription = "",
-  courseImage,
-}) {
-  const imageName = `${Math.random()}-${courseImage.name}`.replaceAll("/", "");
+export async function createCourse(newCourse) {
+  console.log("Starting create");
+  console.log(newCourse);
+  const imageName = `${Math.random()}-${newCourse.image.name}`.replaceAll(
+    "/",
+    ""
+  );
   const imagePath = `${supabaseUrl}/storage/v1/object/public/course-images/${imageName}`;
   //https://nyznsssttvpdlhzugabm.supabase.co/storage/v1/object/public/course-images/bapi%20extra%20dependency%20to%20remove.png
   // 1. Creating a course
-  console.log("inside api call", courseName);
+  console.log("inside api call", newCourse.name);
   const course = {
-    name: `${courseName}`,
+    name: newCourse.name,
     lessons: [],
     authorName: "admin",
     rating: 4.3,
-    description: courseDescription,
+    description: newCourse.description,
     image: imagePath,
   };
   const reqHeaders = new Headers();
   reqHeaders.append("Content-Type", "application/json");
   const url = `${apiUrl}/courses/new`;
+  console.log("before try");
   try {
     const response = await fetch(url, {
       method: "POST",
@@ -52,7 +54,7 @@ export async function createCourse({
     // 2. Upload image
     const { error: storageError } = await supabase.storage
       .from("course-images")
-      .upload(imageName, courseImage);
+      .upload(imageName, newCourse.image);
 
     // 3. Maybe delete course if there was an error uploading image
 

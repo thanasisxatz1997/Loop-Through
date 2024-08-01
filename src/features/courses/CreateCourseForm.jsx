@@ -4,6 +4,7 @@ import StyledButton from "../../styles/StyledButton";
 import Row from "../../styles/Row";
 import { useState } from "react";
 import FileInput from "../../styles/FileInput";
+import { useForm } from "react-hook-form";
 
 const StyledFormLabel = styled.label`
   margin-right: 5px;
@@ -26,40 +27,63 @@ function CreateCourseForm({ createCourse, onCloseModal }) {
   const [courseDescription, setCourseDescription] = useState("");
   const [courseImage, setCourseImage] = useState({});
 
+  const { register, handleSubmit, reset, getValues, formState } = useForm({
+    defaultValues: {},
+  });
+  const { errors } = formState;
+
+  function onSubmit(data) {
+    console.log("inside submit");
+    console.log({ ...data, image: data.image[0] });
+    createCourse({ ...data, image: data.image[0] });
+    console.log("done creating");
+    console.log();
+    onCloseModal?.();
+  }
+
+  function onError(errors) {
+    console.log(errors);
+  }
+
   return (
-    <div>
+    <form onSubmit={handleSubmit(onSubmit, onError)}>
       <StyledFormLabel>
         <Heading as="h2">{`New Course`}</Heading>
       </StyledFormLabel>
       <Row margin="0rem 0rem">
         <StyledFormTextInput
+          id="name"
           placeholder="Name:"
-          value={courseName}
-          onChange={(e) => setCourseName(e.target.value)}
+          {...register("name", { required: "This field is required" })}
+          // onChange={(e) => setCourseName(e.target.value)}
         ></StyledFormTextInput>
       </Row>
       <Row margin="0rem 0rem">
         <StyledFormTextArea
+          id="description"
           placeholder="Description:"
-          value={courseDescription}
-          onChange={(e) => setCourseDescription(e.target.value)}
+          {...register("description", { required: "This field is required" })}
+          // onChange={(e) => setCourseDescription(e.target.value)}
         ></StyledFormTextArea>
       </Row>
       <Row margin="1rem 0rem" content="flex-start" gap="1rem">
         <FileInput
           id="image"
           accept="image/*"
-          onChange={(e) => setCourseImage(e.target.files[0])}
+          {...register("image", {
+            required: "This field is required",
+          })}
+          // onChange={(e) => setCourseImage(e.target.files[0])}
         ></FileInput>
       </Row>
       <Row margin="1rem 0rem">
         <StyledButton
           variation="success"
-          onClick={() => {
-            console.log("clicking with : ", courseName, "image: ", courseImage);
-            createCourse({ courseName, courseDescription, courseImage });
-            onCloseModal();
-          }}
+          // onClick={() => {
+          //   console.log("clicking with : ", courseName, "image: ", courseImage);
+          //   createCourse({ courseName, courseDescription, courseImage });
+          //   onCloseModal();
+          // }}
         >
           Create
         </StyledButton>
@@ -68,7 +92,7 @@ function CreateCourseForm({ createCourse, onCloseModal }) {
         </StyledButton>
       </Row>
       <Row></Row>
-    </div>
+    </form>
   );
 }
 

@@ -14,8 +14,9 @@ function CourseButton({ id, title, description, author, image }) {
       <Link to={`/course/:${id}`}>
         <Row type="vertical">
           <Heading as="h2">{title}</Heading>
-
-          <p>{description}</p>
+          <Row padding="1rem">
+            <p>{description}</p>
+          </Row>
 
           <br></br>
 

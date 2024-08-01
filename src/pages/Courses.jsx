@@ -31,7 +31,7 @@ const StyledCoursesMainContainer = styled.main`
   padding: 3rem;
   gap: 2rem;
   grid-template-rows: auto;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(200px, max-content));
   justify-items: center;
   align-items: center;
   grid-auto-rows: 200px;
