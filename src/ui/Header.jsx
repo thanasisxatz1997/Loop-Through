@@ -61,7 +61,7 @@ function Header() {
               <HiMiniCog6Tooth size={30}></HiMiniCog6Tooth>
             </HeaderButton>
           </NavLink>
-          <NavLink to="/user">
+          <NavLink to="/login">
             <HeaderButton>
               <h3>Sign In</h3>
               <HiMiniUser size={30}></HiMiniUser>

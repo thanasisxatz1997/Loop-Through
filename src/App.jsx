@@ -37,7 +37,7 @@ function App() {
           >
             <Route index element={<Navigate replace to="home" />}></Route>
             <Route path="home" element={<Home />}></Route>
-            <Route path="login" element={<Login />}></Route>
+            {/* <Route path="login" element={<Login />}></Route> */}
             <Route path="courses" element={<Courses />}></Route>
             <Route path="courses/:id" element={<Course />} />
             <Route path="quizes" element={<Quizes />}></Route>
@@ -45,8 +45,11 @@ function App() {
             <Route path="quiz/:id" element={<Quiz />} />
             <Route path="settings" element={<Settings />}></Route>
             <Route path="course/:id" element={<Course />}></Route>
-            <Route path="user" element={<User />}></Route>
+
             <Route path="info" element={<AboutUs />}></Route>
+          </Route>
+          <Route element={<AppLayout />}>
+            <Route path="login" element={<User />}></Route>
           </Route>
         </Routes>
       </BrowserRouter>
