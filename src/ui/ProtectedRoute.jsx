@@ -14,22 +14,22 @@ const FullPage = styled.div`
 
 function ProtectedRoute({ children }) {
   const navigate = useNavigate();
+
   //1. Load the authenticated user
-  const { isPending, isAuthenticated } = useUser();
+  const { isPending, isAuthenticated, isFetching } = useUser();
 
   //2. If there is NO authenticated user, redirect to the /login
   useEffect(
     function () {
-      if (!isAuthenticated && !isPending) {
+      if (!isPending && !isAuthenticated && !isFetching) {
         navigate("/login");
+        console.log("navigated to login");
       }
     },
-    [isAuthenticated, isPending, navigate]
+    [isAuthenticated, isPending, navigate, isFetching]
   );
 
   //3. While loading, show a spinner
-  if (isPending) {
-  }
   if (isPending)
     return (
       <FullPage>
@@ -42,7 +42,7 @@ function ProtectedRoute({ children }) {
     return children;
   }
 
-  return <div>wtf</div>;
+  return null;
 }
 
 export default ProtectedRoute;

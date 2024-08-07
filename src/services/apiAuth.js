@@ -16,6 +16,12 @@ export async function getCurrentUser() {
   if (!session.session) return null;
   const { data, error } = await supabase.auth.getUser();
   if (error) throw new Error(error.message);
+  console.log(
+    "inside useUser: auth:",
+    data.user?.role === "authenticated",
+    "user:",
+    data.user
+  );
 
   return data?.user;
 }
