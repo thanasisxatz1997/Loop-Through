@@ -2,8 +2,9 @@ import styled from "styled-components";
 import Heading from "../../styles/Heading";
 import Row from "../../styles/Row";
 import StyledButton from "../../styles/StyledButton";
-import { login } from "../../services/apiAuth";
 import { useState } from "react";
+import { useLogin } from "./useLogin";
+import SpinnerMini from "../../ui/SpinnerMini";
 
 const StyledSignInForm = styled.form`
   background-color: var(--color-grey-100);
@@ -23,8 +24,11 @@ const StyledHref = styled.a`
 `;
 
 function SignInForm() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("admin@admin.com");
+  const [password, setPassword] = useState("admin");
+  const { login, isLoading } = useLogin();
+
+  console.log(isLoading);
   function handleSubmit(e) {
     e.preventDefault();
     if (!email || !password) return;
@@ -38,6 +42,7 @@ function SignInForm() {
           <Heading as="h3">{`Username/Email:`}</Heading>
         </StyledFormLabel>
         <StyledFormTextInput
+          disabled={isLoading}
           placeholder=" Username"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
@@ -48,6 +53,8 @@ function SignInForm() {
           <Heading as="h3">{`Password:`}</Heading>
         </StyledFormLabel>
         <StyledFormTextInput
+          disabled={isLoading}
+          type="password"
           placeholder=" ********"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
@@ -57,7 +64,9 @@ function SignInForm() {
         <StyledHref href="/">Forgot your password?</StyledHref>
       </Row>
       <Row>
-        <StyledButton>Sign In</StyledButton>
+        <StyledButton disabled={isLoading}>
+          {!isLoading ? "Sign In" : <SpinnerMini></SpinnerMini>}
+        </StyledButton>
       </Row>
     </StyledSignInForm>
   );
