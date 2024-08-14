@@ -5,6 +5,7 @@ import Row from "../../styles/Row";
 import { useState } from "react";
 import FileInput from "../../styles/FileInput";
 import { useForm } from "react-hook-form";
+import CourseButton from "./CourseButton";
 
 const StyledFormLabel = styled.label`
   margin-right: 5px;
@@ -25,13 +26,12 @@ const StyledFormTextArea = styled.textarea`
 function CreateCourseForm({ createCourse, onCloseModal }) {
   const [courseName, setCourseName] = useState("");
   const [courseDescription, setCourseDescription] = useState("");
-  const [courseImage, setCourseImage] = useState({});
+  const [courseImage, setCourseImage] = useState(null);
 
   const { register, handleSubmit, reset, getValues, formState } = useForm({
     defaultValues: {},
   });
   const { errors } = formState;
-
   function onSubmit(data) {
     console.log("inside submit");
     console.log({ ...data, image: data.image[0] });
@@ -55,7 +55,7 @@ function CreateCourseForm({ createCourse, onCloseModal }) {
           id="name"
           placeholder="Name:"
           {...register("name", { required: "This field is required" })}
-          // onChange={(e) => setCourseName(e.target.value)}
+          onChange={(e) => setCourseName(e.target.value)}
         ></StyledFormTextInput>
       </Row>
       <Row margin="0rem 0rem">
@@ -63,7 +63,7 @@ function CreateCourseForm({ createCourse, onCloseModal }) {
           id="description"
           placeholder="Description:"
           {...register("description", { required: "This field is required" })}
-          // onChange={(e) => setCourseDescription(e.target.value)}
+          onChange={(e) => setCourseDescription(e.target.value)}
         ></StyledFormTextArea>
       </Row>
       <Row margin="1rem 0rem" content="flex-start" gap="1rem">
@@ -73,7 +73,10 @@ function CreateCourseForm({ createCourse, onCloseModal }) {
           {...register("image", {
             required: "This field is required",
           })}
-          // onChange={(e) => setCourseImage(e.target.files[0])}
+          onChange={(e) => {
+            console.log(e.target.files[0]);
+            setCourseImage(URL.createObjectURL(e.target.files[0]));
+          }}
         ></FileInput>
       </Row>
       <Row margin="1rem 0rem">
@@ -91,7 +94,20 @@ function CreateCourseForm({ createCourse, onCloseModal }) {
           Cancel
         </StyledButton>
       </Row>
-      <Row></Row>
+      <hr></hr>
+      <Row type="vertical">
+        <Row padding="1rem">
+          <Heading as={"h4"}>PREVIEW:</Heading>
+        </Row>
+        <Row content="center">
+          <CourseButton
+            preview={true}
+            title={courseName}
+            description={courseDescription}
+            image={courseImage ? courseImage : ""}
+          ></CourseButton>
+        </Row>
+      </Row>
     </form>
   );
 }

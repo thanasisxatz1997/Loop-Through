@@ -2,6 +2,11 @@ import styled, { css } from "styled-components";
 
 const StyledCourseButton = styled.button`
   border-radius: 10%;
+  min-height: 200px;
+  min-width: 200px;
+  max-height: 200px;
+  max-width: 200px;
+  text-overflow: none;
   width: 10rem;
   height: 10rem;
   padding-top: 0.5rem;
