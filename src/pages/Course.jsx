@@ -102,43 +102,48 @@ function Course() {
   return (
     <CourseContext.Provider value={{ lessons, courseId }}>
       <StyledCourseContainer>
-        <LessonSidebar>
-          {lessons.map((lesson) => (
-            <SidebarLessonItem
-              key={lesson.id}
-              lesson={lesson}
-              active={lesson.id === activeLessonId ? "true" : "false"}
-            ></SidebarLessonItem>
-          ))}
-          {editable && (
-            <Modal>
-              <Modal.Open opens="newLessonModal">
-                <SidebarCreateLessonItem></SidebarCreateLessonItem>
-              </Modal.Open>
-              <Modal.Window name="newLessonModal">
-                <CreateLessonForm
-                  createLesson={createNewLesson}
-                  courseId={courseId}
-                  lessonNumber={lessons.length + 1}
-                ></CreateLessonForm>
-              </Modal.Window>
-            </Modal>
-          )}
+        <Modal>
+          <LessonSidebar>
+            {lessons.map((lesson) => (
+              <SidebarLessonItem
+                key={lesson.id}
+                lesson={lesson}
+                active={lesson.id === activeLessonId ? "true" : "false"}
+              ></SidebarLessonItem>
+            ))}
+            {editable && (
+              <>
+                <Modal.Open opens="newLessonModal">
+                  <SidebarCreateLessonItem></SidebarCreateLessonItem>
+                </Modal.Open>
+                <Modal.Window name="newLessonModal">
+                  <CreateLessonForm
+                    createLesson={createNewLesson}
+                    courseId={courseId}
+                    lessonNumber={lessons.length + 1}
+                  ></CreateLessonForm>
+                </Modal.Window>
+              </>
+            )}
 
-          <Row type="vertical" content="end">
-            <RatingContainer>
-              <Heading as="h3">Rate this course!</Heading>
-              <StarRating size={30} color="var(--color-grey-900)"></StarRating>
-            </RatingContainer>
-          </Row>
-        </LessonSidebar>
-        <LessonContainer>
-          {hasActiveLesson ? (
-            <LessonContent lesson={activeLesson}></LessonContent>
-          ) : (
-            "There is no active lesson"
-          )}
-        </LessonContainer>
+            <Row type="vertical" content="end">
+              <RatingContainer>
+                <Heading as="h3">Rate this course!</Heading>
+                <StarRating
+                  size={30}
+                  color="var(--color-grey-900)"
+                ></StarRating>
+              </RatingContainer>
+            </Row>
+          </LessonSidebar>
+          <LessonContainer>
+            {hasActiveLesson ? (
+              <LessonContent lesson={activeLesson}></LessonContent>
+            ) : (
+              "There is no active lesson"
+            )}
+          </LessonContainer>
+        </Modal>
       </StyledCourseContainer>
     </CourseContext.Provider>
   );

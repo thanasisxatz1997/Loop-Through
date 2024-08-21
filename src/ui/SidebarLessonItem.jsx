@@ -1,6 +1,7 @@
 import Heading from "../styles/Heading";
 import { useNavigate } from "react-router-dom";
 import StyledSidebarLessonItem from "../styles/StyledSidebarLessonItem";
+import Menus from "./Menus";
 
 function SidebarLessonItem({ lesson, active }) {
   console.log("lesson is : ", lesson);
