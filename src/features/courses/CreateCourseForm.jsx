@@ -6,23 +6,10 @@ import { useState } from "react";
 import FileInput from "../../styles/FileInput";
 import { useForm } from "react-hook-form";
 import CourseButton from "./CourseButton";
+import StyledFormTextArea from "../../styles/StyledFormTextArea";
+import StyledFormTextInput from "../../styles/StyledFormTextInput";
+import StyledFormLabel from "../../styles/StyledFormLabel";
 
-const StyledFormLabel = styled.label`
-  margin-right: 5px;
-`;
-const StyledFormTextInput = styled.input`
-  padding: 2px;
-  font-size: large;
-  border: solid 1px;
-`;
-const StyledFormTextArea = styled.textarea`
-  margin-top: 1rem;
-  padding: 2px;
-  font-size: large;
-  border: solid 1px;
-  width: 100%;
-  resize: none;
-`;
 function CreateCourseForm({ createCourse, onCloseModal }) {
   const [courseName, setCourseName] = useState("");
   const [courseDescription, setCourseDescription] = useState("");
