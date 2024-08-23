@@ -8,7 +8,7 @@ import styled, { css } from "styled-components";
 import { useState } from "react";
 import Modal from "./Modal";
 import LessonElementCreateForm from "../features/lessons/LessonElementCreateForm";
-import CreateCourseForm from "../features/courses/CreateCourseForm";
+import { HiMiniPlusCircle } from "react-icons/hi2";
 
 const FloatingDiv = styled.div`
   top: 0px;
@@ -27,7 +27,7 @@ FloatingDiv.defaultProps = {
 const Container = styled.div`
   position: relative;
   padding-bottom: 1px;
-
+  margin: 10px 0px;
   ${(props) => css`
     border: ${props.border};
   `}
@@ -36,6 +36,14 @@ const Container = styled.div`
 Container.defaultProps = {
   border: "none",
 };
+
+const StyledLessonElementCreateButton = styled.button`
+  width: 200px;
+  height: 30px;
+  border-radius: 5px;
+  border: solid 1px;
+  background-color: var(--color-grey-50);
+`;
 
 function LessonContent({ lesson }) {
   const [hoveredId, setHoveredId] = useState("");
@@ -83,6 +91,13 @@ function LessonContent({ lesson }) {
           // createCourse={() => console.log("aaa")}
           ></LessonElementCreateForm>
         </Modal.Window>
+        <Row content="center">
+          <Modal.Open opens="lessonElementModal">
+            <StyledLessonElementCreateButton>
+              <HiMiniPlusCircle size={25} />
+            </StyledLessonElementCreateButton>
+          </Modal.Open>
+        </Row>
       </StyledLessonContent>
       <LessonQuizesContainer quizes={[]}></LessonQuizesContainer>
     </Row>

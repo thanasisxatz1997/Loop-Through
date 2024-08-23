@@ -26,9 +26,8 @@ const Heading = styled.h1`
       user-select: none;
     `}
     ${(props) =>
-    props.textalign === "center" &&
     css`
-      text-align: center;
+      text-align: ${props.textalign};
     `}
 `;
 

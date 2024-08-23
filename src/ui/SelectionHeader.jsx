@@ -19,12 +19,12 @@ const TabsContainer = styled.div`
   flex-direction: row;
   width: 100%;
   height: 70px;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-  background: #fff;
+  background: var(--color-grey-50);
 `;
 
 const StyledTab = styled.div`
   cursor: pointer;
+  user-select: none;
   text-decoration: none;
   display: flex;
   justify-content: center;
