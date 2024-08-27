@@ -4,10 +4,7 @@ import StyledSidebarLessonItem from "../styles/StyledSidebarLessonItem";
 import Menus from "./Menus";
 
 function SidebarLessonItem({ lesson, active }) {
-  console.log("lesson is : ", lesson);
   const navigate = useNavigate();
-  console.log("Lesson here: ", lesson);
-  console.log("Is active?", active);
   return (
     // <Link to={`${lesson.courseId}?lesson=${lesson.id}`} replace={true}>
     <StyledSidebarLessonItem

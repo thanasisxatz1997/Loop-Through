@@ -1,3 +1,4 @@
+import { forwardRef } from "react";
 import styled from "styled-components";
 
 const StyledSelectBox = styled.select`
@@ -50,26 +51,31 @@ const StyledSelectBox = styled.select`
   }
 `;
 
-function SelectBox({
-  selectTitle = "Select Option",
-  options = [
-    { value: "#", name: "One" },
-    { value: "#", name: "Two" },
-  ],
-  onChange,
-}) {
-  return (
-    <StyledSelectBox onChange={onChange}>
-      <option value={""} className="selected" disabled>
-        {selectTitle}
-      </option>
-      {options.map((option) => (
-        <option key={option.name} value={option.value}>
-          {option.name}
+const SelectBox = forwardRef(
+  (
+    {
+      selectTitle = "Select Option",
+      options = [
+        { value: "#", name: "One" },
+        { value: "#", name: "Two" },
+      ],
+      ...props
+    },
+    ref
+  ) => {
+    return (
+      <StyledSelectBox ref={ref} {...props}>
+        <option value={""} className="selected" disabled>
+          {selectTitle}
         </option>
-      ))}
-    </StyledSelectBox>
-  );
-}
+        {options.map((option) => (
+          <option key={option.name} value={option.value}>
+            {option.name}
+          </option>
+        ))}
+      </StyledSelectBox>
+    );
+  }
+);
 
 export default SelectBox;

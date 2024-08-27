@@ -4,6 +4,7 @@ import StyledFormTextInput from "../../styles/StyledFormTextInput";
 import Row from "../../styles/Row";
 import SelectBox from "../../ui/SelectBox";
 import StyledButton from "../../styles/StyledButton";
+import { useForm } from "react-hook-form";
 
 const StyledFormContainer = styled.form`
   min-height: 150px;
@@ -26,20 +27,53 @@ const titleOptions = [
   },
 ];
 
-function TitleCreateEditForm() {
+function TitleCreateEditForm({
+  onCloseModal,
+  onLessonEdited,
+  startingContent,
+}) {
+  console.log("inside title:", startingContent);
+
+  const { register, handleSubmit, reset, getValues, formState } = useForm({
+    defaultValues: {
+      content: startingContent ? startingContent.content : "",
+      size: startingContent ? startingContent.size : "",
+    },
+  });
+  const { errors } = formState;
+  function onSubmit(data) {
+    onLessonEdited({ type: "t", ...data });
+    onCloseModal?.();
+  }
+
+  function onError(errors) {
+    console.log(errors);
+  }
   return (
-    <StyledFormContainer>
+    <StyledFormContainer onSubmit={handleSubmit(onSubmit, onError)}>
       <Row content="flex-start" gap="10px" margin="10px 0px">
         <StyledFormLabel>Title:</StyledFormLabel>
-        <StyledFormTextInput></StyledFormTextInput>
+        <StyledFormTextInput
+          id="content"
+          placeholder="enter a title"
+          {...register("content", { required: "This field is required" })}
+        ></StyledFormTextInput>
       </Row>
       <Row content="flex-start" gap="10px" margin="10px 0px">
         <StyledFormLabel>Size:</StyledFormLabel>
-        <SelectBox selectTitle="Select Size" options={titleOptions}></SelectBox>
+        <SelectBox
+          selectTitle="Select Size"
+          options={titleOptions}
+          id="size"
+          name="size"
+          {...register("size", { required: "This field is required" })}
+        ></SelectBox>
       </Row>
       <Row content="flex-start" margin="10px 0px" gap="10px">
-        <StyledButton variation="success">Cancel</StyledButton>
-        <StyledButton variation="danger">Cancel</StyledButton>
+        <StyledButton variation="success">Save</StyledButton>
+        <StyledButton variation="danger" onClick={onCloseModal}>
+          Cancel
+        </StyledButton>
       </Row>
     </StyledFormContainer>
   );

@@ -47,7 +47,9 @@ const StyledLessonElementCreateButton = styled.button`
 
 function LessonContent({ lesson }) {
   const [hoveredId, setHoveredId] = useState("");
+  const [lastHoveredId, setLastHoveredId] = useState("");
   const activeContentElements = lesson.content;
+
   return (
     <Row type="vertical">
       <LessonTitle
@@ -58,26 +60,31 @@ function LessonContent({ lesson }) {
           {activeContentElements.map((element) => (
             <Container
               key={element.id}
-              onMouseEnter={() => setHoveredId(element.id)}
-              onMouseLeave={() => setHoveredId("")}
+              onMouseEnter={() => {
+                setLastHoveredId(element.id);
+                setHoveredId(element.id);
+              }}
+              onMouseLeave={() => {
+                setHoveredId("");
+              }}
               border={hoveredId === element.id && "1px dashed  #000000;"}
             >
-              <LessonElement key={element.id} element={element}></LessonElement>
+              <LessonElement element={element}></LessonElement>
 
               <FloatingDiv display="block">
                 <Menus.Menu>
                   {hoveredId === element.id && <Menus.Toggle id={element.id} />}
                   <Menus.List id={element.id}>
-                    <Modal.Open opens="lessonElementModal">
+                    <Modal.Open opens="lessonElementModalCreateAbove">
                       <Menus.Button>Create Above</Menus.Button>
                     </Modal.Open>
-                    <Modal.Open opens="lessonElementModal2">
+                    <Modal.Open opens="lessonElementModalCreateBelow">
                       <Menus.Button>Create Below</Menus.Button>
                     </Modal.Open>
-                    <Modal.Open opens="lessonElementModal3">
+                    <Modal.Open opens="lessonElementModalEdit">
                       <Menus.Button>Edit</Menus.Button>
                     </Modal.Open>
-                    <Modal.Open opens="lessonElementModal4">
+                    <Modal.Open opens="deleteConfirmationModal">
                       <Menus.Button>Delete</Menus.Button>
                     </Modal.Open>
                   </Menus.List>
@@ -86,18 +93,41 @@ function LessonContent({ lesson }) {
             </Container>
           ))}
         </Menus>
-        <Modal.Window name="lessonElementModal">
-          <LessonElementCreateForm
-          // createCourse={() => console.log("aaa")}
-          ></LessonElementCreateForm>
-        </Modal.Window>
         <Row content="center">
-          <Modal.Open opens="lessonElementModal">
+          <Modal.Open opens="lessonElementModalCreateBelow">
             <StyledLessonElementCreateButton>
               <HiMiniPlusCircle size={25} />
             </StyledLessonElementCreateButton>
           </Modal.Open>
         </Row>
+        <Modal.Window name="lessonElementModalCreateAbove">
+          <LessonElementCreateForm
+            elementId={lastHoveredId}
+            lesson={lesson}
+            create="above"
+          ></LessonElementCreateForm>
+        </Modal.Window>
+        <Modal.Window name="lessonElementModalCreateBelow">
+          <LessonElementCreateForm
+            elementId={lastHoveredId}
+            lesson={lesson}
+            create="below"
+          ></LessonElementCreateForm>
+        </Modal.Window>
+        <Modal.Window name="lessonElementModalEdit">
+          <LessonElementCreateForm
+            elementId={lastHoveredId}
+            edit={true}
+            lesson={lesson}
+          ></LessonElementCreateForm>
+        </Modal.Window>
+        <Modal.Window name="deleteConfirmationModal">
+          <LessonElementCreateForm
+            elementId={lastHoveredId}
+            lesson={lesson}
+            deleteOperation={true}
+          ></LessonElementCreateForm>
+        </Modal.Window>
       </StyledLessonContent>
       <LessonQuizesContainer quizes={[]}></LessonQuizesContainer>
     </Row>

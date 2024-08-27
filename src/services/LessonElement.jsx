@@ -5,10 +5,18 @@ function LessonElement({ element }) {
   const content = element.content;
   switch (type) {
     case "p":
-      return <p style={{ textAlign: "center" }}>{content}</p>;
+      return (
+        <p style={{ textAlign: element.textAlign ? element.textAlign : "" }}>
+          {content}
+        </p>
+      );
     case "t":
       return (
-        <Heading as="h3" style={{ textalign: "center" }}>
+        <Heading
+          as="h3"
+          textalign={element.textAlign ? element.textAlign : "center"}
+          style={{ textalign: "center" }}
+        >
           {content}
         </Heading>
       );

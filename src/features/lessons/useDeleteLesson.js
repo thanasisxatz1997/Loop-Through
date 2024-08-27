@@ -1,12 +1,11 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { updateLesson } from "../../services/apiLessons";
 import toast from "react-hot-toast";
 
-export function useEditLesson() {
+export function useDeleteLesson() {
   const queryClient = useQueryClient();
 
-  const { mutate: editLesson, isPending: isEditing } = useMutation({
-    mutationFn: (lesson) => updateLesson(lesson),
+  const { mutate: deleteLesson, isPending: isDeleting } = useMutation({
+    mutationFn: (lessonId) => deleteLesson(lessonId),
     onSuccess: () => {
       toast.success("Lesson successfully updated.");
       queryClient.invalidateQueries({ queryKey: ["lessons"] });
@@ -18,5 +17,5 @@ export function useEditLesson() {
     },
   });
 
-  return [editLesson, isEditing];
+  return [deleteLesson, isDeleting];
 }
