@@ -31,6 +31,7 @@ function TitleCreateEditForm({
   onCloseModal,
   onLessonEdited,
   startingContent,
+  isEditing,
 }) {
   console.log("inside title:", startingContent);
 
@@ -70,8 +71,14 @@ function TitleCreateEditForm({
         ></SelectBox>
       </Row>
       <Row content="flex-start" margin="10px 0px" gap="10px">
-        <StyledButton variation="success">Save</StyledButton>
-        <StyledButton variation="danger" onClick={onCloseModal}>
+        <StyledButton variation="success" disabled={isEditing}>
+          Save
+        </StyledButton>
+        <StyledButton
+          variation="danger"
+          onClick={onCloseModal}
+          disabled={isEditing}
+        >
           Cancel
         </StyledButton>
       </Row>

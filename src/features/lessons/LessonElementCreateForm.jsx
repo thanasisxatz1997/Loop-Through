@@ -100,6 +100,7 @@ function LessonElementCreateForm({
           startingContent={edit ? lesson.content[elementId - 1] : null}
           onCloseModal={onCloseModal}
           onLessonEdited={onLessonEdited}
+          isEditing={isEditing}
         ></TitleCreateEditForm>
       ),
     },
@@ -129,6 +130,7 @@ function LessonElementCreateForm({
       <DeleteConfirmation
         onConfirm={deleteLessonElement}
         onCloseModal={onCloseModal}
+        isDeleting={isEditing}
       ></DeleteConfirmation>
     );
 
