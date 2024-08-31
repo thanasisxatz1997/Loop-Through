@@ -59,12 +59,14 @@ const SelectBox = forwardRef(
         { value: "#", name: "One" },
         { value: "#", name: "Two" },
       ],
+      onChange,
+      value,
       ...props
     },
     ref
   ) => {
     return (
-      <StyledSelectBox ref={ref} {...props}>
+      <StyledSelectBox ref={ref} onChange={onChange} {...props} value={value}>
         <option value={""} className="selected" disabled>
           {selectTitle}
         </option>

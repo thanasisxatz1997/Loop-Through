@@ -42,7 +42,20 @@ function LessonElementCreateForm({
   create,
   deleteOperation = false,
 }) {
+  const tabEnumeration = [
+    { type: "t", key: 0 },
+    { type: "p", key: 1 },
+    { type: "i", key: 2 },
+    { type: "o", key: 3 },
+  ];
   const [editLesson, isEditing] = useEditLesson();
+  const startingType = edit
+    ? lesson.content.find((item) => item.id === elementId).type
+    : "t";
+  const startingTab = tabEnumeration.find(
+    (item) => item.type === startingType
+  ).key;
+  const [activeTabId, setActiveTabId] = useState(startingTab);
   const tabs = [
     { name: "Title", id: 0 },
     { name: "Paragraph", id: 1 },
@@ -52,27 +65,21 @@ function LessonElementCreateForm({
   const newElementId = create === "below" ? elementId + 1 : elementId;
 
   function onLessonEdited(newElementData) {
-    console.log("new el data", newElementData);
     const updatedLessonContent = newLessonContent.map((item) =>
       item.id === newElementId ? { id: newElementId, ...newElementData } : item
     );
-    console.log("Updated", updatedLessonContent);
     const enumeratedLessonContent = updatedLessonContent.map((item, i) => ({
       id: i,
       ...item,
     }));
-    console.log("enumerated", enumeratedLessonContent);
     const updatedLesson = { ...lesson, content: enumeratedLessonContent };
-    console.log(updatedLesson);
     editLesson(updatedLesson);
   }
 
   function deleteLessonElement() {
-    console.log("new del data:", lesson.content);
     const contentAfterDelete = lesson.content.filter(
       (item) => item.id !== elementId
     );
-    console.log(contentAfterDelete);
 
     const enumeratedLessonContent = contentAfterDelete
       .slice()
@@ -80,9 +87,7 @@ function LessonElementCreateForm({
         id: i,
         ...item,
       }));
-    console.log("enumerated", enumeratedLessonContent);
     const updatedLesson = { ...lesson, content: enumeratedLessonContent };
-    console.log(updatedLesson);
     editLesson(updatedLesson);
     onCloseModal();
   }
@@ -92,12 +97,14 @@ function LessonElementCreateForm({
       ? lesson.content
       : getNewLessonContent(lesson.content, elementId, create);
 
+  const startingContent =
+    edit && startingTab === activeTabId ? lesson.content[elementId - 1] : null;
   const LessonElementForms = [
     {
       id: 0,
       elem: (
         <TitleCreateEditForm
-          startingContent={edit ? lesson.content[elementId - 1] : null}
+          startingContent={startingContent}
           onCloseModal={onCloseModal}
           onLessonEdited={onLessonEdited}
           isEditing={isEditing}
@@ -108,8 +115,10 @@ function LessonElementCreateForm({
       id: 1,
       elem: (
         <ParagraphCreateEditForm
+          startingContent={startingContent}
           onCloseModal={onCloseModal}
           onLessonEdited={onLessonEdited}
+          isEditing={isEditing}
         ></ParagraphCreateEditForm>
       ),
     },
@@ -117,13 +126,14 @@ function LessonElementCreateForm({
       id: 2,
       elem: (
         <ImageCreateEditForm
+          startingContent={startingContent}
           onCloseModal={onCloseModal}
           onLessonEdited={onLessonEdited}
+          isEditing={isEditing}
         ></ImageCreateEditForm>
       ),
     },
   ];
-  const [activeTabId, setActiveTabId] = useState(0);
 
   if (deleteOperation)
     return (

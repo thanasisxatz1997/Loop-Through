@@ -4,6 +4,7 @@ import Row from "../../styles/Row";
 import SelectBox from "../../ui/SelectBox";
 import StyledButton from "../../styles/StyledButton";
 import StyledFormTextArea from "../../styles/StyledFormTextArea";
+import { useForm } from "react-hook-form";
 
 const StyledFormContainer = styled.form`
   min-height: 150px;
@@ -13,7 +14,20 @@ const StyledFormContainer = styled.form`
 
 const alignmentOptions = [{ value: "center", name: "center" }];
 
-function ParagraphCreateEditForm() {
+function ParagraphCreateEditForm({
+  onCloseModal,
+  onLessonEdited,
+  startingContent,
+  isEditing,
+}) {
+  const { register, handleSubmit, reset, getValues, formState } = useForm({
+    defaultValues: {
+      content: startingContent ? startingContent.content : "",
+      size: startingContent ? startingContent.size : "",
+    },
+  });
+
+  const { errors } = formState;
   return (
     <StyledFormContainer>
       <StyledFormLabel>Text:</StyledFormLabel>

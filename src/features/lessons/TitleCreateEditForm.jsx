@@ -22,7 +22,7 @@ const titleOptions = [
     name: "Medium",
   },
   {
-    balue: "h3",
+    value: "h3",
     name: "Small",
   },
 ];
@@ -41,7 +41,9 @@ function TitleCreateEditForm({
       size: startingContent ? startingContent.size : "",
     },
   });
+
   const { errors } = formState;
+
   function onSubmit(data) {
     onLessonEdited({ type: "t", ...data });
     onCloseModal?.();
