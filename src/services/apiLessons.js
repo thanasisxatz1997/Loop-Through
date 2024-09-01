@@ -1,3 +1,4 @@
+import { json } from "react-router";
 import { apiUrl } from "./mongoApi";
 
 export async function getLessonById(id) {
@@ -74,6 +75,8 @@ export async function updateLesson(lesson) {
     content: lesson.content,
     quizzes: lesson.quizzes,
   };
+  console.log(lessonBody);
+  console.log(JSON.stringify(lessonBody));
   const reqHeaders = new Headers();
   reqHeaders.append("Content-Type", "application/json");
   const url = `${apiUrl}/lessons/updateLessonById?id=${lesson.id}`;
@@ -94,4 +97,22 @@ export async function updateLesson(lesson) {
   }
 }
 
-export async function deleteLesson(lesson) {}
+export async function deleteLessonRequest(lessonId) {
+  const url = `${apiUrl}/lessons/deleteLessonById?id=${lessonId}`;
+  const reqHeaders = new Headers();
+  reqHeaders.append("Content-Type", "application/json");
+  try {
+    const response = await fetch(url, {
+      method: "DELETE",
+      headers: reqHeaders,
+    });
+    if (!response.ok) {
+      throw new Error(`Response status: ${response.status}`);
+    }
+    const data = await response.json();
+    console.log("at response data: ", data);
+    return data;
+  } catch (error) {
+    console.log(error.message);
+  }
+}

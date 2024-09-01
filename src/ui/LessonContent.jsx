@@ -9,7 +9,10 @@ import { useState } from "react";
 import Modal from "./Modal";
 import LessonElementCreateForm from "../features/lessons/LessonElementCreateForm";
 import { HiMiniPlusCircle } from "react-icons/hi2";
-
+import Button from "../styles/StyledButton";
+import { HiArchiveBoxXMark } from "react-icons/hi2";
+import DeleteConfirmation from "./DeleteConfirmation";
+import { useDeleteLesson } from "../features/lessons/useDeleteLesson";
 const FloatingDiv = styled.div`
   top: 0px;
   right: 10px;
@@ -48,13 +51,23 @@ const StyledLessonElementCreateButton = styled.button`
 function LessonContent({ lesson }) {
   const [hoveredId, setHoveredId] = useState("");
   const [lastHoveredId, setLastHoveredId] = useState("");
+  const [deleteLesson, isDeleting] = useDeleteLesson();
   const activeContentElements = lesson.content;
 
   return (
     <Row type="vertical">
-      <LessonTitle
-        title={`This is lesson number ${lesson.lessonNumber}`}
-      ></LessonTitle>
+      <Row content="center" gap="10px">
+        <LessonTitle
+          title={`This is lesson number ${lesson.lessonNumber}`}
+        ></LessonTitle>
+        <Row>
+          <Modal.Open opens="deleteLessonConfirmationModal">
+            <Button variation="danger" size="small">
+              <HiArchiveBoxXMark size={20} />
+            </Button>
+          </Modal.Open>
+        </Row>
+      </Row>
       <StyledLessonContent>
         <Menus>
           {activeContentElements.map((element) => (
@@ -109,7 +122,7 @@ function LessonContent({ lesson }) {
         </Modal.Window>
         <Modal.Window name="lessonElementModalCreateBelow">
           <LessonElementCreateForm
-            elementId={lastHoveredId}
+            elementId={lastHoveredId ? lastHoveredId : 0}
             lesson={lesson}
             create="below"
           ></LessonElementCreateForm>
@@ -127,6 +140,12 @@ function LessonContent({ lesson }) {
             lesson={lesson}
             deleteOperation={true}
           ></LessonElementCreateForm>
+        </Modal.Window>
+        <Modal.Window name="deleteLessonConfirmationModal">
+          <DeleteConfirmation
+            onConfirm={() => deleteLesson(lesson.id)}
+            isDeleting={isDeleting}
+          ></DeleteConfirmation>
         </Modal.Window>
       </StyledLessonContent>
       <LessonQuizesContainer quizes={[]}></LessonQuizesContainer>

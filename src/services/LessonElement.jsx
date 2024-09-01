@@ -6,14 +6,22 @@ function LessonElement({ element }) {
   switch (type) {
     case "p":
       return (
-        <p style={{ textAlign: element.textAlign ? element.textAlign : "" }}>
+        <p
+          style={{
+            textAlign: element.textAlign ? element.textAlign : "",
+            fontSize: element.size ? element.size : "15px",
+            backgroundColor: element.backgroundColor
+              ? element.backgroundColor
+              : "",
+          }}
+        >
           {content}
         </p>
       );
     case "t":
       return (
         <Heading
-          as="h3"
+          as={element.size}
           textalign={element.textAlign ? element.textAlign : "center"}
           style={{ textalign: "center" }}
         >
