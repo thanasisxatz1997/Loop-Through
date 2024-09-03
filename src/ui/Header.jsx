@@ -13,13 +13,16 @@ import {
   HiMiniQuestionMarkCircle,
 } from "react-icons/hi2";
 import HeaderRow from "../styles/HeaderRow";
+import { useUser } from "../features/authentication/useUser";
 
 const StyledHeader = styled.header`
   padding: 1.2rem 4.8rem;
   border-bottom: 1px solid var(--color-grey-100);
+  min-width: 1200px;
 `;
 
 function Header() {
+  const { isAuthenticated } = useUser();
   return (
     <StyledHeader>
       <Row type="horizontal">
@@ -51,7 +54,7 @@ function Header() {
           </NavLink>
           <NavLink to="/info">
             <HeaderButton>
-              <h3>About Us</h3>
+              <h3>About</h3>
               <HiMiniQuestionMarkCircle size={30}></HiMiniQuestionMarkCircle>
             </HeaderButton>
           </NavLink>
@@ -61,12 +64,21 @@ function Header() {
               <HiMiniCog6Tooth size={30}></HiMiniCog6Tooth>
             </HeaderButton>
           </NavLink>
-          <NavLink to="/login">
-            <HeaderButton>
-              <h3>Sign In</h3>
-              <HiMiniUser size={30}></HiMiniUser>
-            </HeaderButton>
-          </NavLink>
+          {isAuthenticated ? (
+            <NavLink to="/user">
+              <HeaderButton>
+                <h3>User</h3>
+                <HiMiniUser size={30}></HiMiniUser>
+              </HeaderButton>
+            </NavLink>
+          ) : (
+            <NavLink to="/login">
+              <HeaderButton>
+                <h3>Sign In</h3>
+                <HiMiniUser size={30}></HiMiniUser>
+              </HeaderButton>
+            </NavLink>
+          )}
         </HeaderRow>
       </Row>
     </StyledHeader>

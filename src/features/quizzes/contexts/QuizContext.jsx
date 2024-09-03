@@ -1,5 +1,6 @@
 import { useContext, createContext, useReducer, useEffect } from "react";
 import { apiUrl } from "../../../services/mongoApi";
+import { useParams } from "react-router";
 
 const QuizContext = createContext();
 
@@ -65,6 +66,7 @@ function reducer(state, action) {
 }
 
 function QuizProvider({ children }) {
+  const { id } = useParams();
   const [
     { questions, status, index, answer, points, highscore, secondsRemaining },
     dispatch,
@@ -79,7 +81,7 @@ function QuizProvider({ children }) {
   useEffect(function () {
     // "https://my-json-server.typicode.com/thanasisxatz1997/FakeServer/questions"
     async function fetchData() {
-      await fetch(`${apiUrl}/quizzes/quizById?id=${"668b14caf04dd0aa3c34090b"}`)
+      await fetch(`${apiUrl}/quizzes/quizById?id=${id}`)
         .then((res) => res.json())
         .then((data) =>
           dispatch({ type: "dataReceived", payload: data.questions })

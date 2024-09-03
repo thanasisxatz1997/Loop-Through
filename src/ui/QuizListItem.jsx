@@ -30,12 +30,12 @@ const TextContainer = styled.div`
   padding: 1rem;
 `;
 
-function QuizListItem({ title, delay }) {
+function QuizListItem({ name, delay }) {
   return (
     <StyledQuizListItem delay={delay}>
       <Row content="space-between">
         <TextContainer>
-          <Heading as={"h3"}>{title}</Heading>
+          <Heading as={"h3"}>{name}</Heading>
         </TextContainer>
         <StyledButton size="fill" borderradius="0px 5px 5px 0px">
           <Link to={`/quiz/:1`}>start</Link>

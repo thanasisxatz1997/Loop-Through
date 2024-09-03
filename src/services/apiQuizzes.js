@@ -15,8 +15,23 @@ export async function getQuizzes() {
   }
 }
 
-export async function getQuizById(id) {
+export async function getQuizById({ id }) {
   const url = `${apiUrl}/quizzes/quizById?id=${id}`;
+  try {
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error(`Response status: ${response.status}`);
+    }
+    const data = await response.json();
+    console.log("returning", data);
+    return data;
+  } catch (error) {
+    console.log(error.message);
+  }
+}
+
+export async function getQuizzesByAuthorId(authorId) {
+  const url = `${apiUrl}/quizzes/quizzesByAuthorId?authorId=${authorId}`;
   try {
     const response = await fetch(url);
     if (!response.ok) {

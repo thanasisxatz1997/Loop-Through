@@ -31,19 +31,6 @@ function Settings() {
       <Row content="center">
         <StyledSettingsMain>
           <Row type="horizontal" content="start">
-            <Heading as="h2">User</Heading>
-          </Row>
-          <Row content="start">
-            <Heading as="h3">Username: Thanasis </Heading>
-            <StyledButton size="small">Change</StyledButton>
-          </Row>
-          <Row content="start">
-            <Heading as="h3">Password: ******* </Heading>
-            <StyledButton size="small">Change</StyledButton>
-          </Row>
-          <br></br>
-          <hr></hr>
-          <Row type="horizontal" content="start">
             <Heading as="h2">Colors</Heading>
           </Row>
           <Row content="start">
