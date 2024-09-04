@@ -1,8 +1,6 @@
 import styled from "styled-components";
 import Row from "../../styles/Row";
-import { HiMagnifyingGlass } from "react-icons/hi2";
-import StyledSearchInput from "../../styles/StyledSearchInput";
-import QuizListItem from "../../ui/QuizListItem";
+
 import Heading from "../../styles/Heading";
 import {
   HiMiniChevronUpDown,
@@ -11,22 +9,13 @@ import {
 } from "react-icons/hi2";
 
 import SelectBox from "../../ui/SelectBox";
-import {
-  useReactTable,
-  getCoreRowModel,
-  getPaginationRowModel,
-  getSortedRowModel,
-} from "@tanstack/react-table";
+
 import SearchBar from "../../ui/SearchBar";
 import { Link } from "react-router-dom";
 import Button from "../../styles/StyledButton";
 import Modal from "../../ui/Modal";
-import CreateCourseForm from "../courses/CreateCourseForm";
+
 import CreateQuizForm from "./CreateQuizForm";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { createCourse } from "../../services/apiCourses";
-import toast from "react-hot-toast";
-import { getQuizzes } from "../../services/apiQuizzes";
 
 const StyledQuizzesContainer = styled.div`
   background-color: var(--bg-color-light-0);
