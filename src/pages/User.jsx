@@ -37,20 +37,18 @@ function User() {
           </Row>
           <Row content="start">
             <Heading as="h3">Username: Thanasis </Heading>
-            <StyledButton size="small">Change</StyledButton>
+            {/* <StyledButton size="small">Change</StyledButton> */}
           </Row>
           <Row content="start">
             <Heading as="h3">Password: ******* </Heading>
-            <StyledButton size="small">Change</StyledButton>
+            {/* <StyledButton size="small">Change</StyledButton> */}
           </Row>
           <br></br>
           <hr></hr>
           <Row type="horizontal" content="start">
             <Heading as="h2">Courses</Heading>
           </Row>
-          <Row>
-            <Button size="small">My Courses</Button>
-          </Row>
+          <Row>{/* <Button size="small">My Courses</Button> */}</Row>
           <Row type="horizontal" content="start">
             <Heading as="h2">Quizes</Heading>
           </Row>

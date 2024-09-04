@@ -44,3 +44,37 @@ export async function getQuizzesByAuthorId(authorId) {
     console.log(error.message);
   }
 }
+
+export async function createQuiz(newQuiz) {
+  console.log("Starting create Quiz");
+  console.log(newQuiz);
+
+  // 1. Creating a course
+  console.log("inside api call", newQuiz.name);
+  const quiz = {
+    name: newQuiz.name,
+    questions: [],
+    authorId: newQuiz.authorId,
+    description: newQuiz.description,
+  };
+  const reqHeaders = new Headers();
+  reqHeaders.append("Content-Type", "application/json");
+  const url = `${apiUrl}/quizzes/new`;
+  console.log("before try");
+  try {
+    const response = await fetch(url, {
+      method: "POST",
+      body: JSON.stringify(quiz),
+      headers: reqHeaders,
+    });
+    if (!response.ok) {
+      throw new Error(`Response status: ${response.status}`);
+    }
+    const data = await response.json();
+    console.log("at response data: ", data);
+
+    return data;
+  } catch (error) {
+    console.log(error.message);
+  }
+}

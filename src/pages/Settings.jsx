@@ -35,7 +35,9 @@ function Settings() {
           </Row>
           <Row content="start">
             <Heading as="h3">LightMode</Heading>
-            <StyledButton size="small">Dark Mode</StyledButton>
+            {/* <StyledButton size="small" disabled>
+              Dark Mode
+            </StyledButton> */}
           </Row>
           <br></br>
           <hr></hr>
@@ -44,11 +46,11 @@ function Settings() {
           </Row>
           <Row content="start">
             <Heading as="h3">Showing completed courses.</Heading>
-            <StyledButton size="small">Do not show</StyledButton>
+            {/* <StyledButton size="small">Do not show</StyledButton> */}
           </Row>
           <Row content="start">
             <Heading as="h3">Showing completed quizes.</Heading>
-            <StyledButton size="small">Do not show</StyledButton>
+            {/* <StyledButton size="small">Do not show</StyledButton> */}
           </Row>
           <br></br>
           <hr></hr>

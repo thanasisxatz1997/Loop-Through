@@ -4,7 +4,11 @@ import { HiMagnifyingGlass } from "react-icons/hi2";
 import StyledSearchInput from "../../styles/StyledSearchInput";
 import QuizListItem from "../../ui/QuizListItem";
 import Heading from "../../styles/Heading";
-import { HiMiniChevronUpDown, HiPencilSquare } from "react-icons/hi2";
+import {
+  HiMiniChevronUpDown,
+  HiPencilSquare,
+  HiMiniPlusCircle,
+} from "react-icons/hi2";
 
 import SelectBox from "../../ui/SelectBox";
 import {
@@ -16,6 +20,13 @@ import {
 import SearchBar from "../../ui/SearchBar";
 import { Link } from "react-router-dom";
 import Button from "../../styles/StyledButton";
+import Modal from "../../ui/Modal";
+import CreateCourseForm from "../courses/CreateCourseForm";
+import CreateQuizForm from "./CreateQuizForm";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { createCourse } from "../../services/apiCourses";
+import toast from "react-hot-toast";
+import { getQuizzes } from "../../services/apiQuizzes";
 
 const StyledQuizzesContainer = styled.div`
   background-color: var(--bg-color-light-0);
@@ -83,23 +94,28 @@ const StyledLink = styled(Link)`
 `;
 
 const dificultyOptions = [
-  { value: "#", name: "Easy" },
-  { value: "#", name: "Medium" },
-  { value: "#", name: "Hard" },
+  { value: "Easy", name: "Easy" },
+  { value: "Easy", name: "Medium" },
+  { value: "Easy", name: "Hard" },
 ];
 
 const statusOptions = [
-  { value: "#", name: "Completed" },
-  { value: "#", name: "Unsolved" },
+  { value: "Completed", name: "Completed" },
+  { value: "Completed", name: "Unsolved" },
 ];
 
 const tagsOptions = [
-  { value: "#", name: "Algorithms" },
-  { value: "#", name: "React" },
-  { value: "#", name: "Programming" },
+  { value: "Algorithms", name: "Algorithms" },
+  { value: "Algorithms", name: "React" },
+  { value: "Algorithms", name: "Programming" },
 ];
 
-function QuizzesDisplayComponent({ quizzes, title = "Quizzes", edit = false }) {
+function QuizzesDisplayComponent({
+  quizzes,
+  title = "Quizzes",
+  edit = false,
+  createNewQuiz,
+}) {
   console.log("quizzes:", quizzes);
   return (
     <StyledQuizzesContainer>
@@ -174,6 +190,28 @@ function QuizzesDisplayComponent({ quizzes, title = "Quizzes", edit = false }) {
               ))}
             </tbody>
           </StyledTable>
+          {edit && (
+            <Modal>
+              <Row content="center">
+                <Modal.Open opens="newQuizModal">
+                  {/* <CreateCourseButton>Create a new Course!</CreateCourseButton> */}
+                  <StyledLink>
+                    <Button variation="transparent" size="small" shadow="none">
+                      <Row>
+                        <HiMiniPlusCircle size={15}></HiMiniPlusCircle>
+                        New Quiz
+                      </Row>
+                    </Button>
+                  </StyledLink>
+                </Modal.Open>
+                <Modal.Window name="newQuizModal">
+                  <CreateQuizForm
+                    createNewQuiz={createNewQuiz}
+                  ></CreateQuizForm>
+                </Modal.Window>
+              </Row>
+            </Modal>
+          )}
         </StyledQuizList>
       </StyledQuizzesMainContainer>
     </StyledQuizzesContainer>

@@ -69,9 +69,9 @@ const StyledAccordionContent = styled.div`
 function EditQuizPage() {
   const quizId = useParams();
 
+  const [curOpen, setCurOpen] = useState(null);
   const { quiz, isPending: isQuizPending } = useQuiz(quizId);
   const { isAuthenticated, user, isPending: isUserPending } = useUser();
-  const [curOpen, setCurOpen] = useState(null);
 
   if (isQuizPending || isUserPending) return <Spinner></Spinner>;
   if (!isAuthenticated) return <Heading> Unauthorized</Heading>;
