@@ -48,6 +48,11 @@ function User() {
           <Row type="horizontal" content="start">
             <Heading as="h2">Courses</Heading>
           </Row>
+          <Row>
+            <Link to="/myCourses">
+              <Button size="small">My Courses</Button>
+            </Link>
+          </Row>
           <Row>{/* <Button size="small">My Courses</Button> */}</Row>
           <Row type="horizontal" content="start">
             <Heading as="h2">Quizes</Heading>

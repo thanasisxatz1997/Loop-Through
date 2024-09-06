@@ -16,6 +16,7 @@ import UserQuizzes from "./features/quizzes/UserQuizzes";
 import { useUser } from "./features/authentication/useUser";
 import Login from "./pages/Login";
 import EditQuizPage from "./pages/EditQuizPage";
+import UserCourses from "./pages/UserCourses";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -42,6 +43,7 @@ function App() {
             <Route path="home" element={<Home />}></Route>
             {/* <Route path="login" element={<Login />}></Route> */}
             <Route path="courses" element={<Courses />}></Route>
+            <Route path="myCourses" element={<UserCourses />}></Route>
             <Route path="courses/:id" element={<Course />} />
             <Route path="quizes" element={<Quizzes />}></Route>
             <Route path="myQuizzes" element={<UserQuizzes />}></Route>

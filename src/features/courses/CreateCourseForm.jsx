@@ -10,13 +10,13 @@ import StyledFormTextArea from "../../styles/StyledFormTextArea";
 import StyledFormTextInput from "../../styles/StyledFormTextInput";
 import StyledFormLabel from "../../styles/StyledFormLabel";
 
-function CreateCourseForm({ createCourse, onCloseModal }) {
+function CreateCourseForm({ createCourse, onCloseModal, userId }) {
   const [courseName, setCourseName] = useState("");
   const [courseDescription, setCourseDescription] = useState("");
   const [courseImage, setCourseImage] = useState(null);
 
   const { register, handleSubmit, reset, getValues, formState } = useForm({
-    defaultValues: {},
+    defaultValues: { authorId: userId },
   });
   const { errors } = formState;
   function onSubmit(data) {

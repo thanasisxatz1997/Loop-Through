@@ -122,14 +122,6 @@ function QuizzesDisplayComponent({
           <SearchBar></SearchBar>
         </Row>
         <StyledQuizList>
-          {/* {quizzes.map((quiz, i) => (
-            <QuizListItem
-              key={i}
-              name={quiz.name}
-              delay={`0.${i * 3}s`}
-            ></QuizListItem>
-          ))} */}
-
           <StyledTable>
             <StyledThead>
               <StyledTr>

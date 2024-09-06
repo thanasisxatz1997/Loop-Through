@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 const StyledFormTextArea = styled.textarea`
   margin-top: 1rem;
@@ -8,6 +8,16 @@ const StyledFormTextArea = styled.textarea`
   width: 100%;
   resize: none;
   border-radius: 5px;
+  ${(props) =>
+    props.width &&
+    css`
+      width: ${props.width};
+    `}
+  ${(props) =>
+    props.height &&
+    css`
+      height: ${props.height};
+    `}
 `;
 
 export default StyledFormTextArea;
