@@ -50,6 +50,7 @@ export async function createCourse(newCourse) {
     rating: 4.3,
     description: newCourse.description,
     image: imagePath,
+    tags: newCourse.tags ? newCourse.tags : [],
   };
   const reqHeaders = new Headers();
   reqHeaders.append("Content-Type", "application/json");
@@ -74,6 +75,59 @@ export async function createCourse(newCourse) {
 
     // 3. Maybe delete course if there was an error uploading image
 
+    return data;
+  } catch (error) {
+    console.log(error.message);
+  }
+}
+
+export async function updateCourse(course) {
+  console.log(course);
+  console.log("INSIDE UPDATE Course api: ", course);
+  const courseBody = {
+    name: `${course.name}`,
+    lessons: course.lessons,
+    description: course.description,
+    image: course.image,
+    rating: course.rating,
+    tags: course.tags,
+  };
+  console.log(courseBody);
+  console.log(JSON.stringify(courseBody));
+  const reqHeaders = new Headers();
+  reqHeaders.append("Content-Type", "application/json");
+  const url = `${apiUrl}/courses/updateCourseById?id=${course.id}`;
+  try {
+    const response = await fetch(url, {
+      method: "PUT",
+      body: JSON.stringify(courseBody),
+      headers: reqHeaders,
+    });
+    if (!response.ok) {
+      throw new Error(`Response status: ${response.status}`);
+    }
+    const data = await response.json();
+    console.log("at response data: ", data);
+    return data;
+  } catch (error) {
+    console.log(error.message);
+  }
+}
+
+export async function deleteCourseRequest(courseId) {
+  const url = `${apiUrl}/courses/deleteCourseById?id=${courseId}`;
+  const reqHeaders = new Headers();
+  reqHeaders.append("Content-Type", "application/json");
+  try {
+    const response = await fetch(url, {
+      method: "DELETE",
+      headers: reqHeaders,
+    });
+    if (!response.ok) {
+      throw new Error(`Response status: ${response.status}`);
+    }
+    const data = await response.json();
+    console.log("at response data: ", data);
     return data;
   } catch (error) {
     console.log(error.message);

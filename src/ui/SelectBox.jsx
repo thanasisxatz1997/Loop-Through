@@ -67,9 +67,11 @@ const SelectBox = forwardRef(
   ) => {
     return (
       <StyledSelectBox ref={ref} onChange={onChange} {...props} value={value}>
-        <option value={""} className="selected" disabled>
-          {selectTitle}
-        </option>
+        {selectTitle !== "none" && (
+          <option value={""} className="selected" disabled>
+            {selectTitle}
+          </option>
+        )}
         {options.map((option) => (
           <option key={option.name} value={option.value}>
             {option.name}

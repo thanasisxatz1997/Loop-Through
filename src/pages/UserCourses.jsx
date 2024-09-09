@@ -10,17 +10,25 @@ import CourseButton from "../features/courses/CourseButton";
 import StyledFormTextInput from "../styles/StyledFormTextInput";
 import StyledFormTextArea from "../styles/StyledFormTextArea";
 import Button from "../styles/StyledButton";
+import DeleteConfirmation from "../ui/DeleteConfirmation";
 import {
   HiMiniStar,
   HiMiniTrash,
   HiEyeSlash,
   HiMiniDocumentArrowUp,
   HiMiniPlusCircle,
+  HiMiniPlus,
+  HiOutlineCheck,
 } from "react-icons/hi2";
 import { Link } from "react-router-dom";
 import Modal from "../ui/Modal";
 import CreateCourseForm from "../features/courses/CreateCourseForm";
 import { useCreateCourse } from "../features/courses/useCreateCourse";
+import { useDeleteCourse } from "../features/courses/useDeleteCourse";
+import { useState } from "react";
+import TagsAddFrom from "../ui/TagsAddFrom";
+import { useEditCourse } from "../features/courses/useEditCourse";
+import UserCourseDisplayComponent from "../features/courses/UserCourseDisplayComponent";
 
 const StyledCoursesContainer = styled.div`
   background-color: var(--bg-color-light-0);
@@ -79,13 +87,40 @@ function UserCourses() {
     isFetching: isFetchingUser,
   } = useUser();
 
+  const { deleteCourse, isDeletingCourse } = useDeleteCourse();
+
   const { userCourses, isPending: isPendingCourses } = useUserCourses(user.id);
 
-  console.log("Inside userCourses", userCourses);
+  const { editCourse, isEditingCourse } = useEditCourse();
 
   const { createNewCourse, isCreatingCourse } = useCreateCourse();
 
-  if (isFetchingUser || isPendingUser || isPendingCourses)
+  const [targetCourseId, setTargetCourseId] = useState(null);
+
+  const currentTags =
+    targetCourseId &&
+    userCourses.find((course) => course.id === targetCourseId).tags;
+
+  function handleEditCourse(course) {
+    editCourse(course);
+  }
+
+  function handleSaveTags(newTags) {
+    const courseToEdit = userCourses.find(
+      (course) => course.id === targetCourseId
+    );
+    const newCourse = { ...courseToEdit, tags: newTags };
+    editCourse(newCourse);
+  }
+
+  if (
+    isFetchingUser ||
+    isPendingUser ||
+    isPendingCourses ||
+    isDeletingCourse ||
+    isEditingCourse ||
+    isCreatingCourse
+  )
     return <Spinner></Spinner>;
 
   if (!isAuthenticated)
@@ -113,79 +148,12 @@ function UserCourses() {
           </Row>
           <StyledCourseList>
             {userCourses.map((course) => (
-              <li key={course.id}>
-                <Row padding="20px 0px" gap="3rem">
-                  <CourseButton
-                    id={course.id}
-                    title={course.name}
-                    description={course.description}
-                    author={course.authorName}
-                    image={course.image}
-                  ></CourseButton>
-                  <Row type="vertical">
-                    <Row content="center">
-                      <Heading as="h2">Details</Heading>
-                    </Row>
-                    <Row gap="10px" content="start">
-                      <Heading as="h3">Name:</Heading>
-                      <StyledFormTextInput
-                        defaultValue={course.name}
-                      ></StyledFormTextInput>
-                    </Row>
-                    <Row gap="10px">
-                      <StyledFormTextArea
-                        placeholder="Description"
-                        defaultValue={course.description}
-                        width="500px"
-                        height="150px"
-                      ></StyledFormTextArea>
-                    </Row>
-                    <Row content="start">
-                      <Heading as="h3">Tags:</Heading>
-                      <SelectBox options={tagsOptions}></SelectBox>
-                    </Row>
-                    <Row content="start" gap="10px">
-                      <Heading as="h3">Rating:</Heading>
-                      <Heading as="h3">{course.rating}</Heading>
-                      <HiMiniStar size={20}></HiMiniStar>
-                      <Heading as="h3">(318 reviews)</Heading>
-                    </Row>
-                    <Row content="start" gap="3px">
-                      <Heading as="h3">{course.lessons.length}</Heading>
-                      <Heading as="h3">
-                        {course.lessons.length === 1 ? "lesson" : "lessons"}
-                      </Heading>
-                    </Row>
-                  </Row>
-                  <Row type="vertical">
-                    <Row content="center">
-                      <Heading as="h2">Options</Heading>
-                    </Row>
-                    <Row type="vertical">
-                      <Button>
-                        <Row gap="5px">
-                          Change Image
-                          <HiMiniDocumentArrowUp
-                            size={20}
-                          ></HiMiniDocumentArrowUp>
-                        </Row>
-                      </Button>
-                      <Button>
-                        <Row gap="5px">
-                          Make private <HiEyeSlash size={20}></HiEyeSlash>
-                        </Row>
-                      </Button>
-
-                      <Button variation="danger">
-                        <Row gap="5px">
-                          Delete Course <HiMiniTrash size={20}></HiMiniTrash>
-                        </Row>
-                      </Button>
-                    </Row>
-                  </Row>
-                </Row>
-                <hr></hr>
-              </li>
+              <UserCourseDisplayComponent
+                key={course.id}
+                handleEditCourse={handleEditCourse}
+                course={course}
+                setTargetCourseId={setTargetCourseId}
+              ></UserCourseDisplayComponent>
             ))}
             <li>
               <Row content="center">
@@ -204,11 +172,22 @@ function UserCourses() {
           </StyledCourseList>
         </StyledCoursesMainContainer>
 
+        <Modal.Window name="addTagsModal">
+          <TagsAddFrom
+            usedTags={currentTags}
+            handleSaveTags={handleSaveTags}
+          ></TagsAddFrom>
+        </Modal.Window>
         <Modal.Window name="newCourseModal">
           <CreateCourseForm
             createCourse={createNewCourse}
             userId={user.id}
           ></CreateCourseForm>
+        </Modal.Window>
+        <Modal.Window name="deleteCourseConfirmationModal">
+          <DeleteConfirmation
+            onConfirm={() => deleteCourse(targetCourseId)}
+          ></DeleteConfirmation>
         </Modal.Window>
       </Modal>
     </StyledCoursesContainer>

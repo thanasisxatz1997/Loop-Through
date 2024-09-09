@@ -7,22 +7,33 @@ import styled from "styled-components";
 import StyledFormTextInput from "../styles/StyledFormTextInput";
 import Row from "../styles/Row";
 import SelectBox from "../ui/SelectBox";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "../styles/StyledButton";
-import { HiPencilSquare, HiMiniTrash, HiNoSymbol } from "react-icons/hi2";
+import {
+  HiPencilSquare,
+  HiMiniTrash,
+  HiNoSymbol,
+  HiMiniPencilSquare,
+} from "react-icons/hi2";
 import { useDeleteQuiz } from "../features/quizzes/useDeleteQuiz";
 import { HiMiniPlusCircle } from "react-icons/hi2";
 import Modal from "../ui/Modal";
 import CreateQuestionForm from "../features/quizzes/CreateQuestionForm";
 import { useEditQuiz } from "../features/quizzes/useEditQuiz";
 import DeleteConfirmation from "../ui/DeleteConfirmation";
+import StyledFormLabel from "../styles/StyledFormLabel";
+import StyledFormTextArea from "../styles/StyledFormTextArea";
+import TagsAddFrom from "../ui/TagsAddFrom";
+import { useForm } from "react-hook-form";
+import QuizEditDetails from "../features/quizzes/QuizEditDetails";
+import QuizEditQuestionList from "../features/quizzes/QuizEditQuestionList";
 
 const StyledQuizzesContainer = styled.div`
   background-color: var(--bg-color-light-0);
   height: 100%;
 `;
 
-const StyledQuizzesMainContainer = styled.main`
+const StyledQuizzesMainContainer = styled.div`
   padding: 2rem;
   border-radius: 10px;
   display: flex;
@@ -31,45 +42,12 @@ const StyledQuizzesMainContainer = styled.main`
   align-items: center;
 `;
 
-const StyledQuizList = styled.ul`
-  margin-top: 1rem;
-  padding: 1rem;
-  border-radius: 10px;
-  background-color: #ffffffd1;
-  min-width: 50rem;
-`;
-
 const StyledSettingsMain = styled.main`
   border-radius: 10px;
 
   /* height: 50vh; */
   width: 100vh;
   padding: 3rem;
-`;
-
-const StyledAccordionItem = styled.div`
-  background-color: white;
-  box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
-  padding: 1px 5px;
-  padding-right: 16px;
-  cursor: pointer;
-  border-top: 4px solid #fff;
-  border-bottom: 4px solid #fff;
-
-  display: grid;
-  grid-template-columns: auto 1fr auto;
-  column-gap: 24px;
-  row-gap: 32px;
-  align-items: center;
-`;
-
-const StyledAccordionTitle = styled.p`
-  font-size: 16px;
-  font-weight: 200;
-`;
-
-const StyledAccordionContent = styled.div`
-  cursor: none;
 `;
 
 function EditQuizPage() {
@@ -89,19 +67,24 @@ function EditQuizPage() {
     editQuiz(newQuiz);
   }
 
+  function handleSaveTags(newTags) {
+    const newQuiz = { ...quiz, tags: newTags };
+    handleUpdateQuiz(newQuiz);
+  }
+
   function handleDeleteQuestion(index) {
     // e.stopPropagation();
     // e.preventDefault();
-    console.log("question to delete:", index);
     const newQuestions = quiz.questions.filter((question, i) => i !== index);
-    console.log("new Questions:", newQuestions);
     const newQuiz = { ...quiz, questions: newQuestions };
-    console.log("The new quiz will be: ", newQuiz);
     editQuiz(newQuiz);
   }
 
-  if (isQuizPending || isUserPending) return <Spinner></Spinner>;
-  if (!isAuthenticated) return <Heading> Unauthorized</Heading>;
+  console.log("the quiz is ", quiz);
+
+  if (isQuizPending || isUserPending || isDeleting || isEditing)
+    return <Spinner></Spinner>;
+  if (!isAuthenticated) return <Heading>Unauthorized</Heading>;
   return (
     <StyledQuizzesContainer>
       <Modal>
@@ -136,133 +119,39 @@ function EditQuizPage() {
               </Button>
             </Row>
           </Row>
-          <StyledQuizList>
-            {quiz.questions.map((question, i) => (
-              <Row type="vertical" gap="50px" margin="10px" key={i}>
-                <AccordionItem
-                  curOpen={curOpen}
-                  onOpen={setCurOpen}
-                  title={question.question}
-                  num={i}
-                  key={i}
-                  setCurrentQuestion={setCurrentQuestion}
-                >
-                  <Row
-                    key={question.question}
-                    type="vertical"
-                    margin="10px 0px"
-                  >
-                    <Row content="start" gap="10px">
-                      <h4>Question:</h4>
-                      <StyledFormTextInput
-                        defaultValue={question.question}
-                      ></StyledFormTextInput>
-                    </Row>
-                    <h4>Options:</h4>
-                    <Row type="vertical" margin="0px 50px ">
-                      {question.options.map((option, i) => (
-                        <Row key={i} content="start" gap="10px">
-                          <Heading as="h4">{i}</Heading>
-                          <StyledFormTextInput
-                            defaultValue={option}
-                          ></StyledFormTextInput>
-                        </Row>
-                      ))}
-                      <></>
-                    </Row>
-                    <Row content="start" gap="10px">
-                      <h4>Correct Option:</h4>
-                      <SelectBox></SelectBox>
-                    </Row>
-                    <Row content="start" gap="10px">
-                      <h4>Points:</h4>
-                      <StyledFormTextInput
-                        defaultValue={question.points}
-                      ></StyledFormTextInput>
-                    </Row>
-                    <hr></hr>
-                  </Row>
-                </AccordionItem>
-              </Row>
-            ))}
-            <Row content="center">
-              <Modal.Open opens="createQuestionModal">
-                <Button variation="transparent" size="small" shadow="none">
-                  <Row>
-                    <HiMiniPlusCircle size={15}></HiMiniPlusCircle>
-                    New Question
-                  </Row>
-                </Button>
-              </Modal.Open>
-              <Modal.Window name="createQuestionModal">
-                <CreateQuestionForm
-                  handleUpdateQuiz={handleUpdateQuiz}
-                  quiz={quiz}
-                ></CreateQuestionForm>
-              </Modal.Window>
-              <Modal.Window name="deleteQuestionModal">
-                <DeleteConfirmation
-                  onConfirm={() => handleDeleteQuestion(currentQuestion)}
-                ></DeleteConfirmation>
-              </Modal.Window>
-            </Row>
-          </StyledQuizList>
+          <Row content="start">
+            <QuizEditDetails quiz={quiz}></QuizEditDetails>
+            <QuizEditQuestionList
+              quiz={quiz}
+              curOpen={curOpen}
+              setCurOpen={setCurOpen}
+              handleDeleteQuestion={handleDeleteQuestion}
+              currentQuestion={currentQuestion}
+              setCurrentQuestion={setCurrentQuestion}
+              handleUpdateQuiz={handleUpdateQuiz}
+              handleSaveTags={handleSaveTags}
+            ></QuizEditQuestionList>
+          </Row>
         </StyledQuizzesMainContainer>
+        <Modal.Window name="createQuestionModal">
+          <CreateQuestionForm
+            handleUpdateQuiz={handleUpdateQuiz}
+            quiz={quiz}
+          ></CreateQuestionForm>
+        </Modal.Window>
+        <Modal.Window name="deleteQuestionModal">
+          <DeleteConfirmation
+            onConfirm={() => handleDeleteQuestion(currentQuestion)}
+          ></DeleteConfirmation>
+        </Modal.Window>
+        <Modal.Window name="addTagsModal">
+          <TagsAddFrom
+            usedTags={quiz.tags}
+            handleSaveTags={handleSaveTags}
+          ></TagsAddFrom>
+        </Modal.Window>
       </Modal>
     </StyledQuizzesContainer>
-  );
-}
-
-function AccordionItem({
-  num,
-  title,
-  curOpen,
-  onOpen,
-  children,
-  setCurrentQuestion,
-}) {
-  const isOpen = num === curOpen;
-  function handleToggle() {
-    onOpen(isOpen ? null : num);
-  }
-
-  function handleDeleteClick(e) {
-    console.log("IM CLICKED");
-    e.stopPropagation();
-    e.preventDefault();
-    setCurrentQuestion((cur) => num);
-  }
-
-  return (
-    <StyledAccordionItem
-      className={` ${isOpen ? "open" : ""}`}
-      onClick={handleToggle}
-    >
-      <p className="number">{num < 9 ? `0${num + 1}` : num + 1}</p>
-      <StyledAccordionTitle className="">{title}</StyledAccordionTitle>
-      <Row gap="1rem" content="flex-end">
-        <Modal.Open
-          opens="deleteQuestionModal"
-          fun={(e) => handleDeleteClick(e)}
-        >
-          <Button
-            variation="danger"
-            size="small"
-            onClick={(e) => handleDeleteClick(e)}
-          >
-            <HiMiniTrash size={20}></HiMiniTrash>
-          </Button>
-        </Modal.Open>
-
-        <p className="icon">{isOpen ? "-" : "+"}</p>
-      </Row>
-
-      {isOpen && (
-        <div onClick={(e) => e.stopPropagation()} className="content-box">
-          {children}
-        </div>
-      )}
-    </StyledAccordionItem>
   );
 }
 
