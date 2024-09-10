@@ -5,9 +5,6 @@ import Button from "../../styles/StyledButton";
 import StyledFormTextInput from "../../styles/StyledFormTextInput";
 import Modal from "../../ui/Modal";
 import SelectBox from "../../ui/SelectBox";
-import CreateQuestionForm from "./CreateQuestionForm";
-import DeleteConfirmation from "../../ui/DeleteConfirmation";
-import TagsAddFrom from "../../ui/TagsAddFrom";
 import styled from "styled-components";
 
 const StyledQuizList = styled.ul`

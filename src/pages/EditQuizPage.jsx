@@ -4,10 +4,8 @@ import Heading from "../styles/Heading";
 import { useQuiz } from "../features/quizzes/useQuiz";
 import Spinner from "../ui/Spinner";
 import styled from "styled-components";
-import StyledFormTextInput from "../styles/StyledFormTextInput";
 import Row from "../styles/Row";
-import SelectBox from "../ui/SelectBox";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Button from "../styles/StyledButton";
 import {
   HiPencilSquare,
@@ -16,15 +14,11 @@ import {
   HiMiniPencilSquare,
 } from "react-icons/hi2";
 import { useDeleteQuiz } from "../features/quizzes/useDeleteQuiz";
-import { HiMiniPlusCircle } from "react-icons/hi2";
 import Modal from "../ui/Modal";
 import CreateQuestionForm from "../features/quizzes/CreateQuestionForm";
 import { useEditQuiz } from "../features/quizzes/useEditQuiz";
 import DeleteConfirmation from "../ui/DeleteConfirmation";
-import StyledFormLabel from "../styles/StyledFormLabel";
-import StyledFormTextArea from "../styles/StyledFormTextArea";
 import TagsAddFrom from "../ui/TagsAddFrom";
-import { useForm } from "react-hook-form";
 import QuizEditDetails from "../features/quizzes/QuizEditDetails";
 import QuizEditQuestionList from "../features/quizzes/QuizEditQuestionList";
 
@@ -42,14 +36,6 @@ const StyledQuizzesMainContainer = styled.div`
   align-items: center;
 `;
 
-const StyledSettingsMain = styled.main`
-  border-radius: 10px;
-
-  /* height: 50vh; */
-  width: 100vh;
-  padding: 3rem;
-`;
-
 function EditQuizPage() {
   const quizId = useParams();
 
@@ -57,9 +43,7 @@ function EditQuizPage() {
   const { quiz, isPending: isQuizPending } = useQuiz(quizId);
   const { isAuthenticated, user, isPending: isUserPending } = useUser();
   const { deleteQuiz, isDeleting } = useDeleteQuiz();
-
   const { editQuiz, isEditing } = useEditQuiz();
-
   const [currentQuestion, setCurrentQuestion] = useState(null);
 
   function handleUpdateQuiz(newQuiz) {
@@ -73,8 +57,6 @@ function EditQuizPage() {
   }
 
   function handleDeleteQuestion(index) {
-    // e.stopPropagation();
-    // e.preventDefault();
     const newQuestions = quiz.questions.filter((question, i) => i !== index);
     const newQuiz = { ...quiz, questions: newQuestions };
     editQuiz(newQuiz);
