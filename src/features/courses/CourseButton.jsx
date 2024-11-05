@@ -16,7 +16,7 @@ function CourseButton({
   preview = false,
 }) {
   const hasImage = image !== "" && image;
-
+  console.log("image: ", image);
   if (preview === true) {
     return (
       <StyledCourseButton backgroundimage={hasImage ? image : "none"} disabled>

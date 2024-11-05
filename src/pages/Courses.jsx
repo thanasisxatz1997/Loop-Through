@@ -95,7 +95,7 @@ function Courses() {
             title={course.name}
             description={course.description}
             author={course.authorName}
-            image={course.image}
+            image={course.image.replace(/ /g, "%20")}
           ></CourseButton>
         ))}
         <Modal>

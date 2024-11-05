@@ -20,7 +20,8 @@ const StyledCourseButton = styled.button`
           background-color: var(--color-grey-500);
         `
       : css`
-          background-image: url(${(props) => props.backgroundimage});
+          background-image: url(${(props) =>
+            props.backgroundimage.replace(/ /g, "%20")});
         `}
   background-size: 350px 200px;
   background-position: right center;
