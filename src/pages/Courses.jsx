@@ -31,11 +31,11 @@ const StyledCoursesMainContainer = styled.main`
   padding: 3rem;
   gap: 2rem;
   grid-template-rows: auto;
-  grid-template-columns: repeat(auto-fit, minmax(200px, max-content));
+  grid-template-columns: repeat(auto-fit, minmax(300px, max-content));
   justify-items: center;
   align-items: center;
-  grid-auto-rows: 200px;
-  grid-auto-columns: 200px;
+  grid-auto-rows: 300px;
+  grid-auto-columns: 300px;
 `;
 
 const testCourses = [
