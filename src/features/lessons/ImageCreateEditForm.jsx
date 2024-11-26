@@ -7,6 +7,8 @@ import StyledFormTextArea from "../../styles/StyledFormTextArea";
 import FileInput from "../../styles/FileInput";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { useEffect } from "react";
+import { uploadImage } from "../../services/imageService";
 
 const StyledFormContainer = styled.form`
   min-height: 150px;
@@ -45,6 +47,7 @@ function ImageCreateEditForm({
   const [courseImage, setCourseImage] = useState(
     startingContent && startingContent.content
   );
+  console.log("course image: ", courseImage);
 
   function onSizeXChanged(e) {
     console.log("changed X");
@@ -61,23 +64,60 @@ function ImageCreateEditForm({
   const [sizeX, setSizeX] = useState(getValues("sizeX"));
   const [sizeY, setSizeY] = useState(getValues("sizeY"));
 
+  // useEffect(() => {
+  //   return () => {
+  //     if (courseImage) {
+  //       URL.revokeObjectURL(courseImage);
+  //     }
+  //   };
+  // }, [courseImage]);
+
+  async function onSubmit(data) {
+    console.log("data inside onsubmit ", data);
+    console.log("content:", data.content[0]);
+    try {
+      const { imagePath, imageName } = await uploadImage(data.content[0]);
+      if (imagePath) {
+        console.log("now editing lesson");
+        console.log("new lesson content: ", {
+          type: "i",
+          ...data,
+          content: imagePath,
+          imageName: imageName,
+        });
+        onLessonEdited({
+          type: "i",
+          ...data,
+          content: imagePath,
+          imageName: imageName,
+        });
+      } else {
+        console.log("something went wrong.");
+      }
+    } catch (error) {
+      console.log(error.message);
+    }
+    onCloseModal?.();
+  }
+
+  function onError(errors) {
+    console.log(errors);
+  }
+
   console.log("now sizeX is : ", sizeX);
   console.log("now sizeY is : ", sizeY);
   return (
-    <StyledFormContainer>
+    <StyledFormContainer onSubmit={handleSubmit(onSubmit, onError)}>
       <Row content="flex-start" margin="10px 0px">
         <StyledFormLabel>Image:</StyledFormLabel>
         <FileInput
-          id="image"
+          id="content"
           accept="image/*"
-          // {...register("image", {
-          //   required: "This field is required",
-          // })}
-          onChange={(e) => {
+          {...register("content", { required: "This field is required" })}
+          onInput={(e) => {
             console.log(e.target.files[0]);
             setCourseImage(URL.createObjectURL(e.target.files[0]));
           }}
-          {...register("content", { required: "This field is required" })}
         ></FileInput>
       </Row>
       <Row content="flex-start" margin="10px 0px" gap="10px">

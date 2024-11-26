@@ -19,6 +19,7 @@ function CreateCourseForm({ createCourse, onCloseModal, userId }) {
     defaultValues: { authorId: userId },
   });
   const { errors } = formState;
+
   function onSubmit(data) {
     console.log("inside submit");
     console.log({ ...data, image: data.image[0] });

@@ -6,6 +6,7 @@ import ParagraphCreateEditForm from "./ParagraphCreateEditForm";
 import styled from "styled-components";
 import { useEditLesson } from "./useEditLesson";
 import DeleteConfirmation from "../../ui/DeleteConfirmation";
+import { deleteImage } from "../../services/imageService";
 
 const StyledContainer = styled.div`
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
@@ -81,6 +82,14 @@ function LessonElementCreateForm({
   }
 
   function deleteLessonElement() {
+    console.log("INSIDE DELETE");
+    console.log(
+      lesson.content.find((item) => item.id === elementId).type === "i"
+    );
+    const itemToDelete = lesson.content.find((item) => item.id === elementId);
+    if (itemToDelete.type === "i") {
+      deleteImage(itemToDelete.imageName);
+    }
     const contentAfterDelete = lesson.content.filter(
       (item) => item.id !== elementId
     );
