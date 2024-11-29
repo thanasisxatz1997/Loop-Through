@@ -2,6 +2,10 @@ import styled from "styled-components";
 import Heading from "../../styles/Heading";
 import Row from "../../styles/Row";
 import StyledButton from "../../styles/StyledButton";
+import { useSignUp } from "./useSignUp";
+import { useState } from "react";
+import toast from "react-hot-toast";
+import { useLogin } from "./useLogin";
 
 const StyledSignInForm = styled.form`
   background-color: var(--color-grey-100);
@@ -15,6 +19,22 @@ const StyledFormLabel = styled.label`
 `;
 const StyledFormTextInput = styled.input``;
 function RegisterForm() {
+  const { login, isLoading: isLogingIn } = useLogin();
+  const { signUp, isLoading } = useSignUp();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [passwordCheck, setPasswordCheck] = useState("");
+
+  function handleLogin(e) {
+    e.preventDefault();
+    console.log("trying to sign up with: ", email, password, passwordCheck);
+    if (password !== passwordCheck) {
+      toast.error("The passwords do not match.");
+    } else {
+      signUp({ email, password });
+    }
+  }
+
   return (
     <StyledSignInForm>
       <Heading textalign="center">Register!</Heading>
@@ -28,22 +48,34 @@ function RegisterForm() {
         <StyledFormLabel>
           <Heading as="h3">{`Email:`}</Heading>
         </StyledFormLabel>
-        <StyledFormTextInput placeholder=" email@domain.com"></StyledFormTextInput>
+        <StyledFormTextInput
+          placeholder=" email@domain.com"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        ></StyledFormTextInput>
       </Row>
       <Row margin="1rem 0rem">
         <StyledFormLabel>
           <Heading as="h3">{`Password:`}</Heading>
         </StyledFormLabel>
-        <StyledFormTextInput placeholder=" ********"></StyledFormTextInput>
+        <StyledFormTextInput
+          placeholder=" ********"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        ></StyledFormTextInput>
       </Row>
       <Row margin="1rem 0rem">
         <StyledFormLabel>
           <Heading as="h3">{`Retype Password:`}</Heading>
         </StyledFormLabel>
-        <StyledFormTextInput placeholder=" ********"></StyledFormTextInput>
+        <StyledFormTextInput
+          placeholder=" ********"
+          value={passwordCheck}
+          onChange={(e) => setPasswordCheck(e.target.value)}
+        ></StyledFormTextInput>
       </Row>
       <Row>
-        <StyledButton>Register</StyledButton>
+        <StyledButton onClick={(e) => handleLogin(e)}>Register</StyledButton>
       </Row>
     </StyledSignInForm>
   );
