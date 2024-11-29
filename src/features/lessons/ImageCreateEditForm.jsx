@@ -138,7 +138,10 @@ function ImageCreateEditForm({
           // {...register("sizeY", { required: "This field is required" })}
         ></SelectBox>
       </Row>
-      <Row content="center">
+      <Row
+        content="center"
+        style={{ width: "auto", maxHeight: "50rem", overflow: "scroll" }}
+      >
         <img
           src={courseImage}
           alt="Not found"
