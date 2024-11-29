@@ -17,6 +17,7 @@ import { useUser } from "./features/authentication/useUser";
 import Login from "./pages/Login";
 import EditQuizPage from "./pages/EditQuizPage";
 import UserCourses from "./pages/UserCourses";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -29,6 +30,7 @@ const queryClient = new QueryClient({
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
+      <ReactQueryDevtools initialIsOpen={false} />
       <GlobalStyles />
       <BrowserRouter>
         <Routes>

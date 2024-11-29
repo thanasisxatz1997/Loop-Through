@@ -19,19 +19,20 @@ const StyledFormLabel = styled.label`
 `;
 const StyledFormTextInput = styled.input``;
 function RegisterForm() {
-  const { login, isLoading: isLogingIn } = useLogin();
   const { signUp, isLoading } = useSignUp();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordCheck, setPasswordCheck] = useState("");
+  const [username, setUsername] = useState("");
 
   function handleLogin(e) {
+    const metadata = { username: username };
     e.preventDefault();
     console.log("trying to sign up with: ", email, password, passwordCheck);
     if (password !== passwordCheck) {
       toast.error("The passwords do not match.");
     } else {
-      signUp({ email, password });
+      signUp({ email, password, metadata });
     }
   }
 
@@ -42,7 +43,11 @@ function RegisterForm() {
         <StyledFormLabel>
           <Heading as="h3">{`Username:`}</Heading>
         </StyledFormLabel>
-        <StyledFormTextInput placeholder=" Username"></StyledFormTextInput>
+        <StyledFormTextInput
+          placeholder=" Username"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+        ></StyledFormTextInput>
       </Row>
       <Row margin="1rem 0rem">
         <StyledFormLabel>

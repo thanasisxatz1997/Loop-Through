@@ -12,7 +12,8 @@ export function useSignUp() {
     isPending: isLoading,
     isSuccess,
   } = useMutation({
-    mutationFn: ({ email, password }) => signUpApi({ email, password }),
+    mutationFn: ({ email, password, metadata }) =>
+      signUpApi({ email, password, metadata }),
     onSuccess: (user) => {
       queryClient.setQueryData(["user"], user);
       navigate("/courses");
