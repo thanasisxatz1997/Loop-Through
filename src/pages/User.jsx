@@ -1,9 +1,10 @@
 import styled from "styled-components";
 import Heading from "../styles/Heading";
 import Row from "../styles/Row";
-import StyledButton from "../styles/StyledButton";
 import Button from "../styles/StyledButton";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { logout } from "../services/apiAuth";
+import { useQueryClient } from "@tanstack/react-query";
 
 const StyledUserContainer = styled.div`
   /* background: radial-gradient(
@@ -28,6 +29,21 @@ const StyledSettingsMain = styled.main`
 `;
 
 function User() {
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
+
+  async function handleLogOut() {
+    try {
+      const isLogedOut = await logout();
+      if (isLogedOut) {
+        queryClient.setQueryData(["user"], null);
+        navigate("/home");
+      }
+    } catch (error) {
+      console.error("Logout failed:", error.message);
+    }
+  }
+
   return (
     <StyledUserContainer>
       <Row content="center">
@@ -64,6 +80,10 @@ function User() {
           </Row>
           <br></br>
           <hr></hr>
+          <br></br>
+          <Button variation="danger" onClick={() => handleLogOut()}>
+            Log Out
+          </Button>
         </StyledSettingsMain>
       </Row>
     </StyledUserContainer>

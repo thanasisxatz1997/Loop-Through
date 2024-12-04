@@ -1,4 +1,7 @@
+import toast from "react-hot-toast";
 import supabase from "./supabase";
+import { createUser } from "./apiUsers";
+import { healthCheck } from "./apiCheck";
 
 export async function login({ email, password, metadata = {} }) {
   const { data, error } = await supabase.auth.signInWithPassword({
@@ -12,19 +15,34 @@ export async function login({ email, password, metadata = {} }) {
   return data;
 }
 
-export async function signUp({ email, password, metadata }) {
-  console.log("here the data: ", email, password, metadata);
-  const { data, error } = await supabase.auth.signUp({
-    email,
-    password,
-    options: {
-      data: metadata,
-    },
-  });
+export async function logout() {
+  let { error } = await supabase.auth.signOut();
+  if (error) {
+    toast.error("Error while trying to log out. ", error.message);
+    throw new Error(error.message);
+  } else {
+    toast.success("Logged out successfully!");
+    return true;
+  }
+}
 
-  if (error) throw new Error(error.message);
-  console.log("signed up! ", data);
-  return data;
+export async function signUp({ email, password, metadata }) {
+  try {
+    await healthCheck();
+    console.log("here the data: ", email, password, metadata);
+    const { data, error } = await supabase.auth.signUp({
+      email,
+      password,
+      options: {
+        data: metadata,
+      },
+    });
+    console.log("signed up! ", data);
+    return data;
+  } catch (healthError) {
+    console.log("error", healthError.message);
+    throw new Error("Could not connect to back end", healthError.message);
+  }
 }
 
 export async function getCurrentUser() {
