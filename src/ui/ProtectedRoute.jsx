@@ -18,7 +18,7 @@ function ProtectedRoute({ children }) {
   //1. Load the authenticated user
   const { isPending, isAuthenticated, isFetching } = useUser();
 
-  //2. If there is NO authenticated user, redirect to the /login
+  //2. If there is no authenticated user, redirect to the /login
   useEffect(
     function () {
       if (!isPending && !isAuthenticated && !isFetching) {
@@ -37,7 +37,7 @@ function ProtectedRoute({ children }) {
       </FullPage>
     );
 
-  //4. If there Is a user, render the app
+  //4. If there is a user, render the app
   if (isAuthenticated) {
     return children;
   }
