@@ -43,7 +43,6 @@ function LessonElementCreateForm({
   create,
   deleteOperation = false,
 }) {
-  console.log("elementId:", elementId);
   const tabEnumeration = [
     { type: "t", key: 0 },
     { type: "p", key: 1 },
@@ -67,25 +66,18 @@ function LessonElementCreateForm({
   const newElementId = create === "below" ? elementId + 1 : elementId;
 
   function onLessonEdited(newElementData) {
-    console.log("New lesson content:", newLessonContent);
     const updatedLessonContent = newLessonContent.map((item) =>
       item.id === newElementId ? { id: newElementId, ...newElementData } : item
     );
-    console.log("Updated:", updatedLessonContent);
     const enumeratedLessonContent = updatedLessonContent.map((item, i) => ({
       id: i,
       ...item,
     }));
-    console.log("Enumerated:", enumeratedLessonContent);
     const updatedLesson = { ...lesson, content: enumeratedLessonContent };
     editLesson(updatedLesson);
   }
 
   function deleteLessonElement() {
-    console.log("INSIDE DELETE");
-    console.log(
-      lesson.content.find((item) => item.id === elementId).type === "i"
-    );
     const itemToDelete = lesson.content.find((item) => item.id === elementId);
     if (itemToDelete.type === "i") {
       deleteImage(itemToDelete.imageName);
@@ -93,15 +85,12 @@ function LessonElementCreateForm({
     const contentAfterDelete = lesson.content.filter(
       (item) => item.id !== elementId
     );
-    console.log(contentAfterDelete);
 
     const enumeratedLessonContent = contentAfterDelete.map((item, i) => ({
       ...item,
       id: i + 1,
     }));
-    console.log(enumeratedLessonContent);
     const updatedLesson = { ...lesson, content: enumeratedLessonContent };
-    console.log(updatedLesson);
     editLesson(updatedLesson);
     onCloseModal();
   }

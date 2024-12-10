@@ -47,17 +47,13 @@ function ImageCreateEditForm({
   const [courseImage, setCourseImage] = useState(
     startingContent && startingContent.content
   );
-  console.log("course image: ", courseImage);
 
   function onSizeXChanged(e) {
-    console.log("changed X");
-    console.log("new value:", e.target.value);
     setValue("sizeX", e.target.value); // Update form state
     setSizeX(e.target.value);
   }
 
   function onSizeYChanged(e) {
-    console.log("Changed Y");
     setValue("sizeX", e.target.value); // Update form state
     setSizeY(e.target.value);
   }
@@ -73,18 +69,9 @@ function ImageCreateEditForm({
   // }, [courseImage]);
 
   async function onSubmit(data) {
-    console.log("data inside onsubmit ", data);
-    console.log("content:", data.content[0]);
     try {
       const { imagePath, imageName } = await uploadImage(data.content[0]);
       if (imagePath) {
-        console.log("now editing lesson");
-        console.log("new lesson content: ", {
-          type: "i",
-          ...data,
-          content: imagePath,
-          imageName: imageName,
-        });
         onLessonEdited({
           type: "i",
           ...data,
@@ -104,8 +91,6 @@ function ImageCreateEditForm({
     console.log(errors);
   }
 
-  console.log("now sizeX is : ", sizeX);
-  console.log("now sizeY is : ", sizeY);
   return (
     <StyledFormContainer onSubmit={handleSubmit(onSubmit, onError)}>
       <Row content="flex-start" margin="10px 0px">
@@ -115,7 +100,6 @@ function ImageCreateEditForm({
           accept="image/*"
           {...register("content", { required: "This field is required" })}
           onInput={(e) => {
-            console.log(e.target.files[0]);
             setCourseImage(URL.createObjectURL(e.target.files[0]));
           }}
         ></FileInput>

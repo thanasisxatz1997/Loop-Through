@@ -33,8 +33,6 @@ function TitleCreateEditForm({
   startingContent,
   isEditing,
 }) {
-  console.log("inside title:", startingContent);
-
   const { register, handleSubmit, reset, getValues, formState } = useForm({
     defaultValues: {
       content: startingContent ? startingContent.content : "",

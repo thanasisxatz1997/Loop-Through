@@ -9,7 +9,6 @@ export async function getCourses() {
       throw new Error(`Response status: ${response.status}`);
     }
     const data = await response.json();
-    console.log("at response data: ", data);
     return data;
   } catch (error) {
     console.log(error.message);
@@ -24,7 +23,6 @@ export async function getCoursesByAuthorId(authorId) {
       throw new Error(`Response status: ${response.status}`);
     }
     const data = await response.json();
-    console.log("at response data: ", data);
     return data;
   } catch (error) {
     console.log(error.message);
@@ -32,8 +30,6 @@ export async function getCoursesByAuthorId(authorId) {
 }
 
 export async function createCourse(newCourse) {
-  console.log("Starting create");
-  console.log(newCourse);
   const imageName = `${Math.random()}-${newCourse.image.name}`.replaceAll(
     "/",
     ""
@@ -41,7 +37,6 @@ export async function createCourse(newCourse) {
   const imagePath = `${supabaseUrl}/storage/v1/object/public/course-images/${imageName}`;
   //https://nyznsssttvpdlhzugabm.supabase.co/storage/v1/object/public/course-images/bapi%20extra%20dependency%20to%20remove.png
   // 1. Creating a course
-  console.log("inside api call", newCourse.name);
   const course = {
     name: newCourse.name,
     authorId: newCourse.authorId,
@@ -55,7 +50,6 @@ export async function createCourse(newCourse) {
   const reqHeaders = new Headers();
   reqHeaders.append("Content-Type", "application/json");
   const url = `${apiUrl}/courses/new`;
-  console.log("before try");
   try {
     const response = await fetch(url, {
       method: "POST",
@@ -66,7 +60,6 @@ export async function createCourse(newCourse) {
       throw new Error(`Response status: ${response.status}`);
     }
     const data = await response.json();
-    console.log("at response data: ", data);
 
     // 2. Upload image
     const { error: storageError } = await supabase.storage
@@ -82,8 +75,6 @@ export async function createCourse(newCourse) {
 }
 
 export async function updateCourse(course) {
-  console.log(course);
-  console.log("INSIDE UPDATE Course api: ", course);
   const courseBody = {
     name: `${course.name}`,
     lessons: course.lessons,
@@ -92,8 +83,6 @@ export async function updateCourse(course) {
     rating: course.rating,
     tags: course.tags,
   };
-  console.log(courseBody);
-  console.log(JSON.stringify(courseBody));
   const reqHeaders = new Headers();
   reqHeaders.append("Content-Type", "application/json");
   const url = `${apiUrl}/courses/updateCourseById?id=${course.id}`;
@@ -107,7 +96,6 @@ export async function updateCourse(course) {
       throw new Error(`Response status: ${response.status}`);
     }
     const data = await response.json();
-    console.log("at response data: ", data);
     return data;
   } catch (error) {
     console.log(error.message);
@@ -127,7 +115,6 @@ export async function deleteCourseRequest(courseId) {
       throw new Error(`Response status: ${response.status}`);
     }
     const data = await response.json();
-    console.log("at response data: ", data);
     return data;
   } catch (error) {
     console.log(error.message);

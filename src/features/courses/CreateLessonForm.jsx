@@ -35,7 +35,6 @@ function CreateLessonForm({
       <Row margin="1rem 0rem">
         <StyledButton
           onClick={() => {
-            console.log("clicking with : ", lessonName, courseId, lessonNumber);
             createLesson({ lessonName, courseId, lessonNumber });
             onCloseModal();
           }}

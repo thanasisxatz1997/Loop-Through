@@ -44,7 +44,7 @@ const TagRow = styled(Row)`
 const TagsDisplayRow = styled(Row)`
   flex-wrap: wrap;
   gap: 5px;
-  max-width: 100%; /* Ensure it takes the full available width */
+  max-width: 100%;
 `;
 
 function TagsAddFrom({ usedTags, onCloseModal, handleSaveTags }) {

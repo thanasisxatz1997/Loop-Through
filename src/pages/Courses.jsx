@@ -81,9 +81,6 @@ function Courses() {
   });
 
   if (isLoading) return <Spinner></Spinner>;
-  else console.log("done loading");
-  if (error) console.log(error);
-  console.log("Courses now are:", courses);
   return (
     <StyledCoursesContainer>
       <Sidebar></Sidebar>

@@ -19,19 +19,15 @@ export async function deleteImage(imageName) {
 export async function uploadImage(image) {
   try {
     const imageName = `${Math.random()}-${image.name}`.replaceAll("/", "");
-    console.log("image to be uploaded: ", image);
-    console.log("starting image upload");
     const imagePath = `${supabaseUrl}/storage/v1/object/public/lesson-images/${imageName}`;
     const { error: storageError } = await supabase.storage
       .from("lesson-images")
       .upload(imageName, image);
-    console.log("Image upload finished");
     if (storageError) {
       console.log("Storage error: ");
       console.log(storageError);
       return null;
     }
-    console.log("image path returned: ", imagePath);
     return { imagePath: imagePath, imageName: imageName };
   } catch (error) {
     console.log("Error while uploading image. ", error.message);

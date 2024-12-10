@@ -75,9 +75,7 @@ function Course() {
   const editable = true;
   const params = useParams();
   const courseId = params.id.slice(1);
-  console.log("courseId=", courseId);
   const activeLessonId = useActiveLessonParams();
-  console.log("active lesson in course: ", activeLessonId);
   const hasActiveLesson = activeLessonId !== 0 && activeLessonId !== null;
   const navigate = useNavigate();
   const {
@@ -91,10 +89,7 @@ function Course() {
 
   if (isLoading) return <Spinner></Spinner>;
   if (error) console.log(error);
-  console.log("Done loading");
-  console.log(lessons);
   if (courseId === ":-1") return <CourseCreate></CourseCreate>;
-  console.log("Now lessons are: ", lessons);
   const activeLesson = lessons.filter(
     (lesson) => lesson.id === activeLessonId
   )[0];

@@ -13,7 +13,6 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "react-hot-toast";
 import ProtectedRoute from "./ui/ProtectedRoute";
 import UserQuizzes from "./features/quizzes/UserQuizzes";
-import { useUser } from "./features/authentication/useUser";
 import Login from "./pages/Login";
 import EditQuizPage from "./pages/EditQuizPage";
 import UserCourses from "./pages/UserCourses";
@@ -43,7 +42,6 @@ function App() {
           >
             <Route index element={<Navigate replace to="home" />}></Route>
             <Route path="home" element={<Home />}></Route>
-            {/* <Route path="login" element={<Login />}></Route> */}
             <Route path="courses" element={<Courses />}></Route>
             <Route path="myCourses" element={<UserCourses />}></Route>
             <Route path="courses/:id" element={<Course />} />
@@ -55,7 +53,6 @@ function App() {
             <Route path="settings" element={<Settings />}></Route>
             <Route path="course/:id" element={<Course />}></Route>
             <Route path="user" element={<User />}></Route>
-
             <Route path="info" element={<AboutUs />}></Route>
           </Route>
           <Route element={<AppLayout />}>

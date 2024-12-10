@@ -124,7 +124,6 @@ function AccordionItem({
   }
 
   function handleDeleteClick(e) {
-    console.log("IM CLICKED");
     e.stopPropagation();
     e.preventDefault();
     setCurrentQuestion((cur) => num);

@@ -9,7 +9,6 @@ export async function getLessonById(id) {
       throw new Error(`Response status: ${response.status}`);
     }
     const data = await response.json();
-    console.log("at response data: ", data);
     return data;
   } catch (error) {
     console.log(error.message);
@@ -24,7 +23,6 @@ export async function getLessonsByCourseId(courseId) {
       throw new Error(`Response status: ${response.status}`);
     }
     const data = await response.json();
-    console.log("at response data: ", data);
     return data;
   } catch (error) {
     console.log(error.message);
@@ -34,7 +32,6 @@ export async function getLessonsByCourseId(courseId) {
 export async function createLesson({ lessonName, courseId, lessonNumber }) {
   if (courseId === -1) {
   } else {
-    console.log("inside api call", lessonName, courseId, lessonNumber);
     const lesson = {
       courseId: `${courseId}`,
       name: `${lessonName}`,
@@ -56,7 +53,6 @@ export async function createLesson({ lessonName, courseId, lessonNumber }) {
         throw new Error(`Response status: ${response.status}`);
       }
       const data = await response.json();
-      console.log("at response data: ", data);
       return data;
     } catch (error) {
       console.log(error.message);
@@ -65,8 +61,6 @@ export async function createLesson({ lessonName, courseId, lessonNumber }) {
 }
 
 export async function updateLesson(lesson) {
-  console.log(lesson);
-  console.log("INSIDE UPDATE LESSON: ", lesson);
   const lessonBody = {
     courseId: `${lesson.courseId}`,
     name: `${lesson.name}`,
@@ -75,8 +69,6 @@ export async function updateLesson(lesson) {
     content: lesson.content,
     quizzes: lesson.quizzes,
   };
-  console.log(lessonBody);
-  console.log(JSON.stringify(lessonBody));
   const reqHeaders = new Headers();
   reqHeaders.append("Content-Type", "application/json");
   const url = `${apiUrl}/lessons/updateLessonById?id=${lesson.id}`;
@@ -90,7 +82,6 @@ export async function updateLesson(lesson) {
       throw new Error(`Response status: ${response.status}`);
     }
     const data = await response.json();
-    console.log("at response data: ", data);
     return data;
   } catch (error) {
     console.log(error.message);
@@ -110,7 +101,6 @@ export async function deleteLessonRequest(lessonId) {
       throw new Error(`Response status: ${response.status}`);
     }
     const data = await response.json();
-    console.log("at response data: ", data);
     return data;
   } catch (error) {
     console.log(error.message);

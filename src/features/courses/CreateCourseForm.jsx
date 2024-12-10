@@ -21,11 +21,7 @@ function CreateCourseForm({ createCourse, onCloseModal, userId }) {
   const { errors } = formState;
 
   function onSubmit(data) {
-    console.log("inside submit");
-    console.log({ ...data, image: data.image[0] });
     createCourse({ ...data, image: data.image[0] });
-    console.log("done creating");
-    console.log();
     onCloseModal?.();
   }
 
@@ -71,7 +67,6 @@ function CreateCourseForm({ createCourse, onCloseModal, userId }) {
         <StyledButton
           variation="success"
           // onClick={() => {
-          //   console.log("clicking with : ", courseName, "image: ", courseImage);
           //   createCourse({ courseName, courseDescription, courseImage });
           //   onCloseModal();
           // }}

@@ -46,11 +46,8 @@ function CreateQuestionForm({ onCloseModal, handleUpdateQuiz, quiz }) {
       points: Number(data.points),
       correctOption: Number(data.correctOption),
     };
-    console.log("The data will be:", formatedData);
     const newQuestions = [...quiz.questions, formatedData];
-    console.log("new questions:", newQuestions);
     const newQuiz = { ...quiz, questions: newQuestions };
-    console.log("New quiz:", newQuiz);
     handleUpdateQuiz(newQuiz);
     onCloseModal?.();
   }
@@ -60,7 +57,6 @@ function CreateQuestionForm({ onCloseModal, handleUpdateQuiz, quiz }) {
   }
 
   function handleNewOptionClick(e) {
-    console.log("Im in here");
     e.preventDefault();
     const currentOptions = getValues().options;
 

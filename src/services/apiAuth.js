@@ -29,7 +29,6 @@ export async function logout() {
 export async function signUp({ email, password, metadata }) {
   try {
     await healthCheck();
-    console.log("here the data: ", email, password, metadata);
     const { data, error } = await supabase.auth.signUp({
       email,
       password,
@@ -37,10 +36,8 @@ export async function signUp({ email, password, metadata }) {
         data: metadata,
       },
     });
-    console.log("signed up! ", data);
     return data;
   } catch (healthError) {
-    console.log("error", healthError.message);
     throw new Error("Could not connect to back end", healthError.message);
   }
 }

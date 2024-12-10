@@ -8,7 +8,6 @@ export async function getQuizzes() {
       throw new Error(`Response status: ${response.status}`);
     }
     const data = await response.json();
-    console.log("at response data: ", data);
     return data;
   } catch (error) {
     console.log(error.message);
@@ -23,7 +22,6 @@ export async function getQuizById({ id }) {
       throw new Error(`Response status: ${response.status}`);
     }
     const data = await response.json();
-    console.log("returning", data);
     return data;
   } catch (error) {
     console.log(error.message);
@@ -38,7 +36,6 @@ export async function getQuizzesByAuthorId(authorId) {
       throw new Error(`Response status: ${response.status}`);
     }
     const data = await response.json();
-    console.log("at response data: ", data);
     return data;
   } catch (error) {
     console.log(error.message);
@@ -46,11 +43,7 @@ export async function getQuizzesByAuthorId(authorId) {
 }
 
 export async function createQuiz(newQuiz) {
-  console.log("Starting create Quiz");
-  console.log(newQuiz);
-
   // 1. Creating a course
-  console.log("inside api call", newQuiz.name);
   const quiz = {
     name: newQuiz.name,
     questions: [],
@@ -60,7 +53,6 @@ export async function createQuiz(newQuiz) {
   const reqHeaders = new Headers();
   reqHeaders.append("Content-Type", "application/json");
   const url = `${apiUrl}/quizzes/new`;
-  console.log("before try");
   try {
     const response = await fetch(url, {
       method: "POST",
@@ -71,7 +63,6 @@ export async function createQuiz(newQuiz) {
       throw new Error(`Response status: ${response.status}`);
     }
     const data = await response.json();
-    console.log("at response data: ", data);
 
     return data;
   } catch (error) {
@@ -80,16 +71,12 @@ export async function createQuiz(newQuiz) {
 }
 
 export async function updateQuiz(quiz) {
-  console.log(quiz);
-  console.log("INSIDE UPDATE QUIZ api: ", quiz);
   const quizBody = {
     name: `${quiz.name}`,
     description: quiz.description,
     questions: quiz.questions,
     difficulty: quiz.quizzes,
   };
-  console.log(quizBody);
-  console.log(JSON.stringify(quizBody));
   const reqHeaders = new Headers();
   reqHeaders.append("Content-Type", "application/json");
   const url = `${apiUrl}/quizzes/updateQuizById?id=${quiz.id}`;
@@ -103,7 +90,6 @@ export async function updateQuiz(quiz) {
       throw new Error(`Response status: ${response.status}`);
     }
     const data = await response.json();
-    console.log("at response data: ", data);
     return data;
   } catch (error) {
     console.log(error.message);
@@ -111,7 +97,6 @@ export async function updateQuiz(quiz) {
 }
 
 export async function deleteQuizRequest(quizId) {
-  console.log("inside api", quizId);
   const url = `${apiUrl}/quizzes/deleteQuizById?id=${quizId}`;
   const reqHeaders = new Headers();
   reqHeaders.append("Content-Type", "application/json");
@@ -124,7 +109,6 @@ export async function deleteQuizRequest(quizId) {
       throw new Error(`Response status: ${response.status}`);
     }
     const data = await response.json();
-    console.log("at response data: ", data);
     return data;
   } catch (error) {
     console.log(error.message);

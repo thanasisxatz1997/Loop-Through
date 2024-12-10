@@ -24,12 +24,7 @@ function CreateQuizForm({ createNewQuiz, onCloseModal }) {
   const { errors } = formState;
 
   function onSubmit(data) {
-    console.log("inside submit");
-    console.log("data:", data);
-    console.log("authorId", authorId);
-    // createQuiz(data, authorId);
     createNewQuiz(data);
-    console.log("done creating");
     onCloseModal?.();
   }
 

@@ -25,7 +25,6 @@ export async function createUser(userId) {
       return data;
     }
   } catch (error) {
-    console.log("Error while creating user. ", error.messsage);
     throw new Error("Error while creating user. ", error.messsage);
   }
 }

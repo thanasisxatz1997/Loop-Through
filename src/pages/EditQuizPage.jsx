@@ -47,7 +47,6 @@ function EditQuizPage() {
   const [currentQuestion, setCurrentQuestion] = useState(null);
 
   function handleUpdateQuiz(newQuiz) {
-    console.log("New quiz Data:", newQuiz);
     editQuiz(newQuiz);
   }
 
@@ -61,8 +60,6 @@ function EditQuizPage() {
     const newQuiz = { ...quiz, questions: newQuestions };
     editQuiz(newQuiz);
   }
-
-  console.log("the quiz is ", quiz);
 
   if (isQuizPending || isUserPending || isDeleting || isEditing)
     return <Spinner></Spinner>;

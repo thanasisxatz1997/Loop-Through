@@ -105,7 +105,6 @@ function QuizzesDisplayComponent({
   edit = false,
   createNewQuiz,
 }) {
-  console.log("quizzes:", quizzes);
   return (
     <StyledQuizzesContainer>
       <StyledQuizzesMainContainer>

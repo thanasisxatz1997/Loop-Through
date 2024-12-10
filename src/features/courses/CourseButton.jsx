@@ -40,7 +40,6 @@ function CourseButton({
   preview = false,
 }) {
   const hasImage = image !== "" && image;
-  console.log("image: ", image);
   const contents = (
     <Row type="vertical">
       <StyledTitleContainer>
