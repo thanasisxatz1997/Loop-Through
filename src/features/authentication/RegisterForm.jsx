@@ -64,6 +64,7 @@ function RegisterForm() {
           <Heading as="h3">{`Password:`}</Heading>
         </StyledFormLabel>
         <StyledFormTextInput
+          type="password"
           placeholder=" ********"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
@@ -74,6 +75,7 @@ function RegisterForm() {
           <Heading as="h3">{`Retype Password:`}</Heading>
         </StyledFormLabel>
         <StyledFormTextInput
+          type="password"
           placeholder=" ********"
           value={passwordCheck}
           onChange={(e) => setPasswordCheck(e.target.value)}
