@@ -1,3 +1,4 @@
+import { getLessonsByCourseId } from "./apiLessons";
 import { apiUrl } from "./mongoApi";
 import supabase, { supabaseUrl } from "./supabase";
 
@@ -34,9 +35,10 @@ export async function createCourse(newCourse) {
     "/",
     ""
   );
-  const imagePath = `${supabaseUrl}/storage/v1/object/public/course-images/${imageName}`;
+  const imagePath = `${supabaseUrl}/storage/v1/object/public/course-images/${newCourse.authorId}/${imageName}`;
   //https://nyznsssttvpdlhzugabm.supabase.co/storage/v1/object/public/course-images/bapi%20extra%20dependency%20to%20remove.png
   // 1. Creating a course
+
   const course = {
     name: newCourse.name,
     authorId: newCourse.authorId,
@@ -47,6 +49,7 @@ export async function createCourse(newCourse) {
     image: imagePath,
     tags: newCourse.tags ? newCourse.tags : [],
   };
+  console.log("The course that will be created: ", course);
   const reqHeaders = new Headers();
   reqHeaders.append("Content-Type", "application/json");
   const url = `${apiUrl}/courses/new`;
@@ -63,7 +66,7 @@ export async function createCourse(newCourse) {
 
     // 2. Upload image
     const { error: storageError } = await supabase.storage
-      .from("course-images")
+      .from(`course-images/${newCourse.authorId}`)
       .upload(imageName, newCourse.image);
 
     // 3. Maybe delete course if there was an error uploading image

@@ -62,18 +62,21 @@ const StyledLink = styled(Link)`
 `;
 
 const dificultyOptions = [
+  { value: null, name: null },
   { value: "Easy", name: "Easy" },
   { value: "Medium", name: "Medium" },
   { value: "Hard", name: "Hard" },
 ];
 
 const statusOptions = [
+  { value: null, name: null },
   { value: "Completed", name: "Completed" },
   { value: "In progress", name: "In progress" },
   { value: "Not started", name: "Not started" },
 ];
 
 const tagsOptions = [
+  { value: null, name: null },
   { value: "Algorithms", name: "Algorithms" },
   { value: "React", name: "React" },
   { value: "Programming", name: "Programming" },
@@ -97,9 +100,42 @@ function UserCourses() {
 
   const [targetCourseId, setTargetCourseId] = useState(null);
 
+  const [difficultyFilter, setDifficultyFilter] = useState(null);
+
+  const [statusFilter, setStatusFilter] = useState(null);
+
+  const [tagsFilter, setTagsFilter] = useState(null);
+
+  const displayedCourses = FilterCourses();
+
+  console.log("dificulty filter: ", difficultyFilter);
+  console.log("tags filter: ", tagsFilter);
+  console.log(userCourses);
+
+  function FilterCourses() {
+    let courses = userCourses || [];
+    if (difficultyFilter) {
+      courses = courses.filter(
+        (course) => course.difficulty === difficultyFilter
+      );
+    }
+    console.log("displayedCourses: ", courses);
+    if (statusFilter) {
+      courses = courses.filter((course) => course.status === statusFilter);
+    }
+    console.log("displayedCourses: ", courses);
+    console.log(courses.filter((course) => course.tags.includes(tagsFilter)));
+    if (tagsFilter) {
+      courses = courses.filter((course) => course.tags.includes(tagsFilter));
+    }
+    console.log("displayedCourses: ", courses);
+    return courses;
+  }
+  console.log(targetCourseId);
   const currentTags =
-    targetCourseId &&
-    userCourses.find((course) => course.id === targetCourseId).tags;
+    (targetCourseId &&
+      userCourses.find((course) => course.id === targetCourseId)?.tags) ||
+    [];
 
   function handleEditCourse(course) {
     editCourse(course);
@@ -138,16 +174,24 @@ function UserCourses() {
             <Heading>My Courses</Heading>
           </Row>
           <Row content="start" gap="10px">
+            <label>Dificulty:</label>
             <SelectBox
+              onChange={(e) => setDifficultyFilter(e.target.value)}
               options={dificultyOptions}
               selectTitle="Dificulty"
             ></SelectBox>
+            <label>Status:</label>
             <SelectBox options={statusOptions} selectTitle="Status"></SelectBox>
-            <SelectBox options={tagsOptions} selectTitle="Tags"></SelectBox>
+            <label>Tags:</label>
+            <SelectBox
+              options={tagsOptions}
+              selectTitle="Tags"
+              onChange={(e) => setTagsFilter(e.target.value)}
+            ></SelectBox>
             <SearchBar></SearchBar>
           </Row>
           <StyledCourseList>
-            {userCourses.map((course) => (
+            {displayedCourses.map((course) => (
               <UserCourseDisplayComponent
                 key={course.id}
                 handleEditCourse={handleEditCourse}

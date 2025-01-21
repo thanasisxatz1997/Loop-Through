@@ -8,7 +8,8 @@ import FileInput from "../../styles/FileInput";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useEffect } from "react";
-import { uploadImage } from "../../services/imageService";
+import { uploadLessonImage } from "../../services/imageService";
+import { useUser } from "../authentication/useUser";
 
 const StyledFormContainer = styled.form`
   min-height: 150px;
@@ -32,6 +33,7 @@ function ImageCreateEditForm({
   onLessonEdited,
   startingContent,
   isEditing,
+  lesson,
 }) {
   const { register, handleSubmit, reset, getValues, formState, setValue } =
     useForm({
@@ -43,7 +45,7 @@ function ImageCreateEditForm({
     });
 
   const { errors } = formState;
-
+  const { user, isPending, isAuthenticated, isFetching } = useUser();
   const [courseImage, setCourseImage] = useState(
     startingContent && startingContent.content
   );
@@ -70,7 +72,12 @@ function ImageCreateEditForm({
 
   async function onSubmit(data) {
     try {
-      const { imagePath, imageName } = await uploadImage(data.content[0]);
+      const { imagePath, imageName } = await uploadLessonImage(
+        user.id,
+        lesson.courseId,
+        lesson.id,
+        data.content[0]
+      );
       if (imagePath) {
         onLessonEdited({
           type: "i",

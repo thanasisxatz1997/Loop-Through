@@ -6,7 +6,8 @@ import ParagraphCreateEditForm from "./ParagraphCreateEditForm";
 import styled from "styled-components";
 import { useEditLesson } from "./useEditLesson";
 import DeleteConfirmation from "../../ui/DeleteConfirmation";
-import { deleteImage } from "../../services/imageService";
+import { deleteLessonImage } from "../../services/imageService";
+import { useUser } from "../authentication/useUser";
 
 const StyledContainer = styled.div`
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
@@ -50,6 +51,7 @@ function LessonElementCreateForm({
     { type: "o", key: 3 },
   ];
   const [editLesson, isEditing] = useEditLesson();
+  const { user, isPending, isAuthenticated, isFetching } = useUser();
   const startingType = edit
     ? lesson.content.find((item) => item.id === elementId).type
     : "t";
@@ -80,7 +82,12 @@ function LessonElementCreateForm({
   function deleteLessonElement() {
     const itemToDelete = lesson.content.find((item) => item.id === elementId);
     if (itemToDelete.type === "i") {
-      deleteImage(itemToDelete.imageName);
+      deleteLessonImage(
+        user.id,
+        lesson.courseId,
+        lesson.id,
+        itemToDelete.imageName
+      );
     }
     const contentAfterDelete = lesson.content.filter(
       (item) => item.id !== elementId
@@ -133,6 +140,7 @@ function LessonElementCreateForm({
           onCloseModal={onCloseModal}
           onLessonEdited={onLessonEdited}
           isEditing={isEditing}
+          lesson={lesson}
         ></ImageCreateEditForm>
       ),
     },

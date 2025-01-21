@@ -30,6 +30,15 @@ const StyledDescContainer = styled.div`
   box-sizing: border-box;
   overflow: hidden;
 `;
+const StyledDesc = styled.p`
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease;
+  ${StyledCourseButton}:hover & {
+    visibility: visible;
+    opacity: 1;
+  }
+`;
 
 function CourseButton({
   id,
@@ -43,11 +52,34 @@ function CourseButton({
   const contents = (
     <Row type="vertical">
       <StyledTitleContainer>
-        <Heading as="h2">{title}</Heading>
+        <Heading
+          as="h2"
+          style={{
+            backgroundColor: "#0000006f",
+            width: "80%",
+            textAlign: "center",
+            alignSelf: "center",
+            justifySelf: "center",
+            borderRadius: "10px",
+          }}
+        >
+          {title}
+        </Heading>
       </StyledTitleContainer>
       <StyledDescContainer>
         <Row padding="0rem 0.5rem">
-          <p>{description}</p>
+          <StyledDesc
+            style={{
+              backgroundColor: "#0000006f",
+              width: "100%",
+              textAlign: "center",
+              alignSelf: "center",
+              justifySelf: "center",
+              borderRadius: "10px",
+            }}
+          >
+            {description}
+          </StyledDesc>
         </Row>
       </StyledDescContainer>
       <hr></hr>

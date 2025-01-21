@@ -1,5 +1,6 @@
 import { json } from "react-router";
 import { apiUrl } from "./mongoApi";
+import { deleteLessonImage } from "./imageService";
 
 export async function getLessonById(id) {
   const url = `${apiUrl}/lessons/lessonById?id=${id}`;
@@ -88,7 +89,17 @@ export async function updateLesson(lesson) {
   }
 }
 
-export async function deleteLessonRequest(lessonId) {
+export async function deleteLessonRequest(userId, lessonId) {
+  const lesson = await getLessonById(lessonId);
+  if (lesson) {
+    const lessonImages = lesson.content.filter(
+      (item) => item.type === "i" && item
+    );
+    for (const item of lessonImages) {
+      deleteLessonImage(userId, lesson.courseId, lessonId, item.imageName);
+    }
+    console.log(lessonImages);
+  }
   const url = `${apiUrl}/lessons/deleteLessonById?id=${lessonId}`;
   const reqHeaders = new Headers();
   reqHeaders.append("Content-Type", "application/json");

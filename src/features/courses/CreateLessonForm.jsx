@@ -3,6 +3,7 @@ import Heading from "../../styles/Heading";
 import StyledButton from "../../styles/StyledButton";
 import Row from "../../styles/Row";
 import { useState } from "react";
+import { useUser } from "../authentication/useUser";
 
 const StyledFormLabel = styled.label`
   margin-right: 5px;
@@ -19,6 +20,7 @@ function CreateLessonForm({
   onCloseModal,
 }) {
   const [lessonName, setLessonName] = useState("");
+
   console.log("in form: ", courseId, lessonNumber);
   return (
     <div>

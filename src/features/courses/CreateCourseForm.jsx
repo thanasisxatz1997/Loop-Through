@@ -9,19 +9,23 @@ import CourseButton from "./CourseButton";
 import StyledFormTextArea from "../../styles/StyledFormTextArea";
 import StyledFormTextInput from "../../styles/StyledFormTextInput";
 import StyledFormLabel from "../../styles/StyledFormLabel";
+import { useUser } from "../authentication/useUser";
 
 function CreateCourseForm({ createCourse, onCloseModal, userId }) {
   const [courseName, setCourseName] = useState("");
   const [courseDescription, setCourseDescription] = useState("");
   const [courseImage, setCourseImage] = useState(null);
 
+  const { user, isPending, isAuthenticated, isFetching } = useUser();
+
   const { register, handleSubmit, reset, getValues, formState } = useForm({
     defaultValues: { authorId: userId },
   });
   const { errors } = formState;
-
+  console.log("inside create course form: ");
   function onSubmit(data) {
-    createCourse({ ...data, image: data.image[0] });
+    console.log("data being sent in course: ", data);
+    createCourse({ ...data, image: data.image[0], authorId: user.id });
     onCloseModal?.();
   }
 

@@ -25,7 +25,7 @@ export function useLogin() {
 
   useEffect(() => {
     if (isSuccess) {
-      // This is just a safety net to ensure navigation happens Might remove
+      // This is just a safety net to ensure navigation happens. Might remove
       navigate("/courses");
     }
   }, [isSuccess, navigate]);
