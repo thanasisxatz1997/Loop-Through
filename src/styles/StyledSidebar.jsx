@@ -16,7 +16,7 @@ const StyledSidebar = styled.aside`
 `;
 
 StyledSidebar.defaultProps = {
-  padding: "3.2rem 2.4rem",
+  padding: "1.5rem 0.5rem",
   gap: "3.2rem",
 };
 

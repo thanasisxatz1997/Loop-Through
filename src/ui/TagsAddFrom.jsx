@@ -56,6 +56,11 @@ function TagsAddFrom({ usedTags, onCloseModal, handleSaveTags }) {
       tag.toLowerCase().startsWith(searchText.toLowerCase()) &&
       !editedTags.includes(tag)
   );
+
+  function handleSave(editedTags) {
+    handleSaveTags(editedTags);
+    onCloseModal();
+  }
   return (
     <StyledTagsContainer>
       <Row>
@@ -104,7 +109,7 @@ function TagsAddFrom({ usedTags, onCloseModal, handleSaveTags }) {
       </TagsDisplayRow>
 
       <Row>
-        <Button variation="success" onClick={() => handleSaveTags(editedTags)}>
+        <Button variation="success" onClick={() => handleSave(editedTags)}>
           Save
         </Button>
         <Button variation="danger" onClick={onCloseModal}>

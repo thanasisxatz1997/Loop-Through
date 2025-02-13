@@ -108,10 +108,6 @@ function UserCourses() {
 
   const displayedCourses = FilterCourses();
 
-  console.log("dificulty filter: ", difficultyFilter);
-  console.log("tags filter: ", tagsFilter);
-  console.log(userCourses);
-
   function FilterCourses() {
     let courses = userCourses || [];
     if (difficultyFilter) {
@@ -119,19 +115,14 @@ function UserCourses() {
         (course) => course.difficulty === difficultyFilter
       );
     }
-    console.log("displayedCourses: ", courses);
     if (statusFilter) {
       courses = courses.filter((course) => course.status === statusFilter);
     }
-    console.log("displayedCourses: ", courses);
-    console.log(courses.filter((course) => course.tags.includes(tagsFilter)));
     if (tagsFilter) {
       courses = courses.filter((course) => course.tags.includes(tagsFilter));
     }
-    console.log("displayedCourses: ", courses);
     return courses;
   }
-  console.log(targetCourseId);
   const currentTags =
     (targetCourseId &&
       userCourses.find((course) => course.id === targetCourseId)?.tags) ||

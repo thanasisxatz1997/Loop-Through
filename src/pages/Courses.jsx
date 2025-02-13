@@ -10,6 +10,10 @@ import Spinner from "../ui/Spinner";
 import Modal from "../ui/Modal";
 import CreateLessonForm from "../features/courses/CreateLessonForm";
 import CreateCourseForm from "../features/courses/CreateCourseForm";
+import Button from "../styles/StyledButton";
+import { HiMiniPencilSquare } from "react-icons/hi2";
+import TagsAddFrom from "../ui/TagsAddFrom";
+import { useState } from "react";
 const StyledCoursesContainer = styled.div`
   /* background: radial-gradient(
     circle,
@@ -59,6 +63,11 @@ const testCourses = [
 
 function Courses() {
   const queryClient = useQueryClient();
+  const [searchTags, setSearchTags] = useState([]);
+
+  function handleChangeSearchTags(tags) {
+    setSearchTags(tags);
+  }
 
   const { mutate: createNewCourse, isLoading: isCreatingCourse } = useMutation({
     mutationFn: createCourse,
@@ -83,27 +92,33 @@ function Courses() {
   if (isLoading) return <Spinner></Spinner>;
   return (
     <StyledCoursesContainer>
-      <Sidebar></Sidebar>
-      <StyledCoursesMainContainer>
-        {courses.map((course) => (
-          <CourseButton
-            key={course.id}
-            id={course.id}
-            title={course.name}
-            description={course.description}
-            author={course.authorName}
-            image={course.image.replace(/ /g, "%20")}
-          ></CourseButton>
-        ))}
-        <Modal>
+      <Modal>
+        <Sidebar courses={courses} searchTags={searchTags}></Sidebar>
+        <StyledCoursesMainContainer>
+          {courses.map((course) => (
+            <CourseButton
+              key={course.id}
+              id={course.id}
+              title={course.name}
+              description={course.description}
+              author={course.authorName}
+              image={course.image.replace(/ /g, "%20")}
+            ></CourseButton>
+          ))}
+          <Modal.Window name="addTagsModal">
+            <TagsAddFrom
+              usedTags={searchTags}
+              handleSaveTags={(tags) => handleChangeSearchTags(tags)}
+            ></TagsAddFrom>
+          </Modal.Window>
           <Modal.Open opens="newCourseModal">
             <CreateCourseButton>Create a new Course!</CreateCourseButton>
           </Modal.Open>
           <Modal.Window name="newCourseModal">
             <CreateCourseForm createCourse={createNewCourse}></CreateCourseForm>
           </Modal.Window>
-        </Modal>
-      </StyledCoursesMainContainer>
+        </StyledCoursesMainContainer>
+      </Modal>
     </StyledCoursesContainer>
   );
 }
