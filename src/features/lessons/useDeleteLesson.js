@@ -19,7 +19,7 @@ export function useDeleteLesson() {
       navigate("");
     },
     onError: (err) => {
-      toast.error(err.message);
+      toast.error("Error while deleting lesson. " + err.message);
       console.log(err.message);
       throw new Error(err);
     },

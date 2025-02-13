@@ -56,3 +56,20 @@ export async function getCurrentUser() {
 
   return data?.user;
 }
+
+export function getAuthToken() {
+  const storedData = localStorage.getItem("sb-nyznsssttvpdlhzugabm-auth-token");
+
+  if (!storedData) {
+    console.warn("No auth token found in localStorage.");
+    return null;
+  }
+
+  try {
+    const parsedData = JSON.parse(storedData);
+    return parsedData.access_token || null;
+  } catch (error) {
+    console.error("Error parsing auth token:", error);
+    return null;
+  }
+}

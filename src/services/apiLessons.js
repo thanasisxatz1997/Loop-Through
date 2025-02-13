@@ -1,6 +1,7 @@
 import { json } from "react-router";
 import { apiUrl } from "./mongoApi";
 import { deleteLessonImage } from "./imageService";
+import { getAuthToken } from "./apiAuth";
 
 export async function getLessonById(id) {
   const url = `${apiUrl}/lessons/lessonById?id=${id}`;
@@ -62,6 +63,7 @@ export async function createLesson({ lessonName, courseId, lessonNumber }) {
 }
 
 export async function updateLesson(lesson) {
+  const token = getAuthToken();
   const lessonBody = {
     courseId: `${lesson.courseId}`,
     name: `${lesson.name}`,
@@ -72,6 +74,7 @@ export async function updateLesson(lesson) {
   };
   const reqHeaders = new Headers();
   reqHeaders.append("Content-Type", "application/json");
+  reqHeaders.append("Authorization", `Bearer ${token}`);
   const url = `${apiUrl}/lessons/updateLessonById?id=${lesson.id}`;
   try {
     const response = await fetch(url, {
@@ -90,6 +93,7 @@ export async function updateLesson(lesson) {
 }
 
 export async function deleteLessonRequest(userId, lessonId) {
+  const token = getAuthToken();
   const lesson = await getLessonById(lessonId);
   if (lesson) {
     const lessonImages = lesson.content.filter(
@@ -103,6 +107,7 @@ export async function deleteLessonRequest(userId, lessonId) {
   const url = `${apiUrl}/lessons/deleteLessonById?id=${lessonId}`;
   const reqHeaders = new Headers();
   reqHeaders.append("Content-Type", "application/json");
+  reqHeaders.append("Authorization", `Bearer ${token}`);
   try {
     const response = await fetch(url, {
       method: "DELETE",
@@ -115,5 +120,6 @@ export async function deleteLessonRequest(userId, lessonId) {
     return data;
   } catch (error) {
     console.log(error.message);
+    throw error;
   }
 }
