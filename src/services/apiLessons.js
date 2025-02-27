@@ -89,6 +89,7 @@ export async function updateLesson(lesson) {
     return data;
   } catch (error) {
     console.log(error.message);
+    throw new Error(`Error: ${error.message}`);
   }
 }
 
