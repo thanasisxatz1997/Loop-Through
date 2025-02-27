@@ -89,7 +89,7 @@ function Sidebar({ courses, searchTags }) {
       </Row>
       <Row type="vertical" gap="1.5px">
         {displayedCourses.map((course) => (
-          <StyledSidebarLessonItem>
+          <StyledSidebarLessonItem key={course.id}>
             <Row content="space-between" align-items="center">
               <div
                 style={{

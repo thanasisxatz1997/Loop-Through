@@ -32,6 +32,7 @@ export async function getLessonsByCourseId(courseId) {
 }
 
 export async function createLesson({ lessonName, courseId, lessonNumber }) {
+  const token = getAuthToken();
   if (courseId === -1) {
   } else {
     const lesson = {
@@ -43,6 +44,7 @@ export async function createLesson({ lessonName, courseId, lessonNumber }) {
       quizzes: [],
     };
     const reqHeaders = new Headers();
+    reqHeaders.append("Authorization", `Bearer ${token}`);
     reqHeaders.append("Content-Type", "application/json");
     const url = `${apiUrl}/lessons/new`;
     try {
@@ -57,7 +59,7 @@ export async function createLesson({ lessonName, courseId, lessonNumber }) {
       const data = await response.json();
       return data;
     } catch (error) {
-      console.log(error.message);
+      throw new Error(`Error while creating lesson.`);
     }
   }
 }
@@ -82,8 +84,9 @@ export async function updateLesson(lesson) {
       body: JSON.stringify(lessonBody),
       headers: reqHeaders,
     });
+    console.log("response: ", response);
     if (!response.ok) {
-      throw new Error(`Response status: ${response.status}`);
+      throw new Error(`Error while updating.`);
     }
     const data = await response.json();
     return data;
