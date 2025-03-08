@@ -1,7 +1,6 @@
 import {
   HiEyeSlash,
   HiMiniDocumentArrowUp,
-  HiMiniPlus,
   HiMiniStar,
   HiMiniTrash,
   HiOutlineCheck,
@@ -95,7 +94,7 @@ function UserCourseDisplayComponent({
             <Heading as="h3">Rating:</Heading>
             <Heading as="h3">{course.rating}</Heading>
             <HiMiniStar size={20}></HiMiniStar>
-            <Heading as="h3">(318 reviews)</Heading>
+            <Heading as="h3">({course.totalRatings} reviews)</Heading>
           </Row>
           <Row content="start" gap="3px">
             <Heading as="h3">{course.lessons.length}</Heading>

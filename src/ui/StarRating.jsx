@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 
 const containerStyle = { display: "flex", alignItems: "center", gap: "16px" };
@@ -28,6 +28,10 @@ export default function StarRating({
 }) {
   const [rating, setRating] = useState(defaultRating);
   const [tempRating, setTempRating] = useState(0);
+
+  useEffect(() => {
+    setRating(defaultRating);
+  }, [defaultRating]);
 
   function handleRating(rating) {
     setRating(rating);

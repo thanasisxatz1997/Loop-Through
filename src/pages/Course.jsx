@@ -22,6 +22,9 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import Spinner from "../ui/Spinner";
 import toast from "react-hot-toast";
 import CreateCourseForm from "../features/courses/CreateCourseForm";
+import { useUserCourseRatings } from "../features/courses/useUserCourseRatings";
+import { useUser } from "../features/authentication/useUser";
+import { useRateCourse } from "../features/courses/useRateCourse";
 
 const StyledCourseContainer = styled.div`
   display: grid;
@@ -78,6 +81,15 @@ function Course() {
   const activeLessonId = useActiveLessonParams();
   const hasActiveLesson = activeLessonId !== 0 && activeLessonId !== null;
   const navigate = useNavigate();
+  const { user } = useUser();
+  const { rateCourse, isRatingCourse } = useRateCourse();
+  const { userCourseRatings, isPending } = useUserCourseRatings(user.id);
+  console.log(userCourseRatings);
+  const courseRatings = userCourseRatings?.courseRatings;
+  const currentRating = courseRatings?.find(
+    (rating) => rating.courseId === courseId
+  )?.rating;
+  console.log(currentRating);
   const {
     isLoading,
     data: lessons,
@@ -86,6 +98,16 @@ function Course() {
     queryKey: ["lessons"],
     queryFn: () => getLessonsByCourseId(courseId),
   });
+
+  function handleRateCourse(rating) {
+    console.log("RATING");
+    const courseRating = {
+      courseId: courseId,
+      rating: rating,
+    };
+    console.log("THE COURSE RATING", courseRating);
+    rateCourse(courseRating);
+  }
 
   if (isLoading) return <Spinner></Spinner>;
   if (error) console.log(error);
@@ -125,8 +147,10 @@ function Course() {
               <RatingContainer>
                 <Heading as="h3">Rate this course!</Heading>
                 <StarRating
+                  defaultRating={currentRating}
                   size={30}
                   color="var(--color-grey-900)"
+                  onSetRating={handleRateCourse}
                 ></StarRating>
               </RatingContainer>
             </Row>

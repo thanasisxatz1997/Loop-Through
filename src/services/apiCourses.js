@@ -1,3 +1,4 @@
+import { getAuthToken } from "./apiAuth";
 import { getLessonsByCourseId } from "./apiLessons";
 import { apiUrl } from "./mongoApi";
 import supabase, { supabaseUrl } from "./supabase";
@@ -31,6 +32,7 @@ export async function getCoursesByAuthorId(authorId) {
 }
 
 export async function createCourse(newCourse) {
+  const token = getAuthToken();
   const imageName = `${Math.random()}-${newCourse.image.name}`.replaceAll(
     "/",
     ""
@@ -52,6 +54,7 @@ export async function createCourse(newCourse) {
   console.log("The course that will be created: ", course);
   const reqHeaders = new Headers();
   reqHeaders.append("Content-Type", "application/json");
+  reqHeaders.append("Authorization", `Bearer ${token}`);
   const url = `${apiUrl}/courses/new`;
   try {
     const response = await fetch(url, {
@@ -78,6 +81,7 @@ export async function createCourse(newCourse) {
 }
 
 export async function updateCourse(course) {
+  const token = getAuthToken();
   const courseBody = {
     name: `${course.name}`,
     lessons: course.lessons,
@@ -88,6 +92,7 @@ export async function updateCourse(course) {
   };
   const reqHeaders = new Headers();
   reqHeaders.append("Content-Type", "application/json");
+  reqHeaders.append("Authorization", `Bearer ${token}`);
   const url = `${apiUrl}/courses/updateCourseById?id=${course.id}`;
   try {
     const response = await fetch(url, {
@@ -106,9 +111,11 @@ export async function updateCourse(course) {
 }
 
 export async function deleteCourseRequest(courseId) {
+  const token = getAuthToken();
   const url = `${apiUrl}/courses/deleteCourseById?id=${courseId}`;
   const reqHeaders = new Headers();
   reqHeaders.append("Content-Type", "application/json");
+  reqHeaders.append("Authorization", `Bearer ${token}`);
   try {
     const response = await fetch(url, {
       method: "DELETE",
