@@ -7,7 +7,7 @@ const StyledOption = styled.button`
 `;
 
 function Options({ question }) {
-  const { dispatch, answer } = useQuiz();
+  const { dispatch, answer, index: questionNumber } = useQuiz();
   const hasAnswer = answer !== null;
   return (
     <div className="options">
@@ -18,7 +18,12 @@ function Options({ question }) {
             (index === question.correctOption ? "correct" : "wrong")
           }`}
           key={option}
-          onClick={() => dispatch({ type: "newAnswer", payload: index })}
+          onClick={() =>
+            dispatch({
+              type: "newAnswer",
+              payload: { questionNumber: questionNumber, answer: index },
+            })
+          }
           disabled={hasAnswer}
         >
           {option}

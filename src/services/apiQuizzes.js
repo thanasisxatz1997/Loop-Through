@@ -1,3 +1,4 @@
+import { getAuthToken } from "./apiAuth";
 import { apiUrl } from "./mongoApi";
 
 export async function getQuizzes() {
@@ -43,12 +44,12 @@ export async function getQuizzesByAuthorId(authorId) {
 }
 
 export async function createQuiz(newQuiz) {
-  // 1. Creating a course
   const quiz = {
     name: newQuiz.name,
     questions: [],
     authorId: newQuiz.authorId,
     description: newQuiz.description,
+    tags: newQuiz.tags,
   };
   const reqHeaders = new Headers();
   reqHeaders.append("Content-Type", "application/json");
@@ -75,8 +76,10 @@ export async function updateQuiz(quiz) {
     name: `${quiz.name}`,
     description: quiz.description,
     questions: quiz.questions,
-    difficulty: quiz.quizzes,
+    difficulty: quiz.difficulty,
+    tags: quiz.tags,
   };
+  console.log("THE QUIZ TO BE UPDATED ", quizBody);
   const reqHeaders = new Headers();
   reqHeaders.append("Content-Type", "application/json");
   const url = `${apiUrl}/quizzes/updateQuizById?id=${quiz.id}`;
@@ -112,5 +115,28 @@ export async function deleteQuizRequest(quizId) {
     return data;
   } catch (error) {
     console.log(error.message);
+  }
+}
+
+export async function completeQuizRequest(quizAnswers) {
+  const token = getAuthToken();
+  const reqHeaders = new Headers();
+  reqHeaders.append("Content-Type", "application/json");
+  reqHeaders.append("Authorization", `Bearer ${token}`);
+  const url = `${apiUrl}/quizzes/completeQuiz`;
+  try {
+    const response = await fetch(url, {
+      method: "POST",
+      body: JSON.stringify(quizAnswers),
+      headers: reqHeaders,
+    });
+    if (!response.ok) {
+      throw new Error(`Response status: ${response.status}`);
+    }
+    const data = await response.json();
+    console.log("returning ", data);
+    return data;
+  } catch (error) {
+    throw new Error(`Error while rating ${error}`);
   }
 }

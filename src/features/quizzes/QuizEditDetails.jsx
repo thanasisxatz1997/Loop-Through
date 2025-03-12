@@ -9,8 +9,10 @@ import StyledFormTextArea from "../../styles/StyledFormTextArea";
 import Modal from "../../ui/Modal";
 import Button from "../../styles/StyledButton";
 import { HiMiniPencilSquare } from "react-icons/hi2";
+import TagsAddFrom from "../../ui/TagsAddFrom";
+import { useEditQuiz } from "./useEditQuiz";
 
-const StyledQuizDetails = styled.form`
+const StyledQuizDetails = styled.div`
   background-color: #ffffffd1;
   width: 400px;
   height: auto;
@@ -30,22 +32,17 @@ const difficultyOptions = [
   { value: "Hard", name: "Hard" },
 ];
 
-function QuizEditDetails({ quiz }) {
-  const { register, handleSubmit, reset, getValues, formState } = useForm({
-    defaultValues: {
-      name: quiz ? quiz.name : "",
-      description: quiz ? quiz.description : "",
-      difficulty: quiz ? quiz.difficulty : "",
-    },
-  });
-  const { errors } = formState;
-  function onSubmit(data) {}
-
-  function onError(errors) {
-    console.log(errors);
-  }
+function QuizEditDetails({
+  quiz,
+  handleUpdateQuiz,
+  register,
+  setValue,
+  getValues,
+  handleSaveTags,
+  currentTags,
+}) {
   return (
-    <StyledQuizDetails onSubmit={handleSubmit(onSubmit, onError)}>
+    <StyledQuizDetails>
       <Heading as="h2">Quiz Details:</Heading>
       <Row>
         <StyledFormLabel>Name:</StyledFormLabel>
@@ -69,7 +66,7 @@ function QuizEditDetails({ quiz }) {
       <Row type="vertical" gap="1px">
         <StyledFormLabel>Description:</StyledFormLabel>
         <StyledFormTextArea
-          width="40vh"
+          width="350px"
           options={difficultyOptions}
           id="description"
           {...register("description", {
@@ -82,16 +79,24 @@ function QuizEditDetails({ quiz }) {
         <Heading as="h3">Tags:</Heading>
         <SelectBox
           selectTitle="none"
-          options={quiz.tags.map((tag) => ({
+          options={currentTags.map((tag) => ({
             value: tag,
             name: tag,
           }))}
         ></SelectBox>
-        <Modal.Open opens="addTagsModal" fun={(e) => e.preventDefault()}>
-          <Button size="small">
-            <HiMiniPencilSquare size={20}></HiMiniPencilSquare>
-          </Button>
-        </Modal.Open>
+        <Modal>
+          <Modal.Window name="addTagsModal">
+            <TagsAddFrom
+              usedTags={getValues("tags")}
+              handleSaveTags={handleSaveTags}
+            ></TagsAddFrom>
+          </Modal.Window>
+          <Modal.Open opens="addTagsModal" fun={(e) => e.preventDefault()}>
+            <Button size="small">
+              <HiMiniPencilSquare size={20}></HiMiniPencilSquare>
+            </Button>
+          </Modal.Open>
+        </Modal>
       </Row>
     </StyledQuizDetails>
   );

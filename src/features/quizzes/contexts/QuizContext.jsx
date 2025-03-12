@@ -7,6 +7,7 @@ const QuizContext = createContext();
 const SECS_PER_QUESTION = 30;
 
 const initialState = {
+  quizId: null,
   questions: [],
   //'loading','error','ready','active','finished'
   status: "loading",
@@ -15,12 +16,18 @@ const initialState = {
   points: 0,
   highscore: 0,
   secondsRemaining: null,
+  answers: [],
 };
 
 function reducer(state, action) {
   switch (action.type) {
     case "dataReceived":
-      return { ...state, questions: action.payload, status: "ready" };
+      return {
+        ...state,
+        questions: action.payload.questions,
+        quizId: action.payload.quizId,
+        status: "ready",
+      };
     case "dataFailed":
       return { ...state, status: "error" };
     case "start":
@@ -33,9 +40,16 @@ function reducer(state, action) {
       const question = state.questions.at(state.index);
       return {
         ...state,
-        answer: action.payload,
+        answer: action.payload.answer,
+        answers: [
+          ...state.answers,
+          {
+            questionNumber: action.payload.questionNumber,
+            answer: action.payload.answer,
+          },
+        ],
         points:
-          action.payload === question.correctOption
+          action.payload.answer === question.correctOption
             ? state.points + question.points
             : state.points,
       };
@@ -52,6 +66,7 @@ function reducer(state, action) {
       return {
         ...initialState,
         questions: state.questions,
+        quizId: state.quizId,
         status: "ready",
       };
     case "tick":
@@ -68,7 +83,17 @@ function reducer(state, action) {
 function QuizProvider({ children }) {
   const { id } = useParams();
   const [
-    { questions, status, index, answer, points, highscore, secondsRemaining },
+    {
+      questions,
+      status,
+      index,
+      answer,
+      points,
+      highscore,
+      secondsRemaining,
+      answers,
+      quizId,
+    },
     dispatch,
   ] = useReducer(reducer, initialState);
 
@@ -84,7 +109,10 @@ function QuizProvider({ children }) {
       await fetch(`${apiUrl}/quizzes/quizById?id=${id}`)
         .then((res) => res.json())
         .then((data) =>
-          dispatch({ type: "dataReceived", payload: data.questions })
+          dispatch({
+            type: "dataReceived",
+            payload: { questions: data.questions, quizId: data.id },
+          })
         )
         .catch((err) => dispatch({ type: "dataFailed" }));
     }
@@ -102,6 +130,8 @@ function QuizProvider({ children }) {
         secondsRemaining,
         numQuestions,
         maxPossiblePoints,
+        answers,
+        quizId,
 
         dispatch,
       }}

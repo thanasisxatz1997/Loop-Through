@@ -1,19 +1,16 @@
 import styled from "styled-components";
 import Sidebar from "../ui/Sidebar";
 import CourseButton from "../features/courses/CourseButton";
-import StyledButton from "../styles/StyledButton";
 import CreateCourseButton from "../features/courses/CreateCourseButton";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import { createCourse, getCourses } from "../services/apiCourses";
 import Spinner from "../ui/Spinner";
 import Modal from "../ui/Modal";
-import CreateLessonForm from "../features/courses/CreateLessonForm";
 import CreateCourseForm from "../features/courses/CreateCourseForm";
-import Button from "../styles/StyledButton";
-import { HiMiniPencilSquare } from "react-icons/hi2";
 import TagsAddFrom from "../ui/TagsAddFrom";
 import { useState } from "react";
+
 const StyledCoursesContainer = styled.div`
   /* background: radial-gradient(
     circle,
@@ -21,6 +18,7 @@ const StyledCoursesContainer = styled.div`
     #7ca3d68a 50%,
     #87a4c98a 100%
   ); */
+
   background-color: var(--bg-color-light-0);
 
   display: grid;
@@ -41,25 +39,6 @@ const StyledCoursesMainContainer = styled.main`
   grid-auto-rows: 300px;
   grid-auto-columns: 300px;
 `;
-
-const testCourses = [
-  {
-    id: 1,
-    title: "react",
-    description: "A good React course!",
-    author: "Thanasis Chatziathanasiou",
-    image:
-      "https://assets.leetcode.com/explore/cards/top-151-interview-questions/img",
-  },
-  {
-    id: 2,
-    title: "Html",
-    description: "A good html course!",
-    author: "Thanasis Chatziathanasiou",
-    image:
-      "https://assets.leetcode.com/explore/cards/leetcodes-interview-crash-course-data-structures-and-algorithms/img-1663091244.png",
-  },
-];
 
 function Courses() {
   const queryClient = useQueryClient();
@@ -89,7 +68,10 @@ function Courses() {
     queryFn: getCourses,
   });
 
-  if (isLoading) return <Spinner></Spinner>;
+  if (isLoading || isCreatingCourse) return <Spinner></Spinner>;
+
+  if (error) return <div>Error while loading courses.</div>;
+
   return (
     <StyledCoursesContainer>
       <Modal>

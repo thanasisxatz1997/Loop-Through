@@ -6,6 +6,7 @@ import StyledFormTextInput from "../../styles/StyledFormTextInput";
 import Modal from "../../ui/Modal";
 import SelectBox from "../../ui/SelectBox";
 import styled from "styled-components";
+import { useState } from "react";
 
 const StyledQuizList = styled.ul`
   margin-top: 1rem;
@@ -49,10 +50,44 @@ function QuizEditQuestionList({
   setCurrentQuestion,
   handleUpdateQuiz,
   handleSaveTags,
+  questions,
+  setValue,
+  getValues,
+  watch,
 }) {
+  function handleQuestionChange(e, index) {
+    const prevQuestions = getValues("questions"); // Get current questions array
+    console.log("Current questions:", prevQuestions);
+    console.log("IN HERE");
+    console.log(e.target.value, index);
+    setValue(
+      "questions",
+      questions.map((q, i) =>
+        i !== index ? q : { ...q, question: e.target.value }
+      )
+    );
+    // setValue(
+    //   "questions",
+    //   (prevQuestions) => {
+    //     const updatedQuestions = Array.isArray(prevQuestions)
+    //       ? [...prevQuestions]
+    //       : []; // ✅ Ensure it's an array
+    //     updatedQuestions[index] = {
+    //       ...updatedQuestions[index],
+    //       question: e.target.value,
+    //     };
+    //     return updatedQuestions;
+    //   },
+    //   { shouldDirty: true }
+    // );
+  }
+
+  // function handleBlur() {
+  //   setValue("questions", tempQuestions);
+  // }
   return (
     <StyledQuizList>
-      {quiz.questions.map((question, i) => (
+      {questions?.map((question, i) => (
         <Row type="vertical" gap="50px" margin="10px" key={i}>
           <AccordionItem
             curOpen={curOpen}
@@ -67,11 +102,13 @@ function QuizEditQuestionList({
                 <h4>Question:</h4>
                 <StyledFormTextInput
                   defaultValue={question.question}
+                  onBlur={(e) => handleQuestionChange(e, i)}
+                  // onBlur={handleBlur}
                 ></StyledFormTextInput>
               </Row>
               <h4>Options:</h4>
               <Row type="vertical" margin="0px 50px ">
-                {question.options.map((option, i) => (
+                {question?.options?.map((option, i) => (
                   <Row key={i} content="start" gap="10px">
                     <Heading as="h4">{i}</Heading>
                     <StyledFormTextInput
@@ -79,11 +116,15 @@ function QuizEditQuestionList({
                     ></StyledFormTextInput>
                   </Row>
                 ))}
-                <></>
               </Row>
               <Row content="start" gap="10px">
                 <h4>Correct Option:</h4>
-                <SelectBox></SelectBox>
+                <SelectBox
+                  options={question?.options?.map((option, i) => ({
+                    value: i,
+                    name: i,
+                  }))}
+                ></SelectBox>
               </Row>
               <Row content="start" gap="10px">
                 <h4>Points:</h4>
