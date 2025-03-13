@@ -10,9 +10,19 @@ import Heading from "../styles/Heading";
 import { HiStar } from "react-icons/hi2";
 import { HiOutlineStar } from "react-icons/hi2";
 import Modal from "./Modal";
+import SearchBar from "./SearchBar";
 
 const StyledSidebarItem = styled.button`
   background-color: var(--color-brand-200);
+`;
+
+const SidebarCourseItem = styled.div`
+  padding-left: 5px;
+  border-radius: 2px;
+  border-left: solid 5px var(--color-grey-500);
+  &:hover {
+    border-left: solid 5px blue;
+  }
 `;
 
 function Sidebar({ courses, searchTags }) {
@@ -43,18 +53,22 @@ function Sidebar({ courses, searchTags }) {
     }
   }
 
+  console.log("sidebar courses: ", displayedCourses);
   return (
-    <StyledSidebar>
+    <StyledSidebar gap="10px">
       <Heading textalign="center">Courses</Heading>
-      <Row>
-        <HiMagnifyingGlass size={20}></HiMagnifyingGlass>
-        <StyledSearchInput
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-        ></StyledSearchInput>
+      <Row content="center">
+        {/* <HiMagnifyingGlass size={20}></HiMagnifyingGlass> */}
+        <SearchBar
+          width="32rem"
+          placeholder="Search for a course!"
+          searchText={search}
+          setSearchText={setSearch}
+        ></SearchBar>
+        {/* <StyledSearchInput></StyledSearchInput> */}
       </Row>
       <Row gap="5px">
-        {`Tags: `}
+        <div>{`Tags(${searchTags.length}): `}</div>
         <Row
           gap="5px"
           style={{
@@ -87,36 +101,45 @@ function Sidebar({ courses, searchTags }) {
           </Button>
         </Modal.Open>
       </Row>
+      <hr></hr>
       <Row type="vertical" gap="1.5px">
-        {displayedCourses.map((course) => (
-          <StyledSidebarLessonItem key={course.id}>
-            <Row content="space-between" align-items="center">
-              <div
-                style={{
-                  whiteSpace: "nowrap",
-                  overflow: "hidden",
-                  textOverflow: "ellipsis",
-                  maxWidth: "160px",
-                  minHeight: "20px",
-                }}
-              >{`${course.name}`}</div>
-              <div
-                style={{
-                  fontSize: "16px",
-                  textAlign: "center",
-                  marginLeft: "10px",
-                }}
-              >
-                {course.rating}
-              </div>
-              <HiOutlineStar
-                style={{
-                  paddingBottom: "1px",
-                  color: "var(--color-yellow-700)",
-                }}
-              ></HiOutlineStar>
-            </Row>
-          </StyledSidebarLessonItem>
+        {displayedCourses.map((course, index) => (
+          <SidebarCourseItem
+            onMouseOver={() => console.log("OVER")}
+            key={`${course.id}-${index}`}
+          >
+            <a href={`/course/:${course.id}`}>
+              <Row content="space-between" align-items="center">
+                <div
+                  style={{
+                    whiteSpace: "nowrap",
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                    maxWidth: "160px",
+                    minHeight: "20px",
+                  }}
+                >{`${course.name}`}</div>
+                <Row>
+                  <div
+                    style={{
+                      fontSize: "16px",
+                      textAlign: "center",
+                      marginLeft: "10px",
+                    }}
+                  >
+                    {`${course.rating}`}
+                  </div>
+                  <HiOutlineStar
+                    style={{
+                      paddingBottom: "1px",
+                      color: "var(--color-yellow-700)",
+                    }}
+                  ></HiOutlineStar>
+                  {`(${course.totalRatings})`}
+                </Row>
+              </Row>
+            </a>
+          </SidebarCourseItem>
         ))}
       </Row>
     </StyledSidebar>

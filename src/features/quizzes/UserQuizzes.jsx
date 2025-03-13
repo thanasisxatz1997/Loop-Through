@@ -7,6 +7,7 @@ import Spinner from "../../ui/Spinner";
 import { useUser } from "../authentication/useUser";
 import TagsAddFrom from "../../ui/TagsAddFrom";
 import Modal from "../../ui/Modal";
+import { useUserData } from "../../hooks/user/useUserData";
 
 function UserQuizzes() {
   const queryClient = useQueryClient();

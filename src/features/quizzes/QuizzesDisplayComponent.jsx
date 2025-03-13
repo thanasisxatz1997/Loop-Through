@@ -16,6 +16,9 @@ import Button from "../../styles/StyledButton";
 import Modal from "../../ui/Modal";
 
 import CreateQuizForm from "./CreateQuizForm";
+import { useUser } from "../authentication/useUser";
+import { useUserData } from "../../hooks/user/useUserData";
+import Spinner from "../../ui/Spinner";
 
 const StyledQuizzesContainer = styled.div`
   background-color: var(--bg-color-light-0);
@@ -105,6 +108,36 @@ function QuizzesDisplayComponent({
   edit = false,
   createNewQuiz,
 }) {
+  const {
+    user,
+    isPending: isPendingUser,
+    isAuthenticated,
+    isFetching: isFetchingUser,
+  } = useUser();
+
+  console.log(user);
+
+  const { userData, isLoadingUserData } = useUserData(user?.id);
+  console.log(userData);
+  if (isPendingUser || isFetchingUser || isLoadingUserData) {
+    return <Spinner></Spinner>;
+  }
+
+  function hasCompletedQuiz(quizId) {
+    if (userData?.completedQuizzes?.find((quiz) => quiz.quizId === quizId)) {
+      return true;
+    } else {
+      return false;
+    }
+    console.log(quizId);
+    return userData?.completedQuizzes?.find((quiz) => quiz.quizId === quizId);
+  }
+
+  function getQuizRating(quizId) {
+    return userData?.completedQuizzes?.find((quiz) => quiz.quizId === quizId)
+      .score;
+  }
+
   return (
     <StyledQuizzesContainer>
       <StyledQuizzesMainContainer>
@@ -126,12 +159,12 @@ function QuizzesDisplayComponent({
               <StyledTr>
                 <StyledTh>
                   <Row margin="0px 5px 0px 0px">
-                    Status <HiMiniChevronUpDown />
+                    Title <HiMiniChevronUpDown />
                   </Row>
                 </StyledTh>
                 <StyledTh>
                   <Row margin="0px 5px 0px 0px">
-                    Title <HiMiniChevronUpDown />
+                    Status <HiMiniChevronUpDown />
                   </Row>
                 </StyledTh>
                 <StyledTh>
@@ -153,7 +186,13 @@ function QuizzesDisplayComponent({
                   <StyledTd>
                     <StyledLink to={`/quiz/${quiz.id}`}>{quiz.name}</StyledLink>
                   </StyledTd>
-                  <StyledTd>{edit ? "Created" : "Completed"}</StyledTd>
+                  <StyledTd>
+                    {edit
+                      ? "Created"
+                      : !hasCompletedQuiz(quiz.id)
+                      ? "Unsolved"
+                      : `Best score: ${Math.ceil(getQuizRating(quiz.id))}%`}
+                  </StyledTd>
                   <StyledTd>{quiz.difficulty}</StyledTd>
                   {edit && (
                     <StyledTd>

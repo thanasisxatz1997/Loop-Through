@@ -25,6 +25,7 @@ import CreateCourseForm from "../features/courses/CreateCourseForm";
 import { useUserCourseRatings } from "../features/courses/useUserCourseRatings";
 import { useUser } from "../features/authentication/useUser";
 import { useRateCourse } from "../features/courses/useRateCourse";
+import { useCourses } from "../features/courses/useCourses";
 
 const StyledCourseContainer = styled.div`
   display: grid;
@@ -89,7 +90,11 @@ function Course() {
   const currentRating = courseRatings?.find(
     (rating) => rating.courseId === courseId
   )?.rating;
-  console.log(currentRating);
+
+  const { courses, isLoadingCourses } = useCourses();
+
+  const course = courses?.find((course) => (course.id = courseId));
+  console.log(course);
   const {
     isLoading,
     data: lessons,
@@ -109,10 +114,10 @@ function Course() {
     rateCourse(courseRating);
   }
 
-  if (isLoading) return <Spinner></Spinner>;
+  if (isLoading || isLoadingCourses) return <Spinner></Spinner>;
   if (error) console.log(error);
   if (courseId === ":-1") return <CourseCreate></CourseCreate>;
-  const activeLesson = lessons.filter(
+  const activeLesson = lessons?.filter(
     (lesson) => lesson.id === activeLessonId
   )[0];
 
@@ -121,6 +126,13 @@ function Course() {
       <StyledCourseContainer>
         <Modal>
           <LessonSidebar>
+            <Heading userselect="false" textalign="center">
+              {course.name}
+            </Heading>
+            <hr></hr>
+            <Heading as={"h3"} textalign="left" userselect="false">
+              Lessons:
+            </Heading>
             {lessons.map((lesson) => (
               <SidebarLessonItem
                 key={lesson.id}

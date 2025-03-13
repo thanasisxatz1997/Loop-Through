@@ -10,6 +10,11 @@ import Modal from "../ui/Modal";
 import CreateCourseForm from "../features/courses/CreateCourseForm";
 import TagsAddFrom from "../ui/TagsAddFrom";
 import { useState } from "react";
+import { useCourses } from "../features/courses/useCourses";
+
+const FullHeightContainer = styled.div`
+  height: 100%;
+`;
 
 const StyledCoursesContainer = styled.div`
   /* background: radial-gradient(
@@ -18,13 +23,11 @@ const StyledCoursesContainer = styled.div`
     #7ca3d68a 50%,
     #87a4c98a 100%
   ); */
-
   background-color: var(--bg-color-light-0);
-
   display: grid;
   height: 100%;
   grid-template-rows: auto 1fr;
-  grid-template-columns: 26rem 1fr;
+  grid-template-columns: 36rem 1fr;
   /* grid-row: 1; */
 `;
 
@@ -44,9 +47,8 @@ function Courses() {
   const queryClient = useQueryClient();
   const [searchTags, setSearchTags] = useState([]);
 
-  function handleChangeSearchTags(tags) {
-    setSearchTags(tags);
-  }
+  const { courses, isLoadingCourses, error } = useCourses();
+  console.log(courses);
 
   const { mutate: createNewCourse, isLoading: isCreatingCourse } = useMutation({
     mutationFn: createCourse,
@@ -59,49 +61,50 @@ function Courses() {
     },
   });
 
-  const {
-    isLoading,
-    data: courses,
-    error,
-  } = useQuery({
-    queryKey: ["courses"],
-    queryFn: getCourses,
-  });
+  function handleChangeSearchTags(tags) {
+    setSearchTags(tags);
+  }
 
-  if (isLoading || isCreatingCourse) return <Spinner></Spinner>;
+  if (isLoadingCourses || isCreatingCourse) return <Spinner></Spinner>;
 
   if (error) return <div>Error while loading courses.</div>;
 
   return (
-    <StyledCoursesContainer>
+    <FullHeightContainer>
       <Modal>
-        <Sidebar courses={courses} searchTags={searchTags}></Sidebar>
-        <StyledCoursesMainContainer>
-          {courses.map((course) => (
-            <CourseButton
-              key={course.id}
-              id={course.id}
-              title={course.name}
-              description={course.description}
-              author={course.authorName}
-              image={course.image.replace(/ /g, "%20")}
-            ></CourseButton>
-          ))}
-          <Modal.Window name="addTagsModal">
-            <TagsAddFrom
-              usedTags={searchTags}
-              handleSaveTags={(tags) => handleChangeSearchTags(tags)}
-            ></TagsAddFrom>
-          </Modal.Window>
-          <Modal.Open opens="newCourseModal">
-            <CreateCourseButton>Create a new Course!</CreateCourseButton>
-          </Modal.Open>
-          <Modal.Window name="newCourseModal">
-            <CreateCourseForm createCourse={createNewCourse}></CreateCourseForm>
-          </Modal.Window>
-        </StyledCoursesMainContainer>
+        <StyledCoursesContainer>
+          <Sidebar courses={courses} searchTags={searchTags}></Sidebar>
+          <div>
+            <StyledCoursesMainContainer>
+              {courses.map((course, index) => (
+                <CourseButton
+                  key={`${course.id}-${index}`}
+                  id={course.id}
+                  title={course.name}
+                  description={course.description}
+                  author={course.authorName}
+                  image={course.image.replace(/ /g, "%20")}
+                ></CourseButton>
+              ))}
+              <Modal.Window name="addTagsModal">
+                <TagsAddFrom
+                  usedTags={searchTags}
+                  handleSaveTags={(tags) => handleChangeSearchTags(tags)}
+                ></TagsAddFrom>
+              </Modal.Window>
+              <Modal.Open opens="newCourseModal">
+                <CreateCourseButton>Create a new Course!</CreateCourseButton>
+              </Modal.Open>
+              <Modal.Window name="newCourseModal">
+                <CreateCourseForm
+                  createCourse={createNewCourse}
+                ></CreateCourseForm>
+              </Modal.Window>
+            </StyledCoursesMainContainer>
+          </div>
+        </StyledCoursesContainer>
       </Modal>
-    </StyledCoursesContainer>
+    </FullHeightContainer>
   );
 }
 

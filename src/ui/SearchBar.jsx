@@ -36,11 +36,19 @@ const StyledIcon = styled(HiMagnifyingGlassCircle)`
   color: #aaa;
 `;
 
-function SearchBar({ border, placeholder = "", searchText, setSearchText }) {
+function SearchBar({
+  border,
+  placeholder = "",
+  searchText,
+  setSearchText,
+  width = "auto",
+}) {
+  console.log(width);
   // const [searchText, setSearchText] = useState("");
   return (
     <SearchContainer border={border}>
       <StyledSearchBar
+        style={{ width: width }}
         type="text"
         placeholder={placeholder}
         value={searchText}
