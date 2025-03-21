@@ -13,6 +13,7 @@ import Button from "../styles/StyledButton";
 import { HiArchiveBoxXMark } from "react-icons/hi2";
 import DeleteConfirmation from "./DeleteConfirmation";
 import { useDeleteLesson } from "../features/lessons/useDeleteLesson";
+
 const FloatingDiv = styled.div`
   top: 0px;
   right: 10px;
@@ -57,9 +58,7 @@ function LessonContent({ lesson }) {
   return (
     <Row type="vertical">
       <Row content="center" gap="10px">
-        <LessonTitle
-          title={`This is lesson number ${lesson.lessonNumber}`}
-        ></LessonTitle>
+        <LessonTitle title={`${lesson.name}`}></LessonTitle>
         <Row>
           <Modal.Open opens="deleteLessonConfirmationModal">
             <Button variation="danger" size="small">
@@ -83,7 +82,6 @@ function LessonContent({ lesson }) {
               border={hoveredId === element.id && "1px dashed  #000000;"}
             >
               <LessonElement element={element}></LessonElement>
-
               <FloatingDiv display="block">
                 <Menus.Menu>
                   {hoveredId === element.id && <Menus.Toggle id={element.id} />}

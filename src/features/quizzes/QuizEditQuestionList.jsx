@@ -7,6 +7,7 @@ import Modal from "../../ui/Modal";
 import SelectBox from "../../ui/SelectBox";
 import styled from "styled-components";
 import { useState } from "react";
+import StyledFormTextArea from "../../styles/StyledFormTextArea";
 
 const StyledQuizList = styled.ul`
   margin-top: 1rem;
@@ -97,11 +98,13 @@ function QuizEditQuestionList({
             <Row key={question.question} type="vertical" margin="10px 0px">
               <Row content="start" gap="10px">
                 <h4>Question:</h4>
-                <StyledFormTextInput
+
+                <StyledFormTextArea
+                  style={{ height: "200px" }}
                   defaultValue={question.question}
                   onBlur={(e) => handleQuestionChange(e, i)}
                   // onBlur={handleBlur}
-                ></StyledFormTextInput>
+                ></StyledFormTextArea>
               </Row>
               <h4>Options:</h4>
               <Row type="vertical" margin="0px 50px ">

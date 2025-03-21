@@ -12,7 +12,7 @@ function Question() {
   const question = questions.at(index);
   return (
     <StyledQuestionContainer>
-      <h4>{question.question}</h4>
+      <h4 style={{ whiteSpace: "pre-wrap" }}>{question.question}</h4>
       <Options question={question} />
     </StyledQuestionContainer>
   );

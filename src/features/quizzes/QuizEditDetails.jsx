@@ -79,7 +79,7 @@ function QuizEditDetails({
         <Heading as="h3">Tags:</Heading>
         <SelectBox
           selectTitle="none"
-          options={currentTags.map((tag) => ({
+          options={currentTags?.map((tag) => ({
             value: tag,
             name: tag,
           }))}

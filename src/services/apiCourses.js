@@ -46,7 +46,7 @@ export async function createCourse(newCourse) {
     authorId: newCourse.authorId,
     lessons: [],
     authorName: newCourse.authorName,
-    rating: 4.3,
+    rating: 0,
     description: newCourse.description,
     image: imagePath,
     tags: newCourse.tags ? newCourse.tags : [],

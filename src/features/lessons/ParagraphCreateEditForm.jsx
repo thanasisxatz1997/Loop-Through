@@ -80,6 +80,7 @@ function ParagraphCreateEditForm({
     <StyledFormContainer onSubmit={handleSubmit(onSubmit, onError)}>
       <StyledFormLabel>Text:</StyledFormLabel>
       <StyledFormTextArea
+        style={{ height: "400px" }}
         {...register("content", { required: "This field is required" })}
       ></StyledFormTextArea>
       <Row content="flex-start" gap="10px" margin="10px 0px">

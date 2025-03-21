@@ -38,7 +38,7 @@ const StyledQuizList = styled.ul`
   margin-top: 1rem;
   padding: 1rem;
   border-radius: 10px;
-  background: #ffffff59;
+  background: var(--color-grey-0);
   min-width: 50rem;
 `;
 
@@ -210,7 +210,6 @@ function QuizzesDisplayComponent({
             <Modal>
               <Row content="center">
                 <Modal.Open opens="newQuizModal">
-                  {/* <CreateCourseButton>Create a new Course!</CreateCourseButton> */}
                   <StyledLink>
                     <Button variation="transparent" size="small" shadow="none">
                       <Row>

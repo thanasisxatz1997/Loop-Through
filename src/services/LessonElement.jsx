@@ -9,6 +9,7 @@ function LessonElement({ element }) {
         <p
           style={{
             textAlign: element.textAlign ? element.textAlign : "",
+            whiteSpace: "pre-wrap",
             fontSize: element.size ? element.size : "15px",
             backgroundColor: element.backgroundColor
               ? element.backgroundColor

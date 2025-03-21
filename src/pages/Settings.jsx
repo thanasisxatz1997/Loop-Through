@@ -19,7 +19,7 @@ const StyledSettingsContainer = styled.div`
 
 const StyledSettingsMain = styled.main`
   border-radius: 10px;
-  background-color: #ffffffd1;
+  background-color: var(--color-grey-0);
   height: 50vh;
   width: 100vh;
   padding: 3rem;

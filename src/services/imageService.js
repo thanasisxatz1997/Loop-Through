@@ -37,14 +37,9 @@ export async function deleteImage(imageName) {
 
 export async function deleteLessonImage(userId, courseId, lessonId, imageName) {
   try {
-    console.log("userId: ", userId);
-    console.log("courseId: ", courseId);
-    console.log("lessonId: ", lessonId);
-    console.log("trying to delete image with name: ", imageName);
     const { data1, error1 } = await supabase.storage
       .from(`lesson-images`)
       .list();
-    console.log(data1);
     const { data, error } = await supabase.storage
       .from(`lesson-images`)
       .remove(`${userId}/${courseId}/${lessonId}/${imageName}`);

@@ -22,6 +22,7 @@ const SidebarCourseItem = styled.div`
   border-left: solid 5px var(--color-grey-500);
   &:hover {
     border-left: solid 5px blue;
+    background-color: var(--color-brand-50);
   }
 `;
 
@@ -104,10 +105,7 @@ function Sidebar({ courses, searchTags }) {
       <hr></hr>
       <Row type="vertical" gap="1.5px">
         {displayedCourses.map((course, index) => (
-          <SidebarCourseItem
-            onMouseOver={() => console.log("OVER")}
-            key={`${course.id}-${index}`}
-          >
+          <SidebarCourseItem key={`${course.id}-${index}`}>
             <a href={`/course/:${course.id}`}>
               <Row content="space-between" align-items="center">
                 <div
