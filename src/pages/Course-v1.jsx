@@ -41,8 +41,6 @@ function Course() {
   ];
   const params = useParams();
   const courseId = params.id;
-  console.log("courseId: ", courseId);
-  console.log(courseId === "-1");
 
   const activeLessonId = useActiveLessonParams();
   const hasActiveLesson = activeLessonId !== 0 && activeLessonId !== null;

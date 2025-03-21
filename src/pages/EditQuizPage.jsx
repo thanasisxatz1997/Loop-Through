@@ -68,7 +68,6 @@ function EditQuizPage() {
   const { errors } = formState;
 
   function handleSaveTags(newTags) {
-    console.log("New tags received:", newTags);
     setValue("tags", newTags);
   }
 
@@ -80,7 +79,6 @@ function EditQuizPage() {
 
   function onSubmit(data) {
     const newQuiz = { ...quiz, ...data };
-    console.log("ON SUBMIT", newQuiz);
     editQuiz(newQuiz);
   }
 
@@ -134,7 +132,6 @@ function EditQuizPage() {
                 variation="danger"
                 size="medium"
                 onClick={() => {
-                  console.log("in the component", quizId);
                   deleteQuiz(quizId.id);
                 }}
               >

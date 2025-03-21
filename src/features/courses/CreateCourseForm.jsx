@@ -10,13 +10,12 @@ import StyledFormTextArea from "../../styles/StyledFormTextArea";
 import StyledFormTextInput from "../../styles/StyledFormTextInput";
 import StyledFormLabel from "../../styles/StyledFormLabel";
 import { useUser } from "../authentication/useUser";
+import Spinner from "../../ui/Spinner";
 
-function CreateCourseForm({ createCourse, onCloseModal, userId }) {
+function CreateCourseForm({ createCourse, onCloseModal, userId, user }) {
   const [courseName, setCourseName] = useState("");
   const [courseDescription, setCourseDescription] = useState("");
   const [courseImage, setCourseImage] = useState(null);
-
-  const { user, isPending, isAuthenticated, isFetching } = useUser();
 
   const { register, handleSubmit, reset, getValues, formState } = useForm({
     defaultValues: { authorId: userId },
@@ -25,7 +24,12 @@ function CreateCourseForm({ createCourse, onCloseModal, userId }) {
   console.log("inside create course form: ");
   function onSubmit(data) {
     console.log("data being sent in course: ", data);
-    createCourse({ ...data, image: data.image[0], authorId: user.id });
+    createCourse({
+      ...data,
+      image: data.image[0],
+      authorId: userId,
+      authorName: user.user_metadata.username,
+    });
     onCloseModal?.();
   }
 

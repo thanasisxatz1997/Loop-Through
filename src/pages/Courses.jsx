@@ -11,6 +11,9 @@ import CreateCourseForm from "../features/courses/CreateCourseForm";
 import TagsAddFrom from "../ui/TagsAddFrom";
 import { useState } from "react";
 import { useCourses } from "../features/courses/useCourses";
+import Heading from "../styles/Heading";
+import Row from "../styles/Row";
+import { useUser } from "../features/authentication/useUser";
 
 const FullHeightContainer = styled.div`
   height: 100%;
@@ -48,7 +51,7 @@ function Courses() {
   const [searchTags, setSearchTags] = useState([]);
 
   const { courses, isLoadingCourses, error } = useCourses();
-  console.log(courses);
+  const { user, isPending } = useUser();
 
   const { mutate: createNewCourse, isLoading: isCreatingCourse } = useMutation({
     mutationFn: createCourse,
@@ -65,7 +68,8 @@ function Courses() {
     setSearchTags(tags);
   }
 
-  if (isLoadingCourses || isCreatingCourse) return <Spinner></Spinner>;
+  if (isLoadingCourses || isCreatingCourse || isPending)
+    return <Spinner></Spinner>;
 
   if (error) return <div>Error while loading courses.</div>;
 
@@ -74,7 +78,10 @@ function Courses() {
       <Modal>
         <StyledCoursesContainer>
           <Sidebar courses={courses} searchTags={searchTags}></Sidebar>
-          <div>
+          <div style={{ paddingTop: "2rem" }}>
+            <Row content="center">
+              <Heading>Recommended</Heading>
+            </Row>
             <StyledCoursesMainContainer>
               {courses.map((course, index) => (
                 <CourseButton
@@ -92,12 +99,14 @@ function Courses() {
                   handleSaveTags={(tags) => handleChangeSearchTags(tags)}
                 ></TagsAddFrom>
               </Modal.Window>
-              <Modal.Open opens="newCourseModal">
+              {/* <Modal.Open opens="newCourseModal">
                 <CreateCourseButton>Create a new Course!</CreateCourseButton>
-              </Modal.Open>
+              </Modal.Open> */}
               <Modal.Window name="newCourseModal">
                 <CreateCourseForm
                   createCourse={createNewCourse}
+                  userId={user.id}
+                  user={user}
                 ></CreateCourseForm>
               </Modal.Window>
             </StyledCoursesMainContainer>

@@ -32,8 +32,6 @@ function CreateQuestionForm({ onCloseModal, handleUpdateQuiz, quiz }) {
     },
   });
 
-  console.log(getValues().options);
-
   const { errors } = formState;
 
   const options = watch("options");

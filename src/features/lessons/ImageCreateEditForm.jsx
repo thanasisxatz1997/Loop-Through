@@ -10,6 +10,7 @@ import { useForm } from "react-hook-form";
 import { useEffect } from "react";
 import { uploadLessonImage } from "../../services/imageService";
 import { useUser } from "../authentication/useUser";
+import toast from "react-hot-toast";
 
 const StyledFormContainer = styled.form`
   min-height: 150px;
@@ -50,13 +51,15 @@ function ImageCreateEditForm({
     startingContent && startingContent.content
   );
 
+  const editMode = startingContent !== null ? true : false;
+
   function onSizeXChanged(e) {
     setValue("sizeX", e.target.value); // Update form state
     setSizeX(e.target.value);
   }
 
   function onSizeYChanged(e) {
-    setValue("sizeX", e.target.value); // Update form state
+    setValue("sizeY", e.target.value); // Update form state
     setSizeY(e.target.value);
   }
   const [sizeX, setSizeX] = useState(getValues("sizeX"));
@@ -72,24 +75,31 @@ function ImageCreateEditForm({
 
   async function onSubmit(data) {
     try {
-      const { imagePath, imageName } = await uploadLessonImage(
-        user.id,
-        lesson.courseId,
-        lesson.id,
-        data.content[0]
-      );
-      if (imagePath) {
+      if (data.content[0].name) {
+        const { imagePath, imageName } = await uploadLessonImage(
+          user.id,
+          lesson.courseId,
+          lesson.id,
+          data.content[0]
+        );
+        if (imagePath && imageName) {
+          onLessonEdited({
+            type: "i",
+            ...data,
+            content: imagePath,
+            imageName: imageName,
+          });
+        } else {
+          toast.error("Error while uploading image.");
+        }
+      } else {
         onLessonEdited({
           type: "i",
           ...data,
-          content: imagePath,
-          imageName: imageName,
         });
-      } else {
-        console.log("something went wrong.");
       }
     } catch (error) {
-      console.log(error.message);
+      toast.error(error.message);
     }
     onCloseModal?.();
   }
@@ -105,7 +115,9 @@ function ImageCreateEditForm({
         <FileInput
           id="content"
           accept="image/*"
-          {...register("content", { required: "This field is required" })}
+          {...register("content", {
+            required: !editMode ? "This field is required" : false,
+          })}
           onInput={(e) => {
             setCourseImage(URL.createObjectURL(e.target.files[0]));
           }}

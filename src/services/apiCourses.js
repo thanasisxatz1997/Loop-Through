@@ -45,13 +45,12 @@ export async function createCourse(newCourse) {
     name: newCourse.name,
     authorId: newCourse.authorId,
     lessons: [],
-    authorName: "admin",
+    authorName: newCourse.authorName,
     rating: 4.3,
     description: newCourse.description,
     image: imagePath,
     tags: newCourse.tags ? newCourse.tags : [],
   };
-  console.log("The course that will be created: ", course);
   const reqHeaders = new Headers();
   reqHeaders.append("Content-Type", "application/json");
   reqHeaders.append("Authorization", `Bearer ${token}`);

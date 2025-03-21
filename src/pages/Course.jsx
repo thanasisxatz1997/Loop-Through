@@ -21,7 +21,6 @@ import {
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import Spinner from "../ui/Spinner";
 import toast from "react-hot-toast";
-import CreateCourseForm from "../features/courses/CreateCourseForm";
 import { useUserCourseRatings } from "../features/courses/useUserCourseRatings";
 import { useUser } from "../features/authentication/useUser";
 import { useRateCourse } from "../features/courses/useRateCourse";
@@ -85,7 +84,6 @@ function Course() {
   const { user } = useUser();
   const { rateCourse, isRatingCourse } = useRateCourse();
   const { userCourseRatings, isPending } = useUserCourseRatings(user.id);
-  console.log(userCourseRatings);
   const courseRatings = userCourseRatings?.courseRatings;
   const currentRating = courseRatings?.find(
     (rating) => rating.courseId === courseId
@@ -94,7 +92,6 @@ function Course() {
   const { courses, isLoadingCourses } = useCourses();
 
   const course = courses?.find((course) => (course.id = courseId));
-  console.log(course);
   const {
     isLoading,
     data: lessons,
@@ -105,12 +102,10 @@ function Course() {
   });
 
   function handleRateCourse(rating) {
-    console.log("RATING");
     const courseRating = {
       courseId: courseId,
       rating: rating,
     };
-    console.log("THE COURSE RATING", courseRating);
     rateCourse(courseRating);
   }
 

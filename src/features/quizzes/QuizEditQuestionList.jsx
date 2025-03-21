@@ -57,9 +57,6 @@ function QuizEditQuestionList({
 }) {
   function handleQuestionChange(e, index) {
     const prevQuestions = getValues("questions"); // Get current questions array
-    console.log("Current questions:", prevQuestions);
-    console.log("IN HERE");
-    console.log(e.target.value, index);
     setValue(
       "questions",
       questions.map((q, i) =>

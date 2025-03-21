@@ -79,7 +79,6 @@ export async function updateQuiz(quiz) {
     difficulty: quiz.difficulty,
     tags: quiz.tags,
   };
-  console.log("THE QUIZ TO BE UPDATED ", quizBody);
   const reqHeaders = new Headers();
   reqHeaders.append("Content-Type", "application/json");
   const url = `${apiUrl}/quizzes/updateQuizById?id=${quiz.id}`;

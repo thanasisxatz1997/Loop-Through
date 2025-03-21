@@ -10,7 +10,5 @@ export function useCourses() {
     queryKey: ["courses"],
     queryFn: getCourses,
   });
-
-  console.log("Fetching courses:", courses);
   return { courses, isLoadingCourses, error };
 }

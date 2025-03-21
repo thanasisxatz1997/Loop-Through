@@ -1,12 +1,10 @@
 import { apiUrl } from "./mongoApi";
 
-export async function createUser(userId) {
+export async function createUser(userId, userName) {
   const user = {
     id: userId,
-    courses: [],
-    quizzes: [],
-    ratings: [],
-    settings: {},
+    userName: userName,
+    completedQuizzes: [],
   };
   const url = `${apiUrl}/users/new`;
   const reqHeaders = new Headers();

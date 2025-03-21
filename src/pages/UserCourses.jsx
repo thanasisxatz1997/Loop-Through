@@ -192,38 +192,40 @@ function UserCourses() {
             ))}
             <li>
               <Row content="center">
+                {/* <StyledLink></StyledLink> */}
                 <Modal.Open opens="newCourseModal">
-                  <StyledLink>
-                    <Button variation="transparent" size="large" shadow="none">
-                      <Row>
-                        <HiMiniPlusCircle size={20}></HiMiniPlusCircle>
-                        New Course
-                      </Row>
-                    </Button>
-                  </StyledLink>
+                  <Button variation="transparent" size="large" shadow="none">
+                    <Row>
+                      <HiMiniPlusCircle size={20}></HiMiniPlusCircle>
+                      New Course
+                    </Row>
+                  </Button>
                 </Modal.Open>
+                <Modal.Window name="newCourseModal">
+                  <CreateCourseForm
+                    createCourse={createNewCourse}
+                    userId={user.id}
+                    user={user}
+                  ></CreateCourseForm>
+                </Modal.Window>
+                <Modal.Window name="test">
+                  <div>TESTING</div>
+                </Modal.Window>
+                <Modal.Window name="addTagsModal">
+                  <TagsAddFrom
+                    usedTags={currentTags}
+                    handleSaveTags={handleSaveTags}
+                  ></TagsAddFrom>
+                </Modal.Window>
+                <Modal.Window name="deleteCourseConfirmationModal">
+                  <DeleteConfirmation
+                    onConfirm={() => deleteCourse(targetCourseId)}
+                  ></DeleteConfirmation>
+                </Modal.Window>
               </Row>
             </li>
           </StyledCourseList>
         </StyledCoursesMainContainer>
-
-        <Modal.Window name="addTagsModal">
-          <TagsAddFrom
-            usedTags={currentTags}
-            handleSaveTags={handleSaveTags}
-          ></TagsAddFrom>
-        </Modal.Window>
-        <Modal.Window name="newCourseModal">
-          <CreateCourseForm
-            createCourse={createNewCourse}
-            userId={user.id}
-          ></CreateCourseForm>
-        </Modal.Window>
-        <Modal.Window name="deleteCourseConfirmationModal">
-          <DeleteConfirmation
-            onConfirm={() => deleteCourse(targetCourseId)}
-          ></DeleteConfirmation>
-        </Modal.Window>
       </Modal>
     </StyledCoursesContainer>
   );

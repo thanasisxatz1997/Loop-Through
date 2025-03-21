@@ -15,8 +15,7 @@ const dificultyOptions = [
   { value: "Hard", name: "Hard" },
 ];
 
-function CreateQuizForm({ createNewQuiz, onCloseModal }) {
-  const { user } = useUser();
+function CreateQuizForm({ user, createNewQuiz, onCloseModal }) {
   const authorId = user.id;
   const { register, handleSubmit, reset, getValues, formState } = useForm({
     defaultValues: { authorId: authorId },

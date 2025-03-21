@@ -115,10 +115,7 @@ function QuizzesDisplayComponent({
     isFetching: isFetchingUser,
   } = useUser();
 
-  console.log(user);
-
   const { userData, isLoadingUserData } = useUserData(user?.id);
-  console.log(userData);
   if (isPendingUser || isFetchingUser || isLoadingUserData) {
     return <Spinner></Spinner>;
   }
@@ -129,7 +126,7 @@ function QuizzesDisplayComponent({
     } else {
       return false;
     }
-    console.log(quizId);
+
     return userData?.completedQuizzes?.find((quiz) => quiz.quizId === quizId);
   }
 
@@ -225,6 +222,7 @@ function QuizzesDisplayComponent({
                 </Modal.Open>
                 <Modal.Window name="newQuizModal">
                   <CreateQuizForm
+                    user={user}
                     createNewQuiz={createNewQuiz}
                   ></CreateQuizForm>
                 </Modal.Window>
@@ -235,6 +233,10 @@ function QuizzesDisplayComponent({
       </StyledQuizzesMainContainer>
     </StyledQuizzesContainer>
   );
+}
+
+function TestFun({ onCloseModal }) {
+  return <div>TEST</div>;
 }
 
 export default QuizzesDisplayComponent;

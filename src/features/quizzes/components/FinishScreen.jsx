@@ -8,8 +8,6 @@ import { completeQuizRequest } from "../../../services/apiQuizzes";
 function FinishScreen() {
   const { points, maxPossiblePoints, dispatch, answers, quizId } = useQuiz();
   let emoji;
-  console.log(answers);
-  console.log(quizId);
   const [completedQuiz, setCompletedQuiz] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   // const { completeQuiz, isCompleting } = useCompleteQuiz();
@@ -35,8 +33,6 @@ function FinishScreen() {
     emoji = "🥈";
   else if (completedQuiz?.score >= 50 && completedQuiz?.score < 100)
     emoji = "🥉";
-
-  console.log(completedQuiz);
 
   if (isLoading) {
     return <Spinner></Spinner>;

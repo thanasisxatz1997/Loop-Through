@@ -28,7 +28,6 @@ function SignInForm() {
   const [password, setPassword] = useState("admin");
   const { login, isLoading } = useLogin();
 
-  console.log(isLoading);
   function handleSubmit(e) {
     e.preventDefault();
     if (!email || !password) return;

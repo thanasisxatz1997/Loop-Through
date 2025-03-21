@@ -66,6 +66,7 @@ function Modal({ children }) {
 }
 
 function Open({ children, opens: opensWindowName, fun }) {
+  console.log(opensWindowName);
   const { open } = useContext(ModalContext);
   return cloneElement(children, {
     onClick: (e) => {

@@ -21,7 +21,6 @@ function CreateLessonForm({
 }) {
   const [lessonName, setLessonName] = useState("");
 
-  console.log("in form: ", courseId, lessonNumber);
   return (
     <div>
       <StyledFormLabel>

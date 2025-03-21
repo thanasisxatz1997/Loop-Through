@@ -6,6 +6,7 @@ import { useSignUp } from "./useSignUp";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { useLogin } from "./useLogin";
+import Spinner from "../../ui/Spinner";
 
 const StyledSignInForm = styled.form`
   background-color: var(--color-grey-100);
@@ -34,6 +35,14 @@ function RegisterForm() {
     } else {
       signUp({ email, password, metadata });
     }
+  }
+
+  if (isLoading) {
+    return (
+      <StyledSignInForm style={{ width: "300px" }}>
+        <Spinner></Spinner>
+      </StyledSignInForm>
+    );
   }
 
   return (

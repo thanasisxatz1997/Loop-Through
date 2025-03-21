@@ -76,7 +76,7 @@ function Sidebar({ courses, searchTags }) {
             whiteSpace: "nowrap",
             textOverflow: "ellipsis",
             display: "flex",
-            width: "100%", // Ensures it respects the parent container width
+            width: "100%",
           }}
         >
           <div

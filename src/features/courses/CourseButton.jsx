@@ -55,12 +55,14 @@ function CourseButton({
         <Heading
           as="h2"
           style={{
-            backgroundColor: "#0000006f",
+            // text-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
+            // backgroundColor: "#0000006f",
             width: "80%",
             textAlign: "center",
             alignSelf: "center",
             justifySelf: "center",
             borderRadius: "10px",
+            textShadow: "0 0 10px rgba(0, 0, 0, 0.6)",
           }}
         >
           {title}

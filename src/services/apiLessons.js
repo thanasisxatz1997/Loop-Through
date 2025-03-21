@@ -66,6 +66,7 @@ export async function createLesson({ lessonName, courseId, lessonNumber }) {
 
 export async function updateLesson(lesson) {
   const token = getAuthToken();
+  console.log(lesson);
   const lessonBody = {
     courseId: `${lesson.courseId}`,
     name: `${lesson.name}`,
