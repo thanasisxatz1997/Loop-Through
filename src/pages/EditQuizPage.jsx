@@ -106,6 +106,8 @@ function EditQuizPage() {
     }
   }, [quiz, reset]);
 
+  console.log(getValues("questions"));
+
   if (isQuizPending || isUserPending || isDeleting || isEditing)
     return <Spinner></Spinner>;
   if (!isAuthenticated) return <Heading>Unauthorized</Heading>;
