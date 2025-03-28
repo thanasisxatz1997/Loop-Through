@@ -80,6 +80,30 @@ function QuizEditQuestionList({
     // );
   }
 
+  function handleOptionChange(e, index, optionIndex) {
+    console.log(e.target.value, index, optionIndex);
+    console.log("questions:", questions);
+    const prevOptions = questions[index].options;
+    console.log("prev: ", prevOptions);
+    const newOptions = prevOptions.map((option, i) =>
+      i !== optionIndex ? option : e.target.value
+    );
+    console.log("new: ", newOptions);
+    setValue(
+      "questions",
+      questions.map((q, i) => (i !== index ? q : { ...q, options: newOptions }))
+    );
+  }
+
+  function handleAnswerChange(e, index) {
+    setValue(
+      "questions",
+      questions.map((q, i) =>
+        i !== index ? q : { ...q, correctOption: e.target.value }
+      )
+    );
+  }
+
   // function handleBlur() {
   //   setValue("questions", tempQuestions);
   // }
@@ -108,11 +132,12 @@ function QuizEditQuestionList({
               </Row>
               <h4>Options:</h4>
               <Row type="vertical" margin="0px 50px ">
-                {question?.options?.map((option, i) => (
-                  <Row key={i} content="start" gap="10px">
-                    <Heading as="h4">{i}</Heading>
+                {question?.options?.map((option, optionIndex) => (
+                  <Row key={option + optionIndex} content="start" gap="10px">
+                    <Heading as="h4">{optionIndex}</Heading>
                     <StyledFormTextInput
                       defaultValue={option}
+                      onBlur={(e) => handleOptionChange(e, i, optionIndex)}
                     ></StyledFormTextInput>
                   </Row>
                 ))}
@@ -124,6 +149,8 @@ function QuizEditQuestionList({
                     value: i,
                     name: i,
                   }))}
+                  value={question.correctOption}
+                  onChange={(e) => handleAnswerChange(e, i)}
                 ></SelectBox>
               </Row>
               <Row content="start" gap="10px">

@@ -43,7 +43,6 @@ function SearchBar({
   setSearchText,
   width = "auto",
 }) {
-  console.log(width);
   // const [searchText, setSearchText] = useState("");
   return (
     <SearchContainer border={border}>

@@ -54,7 +54,6 @@ function Sidebar({ courses, searchTags }) {
     }
   }
 
-  console.log("sidebar courses: ", displayedCourses);
   return (
     <StyledSidebar gap="10px">
       <Heading textalign="center">Courses</Heading>
