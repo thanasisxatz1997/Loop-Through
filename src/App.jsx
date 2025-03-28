@@ -17,6 +17,7 @@ import Login from "./pages/Login";
 import EditQuizPage from "./pages/EditQuizPage";
 import UserCourses from "./pages/UserCourses";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import CodeEditor from "./pages/CodeEditor";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -41,6 +42,7 @@ function App() {
             }
           >
             <Route index element={<Navigate replace to="home" />}></Route>
+            <Route path="code-editor" element={<CodeEditor />}></Route>
             <Route path="home" element={<Home />}></Route>
             <Route path="courses" element={<Courses />}></Route>
             <Route path="myCourses" element={<UserCourses />}></Route>
