@@ -1,5 +1,5 @@
 import toast from "react-hot-toast";
-import supabase from "./supabase";
+import supabase, { supabaseProject } from "./supabase";
 import { createUser } from "./apiUsers";
 import { healthCheck } from "./apiCheck";
 
@@ -52,7 +52,7 @@ export async function getCurrentUser() {
 }
 
 export function getAuthToken() {
-  const storedData = localStorage.getItem("sb-nyznsssttvpdlhzugabm-auth-token");
+  const storedData = localStorage.getItem(`sb-${supabaseProject}-auth-token`);
 
   if (!storedData) {
     console.warn("No auth token found in localStorage.");

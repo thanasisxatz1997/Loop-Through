@@ -3,3 +3,11 @@ export async function urlToFile(url, filename) {
   const blob = await response.blob();
   return new File([blob], filename, { type: blob.type });
 }
+
+export const truncateText = (text, maxLength = 500) => {
+  console.log(text);
+  if (text?.length > maxLength) {
+    return text.substring(0, maxLength) + "...";
+  }
+  return text;
+};

@@ -8,7 +8,7 @@ import StarRating from "../ui/StarRating";
 import Row from "../styles/Row";
 import Heading from "../styles/Heading";
 import CourseCreate from "../features/courses/CourseCreatePage";
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import StyledSidebarLessonItem from "../styles/StyledSidebarLessonItem";
 import { HiMiniPlusCircle } from "react-icons/hi2";
 import Modal from "../ui/Modal";
@@ -25,6 +25,10 @@ import { useUserCourseRatings } from "../features/courses/useUserCourseRatings";
 import { useUser } from "../features/authentication/useUser";
 import { useRateCourse } from "../features/courses/useRateCourse";
 import { useCourses } from "../features/courses/useCourses";
+import supabase from "../services/supabase";
+import Button from "../styles/StyledButton";
+import { HiChatBubbleLeftRight } from "react-icons/hi2";
+import ChatWindow from "../features/chat/ChatWindow";
 
 const StyledCourseContainer = styled.div`
   display: grid;
@@ -147,6 +151,9 @@ function Course() {
                     lessonNumber={lessons.length + 1}
                   ></CreateLessonForm>
                 </Modal.Window>
+                <Modal.Window name="chatWindow">
+                  <ChatWindow chatName={courseId}></ChatWindow>
+                </Modal.Window>
               </>
             )}
 
@@ -160,6 +167,16 @@ function Course() {
                   onSetRating={handleRateCourse}
                 ></StarRating>
               </RatingContainer>
+            </Row>
+            <Row content="center">
+              <Modal.Open opens="chatWindow">
+                <Button>
+                  <Row gap="5px">
+                    <div>Chat</div>
+                    <HiChatBubbleLeftRight></HiChatBubbleLeftRight>
+                  </Row>
+                </Button>
+              </Modal.Open>
             </Row>
           </LessonSidebar>
           <LessonContainer>
