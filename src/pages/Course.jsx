@@ -53,9 +53,9 @@ const RatingContainer = styled.div`
 `;
 
 const TextSidebar = styled.div`
-  padding: 10px;
+  padding-bottom: 10px;
   height: auto;
-  position: absolute;
+  position: fixed;
   /* margin: 10px; */
   right: 0px;
   width: auto;
@@ -63,7 +63,7 @@ const TextSidebar = styled.div`
   border-bottom: solid 1px black;
   background-color: var(--color-brand-100);
   border-radius: 0 0 0 5%;
-  box-shadow: -3px 6px 7px 1px var(--color-grey-700);
+  box-shadow: -1px 3px 5px 1px var(--color-grey-700);
   background: linear-gradient(
       rgba(255, 255, 255, 0.3),
       rgba(255, 255, 255, 0.3)
@@ -73,6 +73,9 @@ const TextSidebar = styled.div`
   background-size: cover; /* Ensures the image covers the div */
   background-position: center; /* Centers the image */
   background-repeat: no-repeat; /* Prevents tiling */
+
+  transform: translateX(24rem);
+  transition: transform 600ms;
 `;
 
 export const CourseContext = createContext();
@@ -135,6 +138,10 @@ function Course() {
       rating: rating,
     };
     rateCourse(courseRating);
+  }
+
+  function handleCloseChat() {
+    setIsShowingChat(false);
   }
 
   if (isLoading || isLoadingCourses) return <Spinner></Spinner>;
@@ -214,11 +221,14 @@ function Course() {
           )}
         </LessonContainer>
       </Modal>
-      {isShowingChat && (
-        <TextSidebar>
-          <ChatWindow chatName={courseId}></ChatWindow>
-        </TextSidebar>
-      )}
+
+      <TextSidebar className={isShowingChat ? "slide-in-tr" : "slide-out-tr"}>
+        <ChatWindow
+          chatName={courseId}
+          displayedName={course.name}
+          handleClose={handleCloseChat}
+        ></ChatWindow>
+      </TextSidebar>
     </StyledCourseContainer>
     // </CourseContext.Provider>
   );

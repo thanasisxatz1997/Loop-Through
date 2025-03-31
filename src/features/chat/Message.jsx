@@ -5,7 +5,6 @@ import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 dayjs.extend(relativeTime);
 
-// Styled Components
 const MessageContainer = styled.div`
   display: grid;
   justify-items: ${(props) => (props.isYou ? "end" : "start")};
@@ -56,19 +55,6 @@ const VerifiedIcon = styled(MdVerified)`
   margin-left: 5px;
 `;
 
-const CountryTag = styled.span`
-  font-size: 10px;
-  margin-left: 5px;
-  display: inline-block;
-
-  img {
-    display: inline-block;
-    margin-top: -4px;
-    width: 16px;
-    height: 12px;
-  }
-`;
-
 const MessageText = styled.div`
   text-align: left;
   word-break: break-word;
@@ -83,12 +69,12 @@ const Timestamp = styled.div`
   align-self: end;
 `;
 
-// Component
 export default function Message({ message, isYou }) {
-  const countyCode =
-    message?.country && message?.country !== "undefined"
-      ? message.country.toLowerCase()
-      : "";
+  function getTimeStamp(message) {
+    const date = new Date(message.created_at);
+    const timestamp = date.getTime();
+    return timestamp;
+  }
 
   return (
     <MessageContainer isYou={isYou}>
@@ -96,15 +82,9 @@ export default function Message({ message, isYou }) {
         <Username>
           {message.userName}
           {message.is_authenticated && <VerifiedIcon />}
-          {countyCode && (
-            <CountryTag>
-              from {message.country}{" "}
-              <img src={`/flags/${countyCode}.png`} alt={message.country} />
-            </CountryTag>
-          )}
         </Username>
         <MessageText>{truncateText(message.text)}</MessageText>
-        <Timestamp>{dayjs(message.timestamp).fromNow()}</Timestamp>
+        <Timestamp>{dayjs(getTimeStamp(message)).fromNow()}</Timestamp>
       </MessageBubble>
     </MessageContainer>
   );

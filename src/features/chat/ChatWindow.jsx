@@ -7,9 +7,11 @@ import styled from "styled-components";
 import StyledFormTextInput from "../../styles/StyledFormTextInput";
 import { HiPaperAirplane } from "react-icons/hi2";
 import { useUser } from "../authentication/useUser";
+import { HiArrowUpRight } from "react-icons/hi2";
 
 const Container = styled.div`
   max-height: 600px;
+  margin-bottom: 10px;
 `;
 
 const StyledMessageArea = styled.div`
@@ -21,7 +23,7 @@ const StyledMessageArea = styled.div`
   padding: 10px;
 `;
 
-function ChatWindow({ chatName }) {
+function ChatWindow({ chatName, displayedName = "", handleClose }) {
   const channelRef = useRef(null);
   const [messages, setMessages] = useState([]);
   const [messageToSend, setMessageToSend] = useState("");
@@ -88,6 +90,17 @@ function ChatWindow({ chatName }) {
 
   return (
     <Container>
+      <Row
+        content="space-between"
+        padding="10px"
+        style={{ backgroundColor: "rgba(255, 255, 255, 0.9)" }}
+      >
+        <h2>{displayedName}</h2>
+        <Button variation="danger" size="small" onClick={handleClose}>
+          <HiArrowUpRight size={25}></HiArrowUpRight>
+        </Button>
+      </Row>
+      <hr></hr>
       <StyledMessageArea>
         <Row type="vertical">
           {messages.map((message, i) => (
