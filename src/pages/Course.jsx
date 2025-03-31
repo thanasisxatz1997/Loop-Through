@@ -32,14 +32,14 @@ import ChatWindow from "../features/chat/ChatWindow";
 
 const StyledCourseContainer = styled.div`
   display: grid;
-  height: 100%;
+  height: 92vh;
   grid-template-rows: auto 1fr;
   grid-template-columns: 26rem 1fr;
   /* grid-row: 1; */
 `;
 const LessonContainer = styled.div`
   padding: 3rem;
-  height: 100vh;
+  height: 92vh;
 `;
 
 const RatingContainer = styled.div`
@@ -52,9 +52,33 @@ const RatingContainer = styled.div`
   /* width: 100%; */
 `;
 
+const TextSidebar = styled.div`
+  padding: 10px;
+  height: auto;
+  position: absolute;
+  /* margin: 10px; */
+  right: 0px;
+  width: auto;
+  border-left: solid 1px black;
+  border-bottom: solid 1px black;
+  background-color: var(--color-brand-100);
+  border-radius: 0 0 0 5%;
+  box-shadow: -3px 6px 7px 1px var(--color-grey-700);
+  background: linear-gradient(
+      rgba(255, 255, 255, 0.3),
+      rgba(255, 255, 255, 0.3)
+    ),
+    /* Transparent white overlay */
+      url("/BLUE_GEOMETRIC_FLAT_LIQUID_BACKGROUND_generated.jpg");
+  background-size: cover; /* Ensures the image covers the div */
+  background-position: center; /* Centers the image */
+  background-repeat: no-repeat; /* Prevents tiling */
+`;
+
 export const CourseContext = createContext();
 
 function Course() {
+  const [isShowingChat, setIsShowingChat] = useState(false);
   const queryClient = useQueryClient();
   const { mutate: createNewLesson, isLoading: isCreatingLesson } = useMutation({
     mutationFn: createLesson,
@@ -79,7 +103,6 @@ function Course() {
       },
     });
 
-  const editable = true;
   const params = useParams();
   const courseId = params.id.slice(1);
   const activeLessonId = useActiveLessonParams();
@@ -94,7 +117,6 @@ function Course() {
   )?.rating;
 
   const { courses, isLoadingCourses } = useCourses();
-
   const course = courses?.find((course) => (course.id = courseId));
   const {
     isLoading,
@@ -104,6 +126,8 @@ function Course() {
     queryKey: ["lessons"],
     queryFn: () => getLessonsByCourseId(courseId),
   });
+
+  const editable = course?.authorId === user?.id;
 
   function handleRateCourse(rating) {
     const courseRating = {
@@ -121,74 +145,82 @@ function Course() {
   )[0];
 
   return (
-    <CourseContext.Provider value={{ lessons, courseId }}>
-      <StyledCourseContainer>
-        <Modal>
-          <LessonSidebar>
-            <Heading userselect="false" textalign="center">
-              {course.name}
-            </Heading>
-            <hr></hr>
-            <Heading as={"h3"} textalign="left" userselect="false">
-              Lessons:
-            </Heading>
-            {lessons.map((lesson) => (
-              <SidebarLessonItem
-                key={lesson.id}
-                lesson={lesson}
-                active={lesson.id === activeLessonId ? "true" : "false"}
-              ></SidebarLessonItem>
-            ))}
-            {editable && (
-              <>
-                <Modal.Open opens="newLessonModal">
-                  <SidebarCreateLessonItem></SidebarCreateLessonItem>
-                </Modal.Open>
-                <Modal.Window name="newLessonModal">
-                  <CreateLessonForm
-                    createLesson={createNewLesson}
-                    courseId={courseId}
-                    lessonNumber={lessons.length + 1}
-                  ></CreateLessonForm>
-                </Modal.Window>
-                <Modal.Window name="chatWindow">
-                  <ChatWindow chatName={courseId}></ChatWindow>
-                </Modal.Window>
-              </>
-            )}
-
-            <Row type="vertical" content="end">
-              <RatingContainer>
-                <Heading as="h3">Rate this course!</Heading>
-                <StarRating
-                  defaultRating={currentRating}
-                  size={30}
-                  color="var(--color-grey-900)"
-                  onSetRating={handleRateCourse}
-                ></StarRating>
-              </RatingContainer>
-            </Row>
-            <Row content="center">
-              <Modal.Open opens="chatWindow">
-                <Button>
-                  <Row gap="5px">
-                    <div>Chat</div>
-                    <HiChatBubbleLeftRight></HiChatBubbleLeftRight>
-                  </Row>
-                </Button>
+    // <CourseContext.Provider value={{ lessons, courseId }}>
+    <StyledCourseContainer>
+      <Modal>
+        <LessonSidebar>
+          <Heading userselect="false" textalign="center">
+            {course.name}
+          </Heading>
+          <hr></hr>
+          <Heading as={"h3"} textalign="left" userselect="false">
+            Lessons:
+          </Heading>
+          {lessons.map((lesson) => (
+            <SidebarLessonItem
+              key={lesson.id}
+              lesson={lesson}
+              active={lesson.id === activeLessonId ? "true" : "false"}
+            ></SidebarLessonItem>
+          ))}
+          {editable && (
+            <>
+              <Modal.Open opens="newLessonModal">
+                <SidebarCreateLessonItem></SidebarCreateLessonItem>
               </Modal.Open>
-            </Row>
-          </LessonSidebar>
-          <LessonContainer>
-            {hasActiveLesson ? (
-              <LessonContent lesson={activeLesson}></LessonContent>
-            ) : (
-              "There is no active lesson"
-            )}
-          </LessonContainer>
-        </Modal>
-      </StyledCourseContainer>
-    </CourseContext.Provider>
+              <Modal.Window name="newLessonModal">
+                <CreateLessonForm
+                  createLesson={createNewLesson}
+                  courseId={courseId}
+                  lessonNumber={lessons.length + 1}
+                ></CreateLessonForm>
+              </Modal.Window>
+              <Modal.Window name="chatWindow">
+                <ChatWindow chatName={courseId}></ChatWindow>
+              </Modal.Window>
+            </>
+          )}
+
+          <Row type="vertical" content="end">
+            <RatingContainer>
+              <Heading as="h3">Rate this course!</Heading>
+              <StarRating
+                defaultRating={currentRating}
+                size={30}
+                color="var(--color-grey-900)"
+                onSetRating={handleRateCourse}
+              ></StarRating>
+            </RatingContainer>
+          </Row>
+          <Row content="center">
+            {/* <Modal.Open opens="chatWindow"> */}
+            <Button onClick={() => setIsShowingChat(!isShowingChat)}>
+              <Row gap="5px">
+                <div>Chat</div>
+                <HiChatBubbleLeftRight></HiChatBubbleLeftRight>
+              </Row>
+            </Button>
+            {/* </Modal.Open> */}
+          </Row>
+        </LessonSidebar>
+        <LessonContainer>
+          {hasActiveLesson ? (
+            <LessonContent
+              lesson={activeLesson}
+              editable={editable}
+            ></LessonContent>
+          ) : (
+            "There is no active lesson"
+          )}
+        </LessonContainer>
+      </Modal>
+      {isShowingChat && (
+        <TextSidebar>
+          <ChatWindow chatName={courseId}></ChatWindow>
+        </TextSidebar>
+      )}
+    </StyledCourseContainer>
+    // </CourseContext.Provider>
   );
 }
 

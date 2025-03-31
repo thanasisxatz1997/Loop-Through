@@ -6,10 +6,12 @@ const StyledLessonContent = styled.div`
   padding: 2rem;
   background-color: var(--color-blue-100);
   width: auto;
-  height: 100%;
-  min-height: 40rem;
+  height: 90%;
+  /* height: 100%;
+  min-height: 40rem; */
 
-  max-height: 750px; /* Set a fixed height */
+  /* max-height: 950px; */
+  /* height: 750px; */
   overflow-y: auto; /* Enable vertical scrolling */
   padding: 10px;
   &::-webkit-scrollbar {

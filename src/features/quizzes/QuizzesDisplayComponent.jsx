@@ -29,9 +29,9 @@ const StyledQuizzesContainer = styled.div`
     ),
     /* Transparent white overlay */
       url("/BLUE_GEOMETRIC_FLAT_LIQUID_BACKGROUND_generated.jpg");
-  background-size: cover; /* Ensures the image covers the div */
-  background-position: center; /* Centers the image */
-  background-repeat: no-repeat; /* Prevents tiling */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 `;
 
 const StyledQuizzesMainContainer = styled.main`

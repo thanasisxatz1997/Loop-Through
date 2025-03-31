@@ -49,23 +49,25 @@ const StyledLessonElementCreateButton = styled.button`
   background-color: var(--color-grey-50);
 `;
 
-function LessonContent({ lesson }) {
+function LessonContent({ lesson, editable }) {
   const [hoveredId, setHoveredId] = useState("");
   const [lastHoveredId, setLastHoveredId] = useState("");
   const [deleteLesson, isDeleting] = useDeleteLesson();
   const activeContentElements = lesson.content;
 
   return (
-    <Row type="vertical">
+    <Row type="vertical" style={{ height: "88vh" }}>
       <Row content="center" gap="10px">
         <LessonTitle title={`${lesson.name}`}></LessonTitle>
-        <Row>
-          <Modal.Open opens="deleteLessonConfirmationModal">
-            <Button variation="danger" size="small">
-              <HiArchiveBoxXMark size={20} />
-            </Button>
-          </Modal.Open>
-        </Row>
+        {editable && (
+          <Row>
+            <Modal.Open opens="deleteLessonConfirmationModal">
+              <Button variation="danger" size="small">
+                <HiArchiveBoxXMark size={20} />
+              </Button>
+            </Modal.Open>
+          </Row>
+        )}
       </Row>
       <StyledLessonContent>
         <Menus>
@@ -146,7 +148,7 @@ function LessonContent({ lesson }) {
           ></DeleteConfirmation>
         </Modal.Window>
       </StyledLessonContent>
-      <LessonQuizesContainer quizes={[]}></LessonQuizesContainer>
+      {/* <LessonQuizesContainer quizes={[]}></LessonQuizesContainer> */}
     </Row>
   );
 }

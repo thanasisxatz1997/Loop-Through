@@ -14,7 +14,7 @@ const Container = styled.div`
 
 const StyledMessageArea = styled.div`
   width: 500px;
-  height: 400px; /* Set a fixed height */
+  height: 500px; /* Set a fixed height */
   overflow-y: auto; /* Enable vertical scrolling */
   display: flex;
   flex-direction: column;
@@ -68,9 +68,7 @@ function ChatWindow({ chatName }) {
           "postgres_changes",
           { event: "INSERT", schema: "public", table: "messages" },
           (payload) => {
-            console.log("New message received:", payload.new);
             setMessages((prevMessages) => [...prevMessages, payload.new]);
-            console.log("NEW!!", messages);
           }
         )
         .subscribe();
