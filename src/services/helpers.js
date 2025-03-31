@@ -5,7 +5,6 @@ export async function urlToFile(url, filename) {
 }
 
 export const truncateText = (text, maxLength = 500) => {
-  console.log(text);
   if (text?.length > maxLength) {
     return text.substring(0, maxLength) + "...";
   }

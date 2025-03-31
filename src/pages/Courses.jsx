@@ -26,7 +26,16 @@ const StyledCoursesContainer = styled.div`
     #7ca3d68a 50%,
     #87a4c98a 100%
   ); */
-  background-color: var(--bg-color-light-0);
+  /* background-color: var(--bg-color-light-0); */
+  background: linear-gradient(
+      rgba(255, 255, 255, 0.3),
+      rgba(255, 255, 255, 0.3)
+    ),
+    /* Transparent white overlay */ url("/2.jpg");
+  background-size: cover; /* Ensures the image covers the div */
+  background-position: center; /* Centers the image */
+  background-repeat: no-repeat; /* Prevents tiling */
+  /* opacity: 0.5; */
   display: grid;
   height: 100%;
   grid-template-rows: auto 1fr;
@@ -39,11 +48,11 @@ const StyledCoursesMainContainer = styled.main`
   padding: 3rem;
   gap: 2rem;
   grid-template-rows: auto;
-  grid-template-columns: repeat(auto-fit, minmax(300px, max-content));
+  grid-template-columns: repeat(auto-fit, minmax(250px, max-content));
   justify-items: center;
   align-items: center;
-  grid-auto-rows: 300px;
-  grid-auto-columns: 300px;
+  grid-auto-rows: 250px;
+  grid-auto-columns: 250px;
 `;
 
 function Courses() {
@@ -80,7 +89,7 @@ function Courses() {
           <Sidebar courses={courses} searchTags={searchTags}></Sidebar>
           <div style={{ paddingTop: "2rem" }}>
             <Row content="center">
-              <Heading>Recommended</Heading>
+              <Heading textShadow="white">Recommended</Heading>
             </Row>
             <StyledCoursesMainContainer>
               {courses.map((course, index) => (

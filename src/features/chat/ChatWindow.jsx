@@ -8,8 +8,17 @@ import StyledFormTextInput from "../../styles/StyledFormTextInput";
 import { HiPaperAirplane } from "react-icons/hi2";
 import { useUser } from "../authentication/useUser";
 
+const Container = styled.div`
+  max-height: 600px;
+`;
+
 const StyledMessageArea = styled.div`
   width: 500px;
+  height: 400px; /* Set a fixed height */
+  overflow-y: auto; /* Enable vertical scrolling */
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
 `;
 
 function ChatWindow({ chatName }) {
@@ -17,6 +26,7 @@ function ChatWindow({ chatName }) {
   const [messages, setMessages] = useState([]);
   const [messageToSend, setMessageToSend] = useState("");
   const [error, setError] = useState("");
+  const messagesEndRef = useRef(null);
 
   const { user } = useUser();
   const userName = user?.user_metadata?.username || "Anonymous";
@@ -45,7 +55,7 @@ function ChatWindow({ chatName }) {
       setError(error.message);
       return;
     }
-    setMessages(data);
+    setMessages(data.reverse());
   };
 
   useEffect(() => {
@@ -59,7 +69,7 @@ function ChatWindow({ chatName }) {
           { event: "INSERT", schema: "public", table: "messages" },
           (payload) => {
             console.log("New message received:", payload.new);
-            setMessages((prevMessages) => [payload.new, ...prevMessages]);
+            setMessages((prevMessages) => [...prevMessages, payload.new]);
             console.log("NEW!!", messages);
           }
         )
@@ -74,8 +84,12 @@ function ChatWindow({ chatName }) {
     };
   }, [chatName]);
 
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
+
   return (
-    <div>
+    <Container>
       <StyledMessageArea>
         <Row type="vertical">
           {messages.map((message, i) => (
@@ -86,6 +100,7 @@ function ChatWindow({ chatName }) {
             />
           ))}
         </Row>
+        <div ref={messagesEndRef} />
       </StyledMessageArea>
       <Row content="center" gap="1rem" margin="10px">
         <StyledFormTextInput
@@ -99,7 +114,7 @@ function ChatWindow({ chatName }) {
           <HiPaperAirplane size={20} />
         </Button>
       </Row>
-    </div>
+    </Container>
   );
 }
 

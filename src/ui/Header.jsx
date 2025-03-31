@@ -64,12 +64,12 @@ function Header() {
               <HiMiniCog6Tooth size={30}></HiMiniCog6Tooth>
             </HeaderButton>
           </NavLink>
-          <NavLink to="/settings">
+          {/* <NavLink to="/settings">
             <HeaderButton>
               <h3>Settings</h3>
               <HiMiniCog6Tooth size={30}></HiMiniCog6Tooth>
             </HeaderButton>
-          </NavLink>
+          </NavLink> */}
           {isAuthenticated ? (
             <NavLink to="/user">
               <HeaderButton>

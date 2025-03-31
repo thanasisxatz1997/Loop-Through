@@ -85,7 +85,6 @@ const Timestamp = styled.div`
 
 // Component
 export default function Message({ message, isYou }) {
-  console.log(message);
   const countyCode =
     message?.country && message?.country !== "undefined"
       ? message.country.toLowerCase()

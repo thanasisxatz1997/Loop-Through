@@ -107,6 +107,7 @@ const Button = styled.button`
     css`
       box-sizing: border-box;
     `}
+    white-space: nowrap;
 `;
 
 Button.defaultProps = {

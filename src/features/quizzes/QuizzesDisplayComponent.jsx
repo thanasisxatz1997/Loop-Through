@@ -21,8 +21,17 @@ import { useUserData } from "../../hooks/user/useUserData";
 import Spinner from "../../ui/Spinner";
 
 const StyledQuizzesContainer = styled.div`
-  background-color: var(--bg-color-light-0);
-  height: 100%;
+  /* background-color: var(--bg-color-light-0); */
+  height: 92vh;
+  background: linear-gradient(
+      rgba(255, 255, 255, 0.3),
+      rgba(255, 255, 255, 0.3)
+    ),
+    /* Transparent white overlay */
+      url("/BLUE_GEOMETRIC_FLAT_LIQUID_BACKGROUND_generated.jpg");
+  background-size: cover; /* Ensures the image covers the div */
+  background-position: center; /* Centers the image */
+  background-repeat: no-repeat; /* Prevents tiling */
 `;
 
 const StyledQuizzesMainContainer = styled.main`
@@ -36,10 +45,11 @@ const StyledQuizzesMainContainer = styled.main`
 
 const StyledQuizList = styled.ul`
   margin-top: 1rem;
-  padding: 1rem;
+  padding: 2rem;
   border-radius: 10px;
   background: var(--color-grey-0);
   min-width: 50rem;
+  box-shadow: 5px 8px 12px 3px var(--color-grey-700);
 `;
 
 const StyledTable = styled.table`
@@ -138,74 +148,81 @@ function QuizzesDisplayComponent({
   return (
     <StyledQuizzesContainer>
       <StyledQuizzesMainContainer>
-        <Row content="center">
-          <Heading>{title}</Heading>
-        </Row>
-        <Row content="start" gap="10px">
-          <SelectBox
-            options={dificultyOptions}
-            selectTitle="Dificulty"
-          ></SelectBox>
-          <SelectBox options={statusOptions} selectTitle="Status"></SelectBox>
-          <SelectBox options={tagsOptions} selectTitle="Tags"></SelectBox>
-          <SearchBar></SearchBar>
-        </Row>
         <StyledQuizList>
-          <StyledTable>
-            <StyledThead>
-              <StyledTr>
-                <StyledTh>
-                  <Row margin="0px 5px 0px 0px">
-                    Title <HiMiniChevronUpDown />
-                  </Row>
-                </StyledTh>
-                <StyledTh>
-                  <Row margin="0px 5px 0px 0px">
-                    Status <HiMiniChevronUpDown />
-                  </Row>
-                </StyledTh>
-                <StyledTh>
-                  <Row margin="0px 5px 0px 0px">
-                    Difficulty <HiMiniChevronUpDown />
-                  </Row>
-                </StyledTh>
-                {edit && (
-                  <StyledOptionsTh>
-                    <Row margin="0px 5px 0px 0px">Options</Row>
-                  </StyledOptionsTh>
-                )}
-              </StyledTr>
-            </StyledThead>
-
-            <tbody>
-              {quizzes.map((quiz) => (
-                <StyledTr key={quiz.id}>
-                  <StyledTd>
-                    <StyledLink to={`/quiz/${quiz.id}`}>{quiz.name}</StyledLink>
-                  </StyledTd>
-                  <StyledTd>
-                    {edit
-                      ? "Created"
-                      : !hasCompletedQuiz(quiz.id)
-                      ? "Unsolved"
-                      : `Best score: ${Math.ceil(getQuizRating(quiz.id))}%`}
-                  </StyledTd>
-                  <StyledTd>{quiz.difficulty}</StyledTd>
+          <Row type="vertical" gap="3rem">
+            <Row content="center">
+              <Heading>{title}</Heading>
+            </Row>
+            <Row content="start" gap="10px">
+              <SelectBox
+                options={dificultyOptions}
+                selectTitle="Dificulty"
+              ></SelectBox>
+              <SelectBox
+                options={statusOptions}
+                selectTitle="Status"
+              ></SelectBox>
+              <SelectBox options={tagsOptions} selectTitle="Tags"></SelectBox>
+              <SearchBar></SearchBar>
+            </Row>
+            <StyledTable>
+              <StyledThead>
+                <StyledTr>
+                  <StyledTh>
+                    <Row margin="0px 5px 0px 0px">
+                      Title <HiMiniChevronUpDown />
+                    </Row>
+                  </StyledTh>
+                  <StyledTh>
+                    <Row margin="0px 5px 0px 0px">
+                      Status <HiMiniChevronUpDown />
+                    </Row>
+                  </StyledTh>
+                  <StyledTh>
+                    <Row margin="0px 5px 0px 0px">
+                      Difficulty <HiMiniChevronUpDown />
+                    </Row>
+                  </StyledTh>
                   {edit && (
-                    <StyledTd>
-                      <Row margin="0px 5px 0px 0px" content="center">
-                        <Link to={`/editQuiz/${quiz.id}`}>
-                          <Button size="small">
-                            <HiPencilSquare size={15}></HiPencilSquare>
-                          </Button>
-                        </Link>
-                      </Row>
-                    </StyledTd>
+                    <StyledOptionsTh>
+                      <Row margin="0px 5px 0px 0px">Options</Row>
+                    </StyledOptionsTh>
                   )}
                 </StyledTr>
-              ))}
-            </tbody>
-          </StyledTable>
+              </StyledThead>
+
+              <tbody>
+                {quizzes.map((quiz) => (
+                  <StyledTr key={quiz.id}>
+                    <StyledTd>
+                      <StyledLink to={`/quiz/${quiz.id}`}>
+                        {quiz.name}
+                      </StyledLink>
+                    </StyledTd>
+                    <StyledTd>
+                      {edit
+                        ? "Created"
+                        : !hasCompletedQuiz(quiz.id)
+                        ? "Unsolved"
+                        : `Best score: ${Math.ceil(getQuizRating(quiz.id))}%`}
+                    </StyledTd>
+                    <StyledTd>{quiz.difficulty}</StyledTd>
+                    {edit && (
+                      <StyledTd>
+                        <Row margin="0px 5px 0px 0px" content="center">
+                          <Link to={`/editQuiz/${quiz.id}`}>
+                            <Button size="small">
+                              <HiPencilSquare size={15}></HiPencilSquare>
+                            </Button>
+                          </Link>
+                        </Row>
+                      </StyledTd>
+                    )}
+                  </StyledTr>
+                ))}
+              </tbody>
+            </StyledTable>
+          </Row>
           {edit && (
             <Modal>
               <Row content="center">

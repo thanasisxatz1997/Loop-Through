@@ -13,8 +13,8 @@ const StyledTitleContainer = styled.div`
     overflow: hidden;
     text-overflow: ellipsis;
   }
-  min-height: 60px;
-  max-height: 60px;
+  min-height: 30px;
+  max-height: 30px;
   box-sizing: border-box;
   overflow: hidden;
 `;
@@ -25,8 +25,8 @@ const StyledDescContainer = styled.div`
     /* overflow: hidden; */
     /* text-overflow: ellipsis; */
   }
-  max-height: 150px;
-  min-height: 150px;
+  max-height: 130px;
+  min-height: 130px;
   box-sizing: border-box;
   overflow: hidden;
 `;

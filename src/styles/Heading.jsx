@@ -29,11 +29,20 @@ const Heading = styled.h1`
     css`
       text-align: ${props.textalign};
     `}
+    ${(props) =>
+    css`
+      text-shadow: ${props.textShadow === "white"
+        ? "0 0 10px rgba(255, 255, 255, 0.6)"
+        : props.textShadow === "black"
+        ? "0 0 10px rgba(0, 0, 0, 0.6)"
+        : ""};
+    `}
 `;
 
 Heading.defaultProps = {
   userselect: "true",
   textalign: "",
+  textShadow: "0 0 10px rgba(0, 0, 0, 0.6)",
 };
 
 export default Heading;

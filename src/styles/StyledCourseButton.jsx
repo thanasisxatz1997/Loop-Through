@@ -2,13 +2,13 @@ import styled, { css } from "styled-components";
 
 const StyledCourseButton = styled.button`
   border-radius: 10%;
-  min-height: 300px;
-  min-width: 300px;
-  max-height: 300px;
-  max-width: 300px;
+  min-height: 250px;
+  min-width: 250px;
+  max-height: 250px;
+  max-width: 250px;
   text-overflow: none;
-  width: 300px;
-  height: 300px;
+  width: 250px;
+  height: 250px;
   padding-top: 0.1rem;
   padding-bottom: 0.1rem;
   background-color: var(--color-grey-0);
@@ -23,7 +23,7 @@ const StyledCourseButton = styled.button`
           background-image: url(${(props) =>
             props.backgroundimage.replace(/ /g, "%20")});
         `}
-  background-size: 300px 300px;
+  background-size: 250px 250px;
   background-position: right center;
   width: 100%;
   height: 100%;

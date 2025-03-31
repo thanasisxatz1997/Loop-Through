@@ -10,11 +10,19 @@ import StyledFormTextArea from "../styles/StyledFormTextArea";
 import styled from "styled-components";
 
 const StyledCodeEditorContainer = styled.div`
-  background-color: var(--bg-color-light-0);
+  /* background-color: var(--bg-color-light-0); */
   /* background-color: #131f2e; */
 
   height: 100%;
   padding: 3rem;
+  background: linear-gradient(
+      rgba(255, 255, 255, 0.3),
+      rgba(255, 255, 255, 0.3)
+    ),
+    /* Transparent white overlay */ url("/r31.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 `;
 
 function CodeEditor() {
@@ -47,7 +55,7 @@ function CodeEditor() {
         <StyledFormTextArea
           value={output}
           disabled
-          style={{ height: "150px" }}
+          style={{ height: "150px", backgroundColor: "var(--color-grey-100)" }}
         ></StyledFormTextArea>
         <Row style={{ padding: "1rem" }}>
           <Button
