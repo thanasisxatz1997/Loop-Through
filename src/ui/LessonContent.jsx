@@ -75,44 +75,52 @@ function LessonContent({ lesson, editable }) {
             <Container
               key={element.id}
               onMouseEnter={() => {
-                setLastHoveredId(element.id);
-                setHoveredId(element.id);
+                editable && setLastHoveredId(element.id);
+                editable && setHoveredId(element.id);
               }}
               onMouseLeave={() => {
-                setHoveredId("");
+                editable && setHoveredId("");
               }}
-              border={hoveredId === element.id && "1px dashed  #000000;"}
+              border={
+                editable && hoveredId === element.id && "1px dashed  #000000;"
+              }
             >
               <LessonElement element={element}></LessonElement>
-              <FloatingDiv display="block">
-                <Menus.Menu>
-                  {hoveredId === element.id && <Menus.Toggle id={element.id} />}
-                  <Menus.List id={element.id}>
-                    <Modal.Open opens="lessonElementModalCreateAbove">
-                      <Menus.Button>Create Above</Menus.Button>
-                    </Modal.Open>
-                    <Modal.Open opens="lessonElementModalCreateBelow">
-                      <Menus.Button>Create Below</Menus.Button>
-                    </Modal.Open>
-                    <Modal.Open opens="lessonElementModalEdit">
-                      <Menus.Button>Edit</Menus.Button>
-                    </Modal.Open>
-                    <Modal.Open opens="deleteConfirmationModal">
-                      <Menus.Button>Delete</Menus.Button>
-                    </Modal.Open>
-                  </Menus.List>
-                </Menus.Menu>
-              </FloatingDiv>
+              {editable && (
+                <FloatingDiv display="block">
+                  <Menus.Menu>
+                    {hoveredId === element.id && (
+                      <Menus.Toggle id={element.id} />
+                    )}
+                    <Menus.List id={element.id}>
+                      <Modal.Open opens="lessonElementModalCreateAbove">
+                        <Menus.Button>Create Above</Menus.Button>
+                      </Modal.Open>
+                      <Modal.Open opens="lessonElementModalCreateBelow">
+                        <Menus.Button>Create Below</Menus.Button>
+                      </Modal.Open>
+                      <Modal.Open opens="lessonElementModalEdit">
+                        <Menus.Button>Edit</Menus.Button>
+                      </Modal.Open>
+                      <Modal.Open opens="deleteConfirmationModal">
+                        <Menus.Button>Delete</Menus.Button>
+                      </Modal.Open>
+                    </Menus.List>
+                  </Menus.Menu>
+                </FloatingDiv>
+              )}
             </Container>
           ))}
         </Menus>
-        <Row content="center">
-          <Modal.Open opens="lessonElementModalCreateBelow">
-            <StyledLessonElementCreateButton>
-              <HiMiniPlusCircle size={25} />
-            </StyledLessonElementCreateButton>
-          </Modal.Open>
-        </Row>
+        {editable && (
+          <Row content="center">
+            <Modal.Open opens="lessonElementModalCreateBelow">
+              <StyledLessonElementCreateButton>
+                <HiMiniPlusCircle size={25} />
+              </StyledLessonElementCreateButton>
+            </Modal.Open>
+          </Row>
+        )}
         <Modal.Window name="lessonElementModalCreateAbove">
           <LessonElementCreateForm
             elementId={lastHoveredId}

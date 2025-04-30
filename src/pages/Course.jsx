@@ -82,6 +82,7 @@ export const CourseContext = createContext();
 
 function Course() {
   const [isShowingChat, setIsShowingChat] = useState(false);
+  const [firstRender, setFirstRender] = useState(true);
   const queryClient = useQueryClient();
   const { mutate: createNewLesson, isLoading: isCreatingLesson } = useMutation({
     mutationFn: createLesson,
@@ -120,7 +121,8 @@ function Course() {
   )?.rating;
 
   const { courses, isLoadingCourses } = useCourses();
-  const course = courses?.find((course) => (course.id = courseId));
+  console.log("courses ", courses);
+  const course = courses?.find((course) => course.id === courseId);
   const {
     isLoading,
     data: lessons,
@@ -129,7 +131,9 @@ function Course() {
     queryKey: ["lessons"],
     queryFn: () => getLessonsByCourseId(courseId),
   });
-
+  console.log("course: ", course);
+  console.log("authorId ", course?.authorId);
+  console.log("userId ", user?.id);
   const editable = course?.authorId === user?.id;
 
   function handleRateCourse(rating) {
@@ -142,6 +146,13 @@ function Course() {
 
   function handleCloseChat() {
     setIsShowingChat(false);
+  }
+
+  function handleShowChat() {
+    if (firstRender) {
+      setFirstRender(false);
+    }
+    setIsShowingChat(!isShowingChat);
   }
 
   if (isLoading || isLoadingCourses) return <Spinner></Spinner>;
@@ -201,7 +212,7 @@ function Course() {
           </Row>
           <Row content="center">
             {/* <Modal.Open opens="chatWindow"> */}
-            <Button onClick={() => setIsShowingChat(!isShowingChat)}>
+            <Button onClick={() => handleShowChat()}>
               <Row gap="5px">
                 <div>Chat</div>
                 <HiChatBubbleLeftRight></HiChatBubbleLeftRight>
@@ -222,7 +233,10 @@ function Course() {
         </LessonContainer>
       </Modal>
 
-      <TextSidebar className={isShowingChat ? "slide-in-tr" : "slide-out-tr"}>
+      <TextSidebar
+        style={{ display: `${firstRender ? "none" : "block"}` }}
+        className={isShowingChat ? "slide-in-tr" : "slide-out-tr"}
+      >
         <ChatWindow
           chatName={courseId}
           displayedName={course.name}

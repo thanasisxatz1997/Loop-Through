@@ -26,6 +26,7 @@ function CreateCourseForm({ createCourse, onCloseModal, userId, user }) {
   const { register, handleSubmit, reset, getValues, formState } = useForm({
     defaultValues: { authorId: userId },
   });
+  console.log("userID: ", userId);
   const { errors } = formState;
   console.log("inside create course form: ");
   async function onSubmit(data) {

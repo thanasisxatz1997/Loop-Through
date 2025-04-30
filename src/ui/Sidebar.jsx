@@ -124,7 +124,7 @@ function Sidebar({ courses, searchTags }) {
                       marginLeft: "10px",
                     }}
                   >
-                    {`${course.rating}`}
+                    {`${Number(course.rating.toFixed(1))}`}
                   </div>
                   <HiOutlineStar
                     style={{
