@@ -38,7 +38,7 @@ function ChatWindow({ chatName, displayedName = "", handleClose }) {
     try {
       const { error } = await supabase
         .from("messages")
-        .insert([{ text: message, userName }]);
+        .insert([{ text: message, userName, courseId: chatName }]);
       if (error) throw error;
       setMessageToSend("");
     } catch (error) {
@@ -50,6 +50,7 @@ function ChatWindow({ chatName, displayedName = "", handleClose }) {
     const { data, error } = await supabase
       .from("messages")
       .select()
+      .eq("courseId", chatName)
       .order("id", { ascending: false })
       .limit(10);
 
@@ -70,7 +71,9 @@ function ChatWindow({ chatName, displayedName = "", handleClose }) {
           "postgres_changes",
           { event: "INSERT", schema: "public", table: "messages" },
           (payload) => {
-            setMessages((prevMessages) => [...prevMessages, payload.new]);
+            if (payload.new.courseId === chatName) {
+              setMessages((prevMessages) => [...prevMessages, payload.new]);
+            }
           }
         )
         .subscribe();
