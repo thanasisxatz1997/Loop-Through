@@ -6,12 +6,13 @@ import Spinner from "../../../ui/Spinner";
 import { completeQuizRequest } from "../../../services/apiQuizzes";
 
 function FinishScreen() {
-  const { points, maxPossiblePoints, dispatch, answers, quizId } = useQuiz();
+  const { points, maxPossiblePoints, dispatch, answers, quizId, highscore } =
+    useQuiz();
   let emoji;
   const [completedQuiz, setCompletedQuiz] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   // const { completeQuiz, isCompleting } = useCompleteQuiz();
-
+  console.log(points, highscore);
   useEffect(() => {
     const fetchCompletedQuiz = async () => {
       try {
@@ -28,11 +29,9 @@ function FinishScreen() {
     fetchCompletedQuiz();
   }, [answers, quizId]);
 
-  if (completedQuiz?.score >= 90 && completedQuiz?.score <= 100) emoji = "🥇";
-  else if (completedQuiz?.score >= 70 && completedQuiz?.score < 100)
-    emoji = "🥈";
-  else if (completedQuiz?.score >= 50 && completedQuiz?.score < 100)
-    emoji = "🥉";
+  if (points >= 90 && points <= 100) emoji = "🥇";
+  else if (points >= 70 && points < 100) emoji = "🥈";
+  else if (points >= 50 && points < 100) emoji = "🥉";
 
   if (isLoading) {
     return <Spinner></Spinner>;
@@ -45,8 +44,8 @@ function FinishScreen() {
   return (
     <Row type="vertical">
       <p className="result">
-        <span>{emoji}</span>You scored <strong>{completedQuiz?.points}</strong>{" "}
-        out of {maxPossiblePoints} ({Math.ceil(completedQuiz?.score)}%)
+        <span>{emoji}</span>You scored <strong>{points}</strong> out of{" "}
+        {maxPossiblePoints} ({Math.ceil((points / maxPossiblePoints) * 100)}%)
       </p>
       <p className="highscore">
         (Highscore: {completedQuiz?.totalPoints} points)

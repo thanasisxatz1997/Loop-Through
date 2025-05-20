@@ -52,16 +52,16 @@ function Header() {
               <HiPencilSquare size={30}></HiPencilSquare>
             </HeaderButton>
           </NavLink>
-          <NavLink to="/info">
-            <HeaderButton>
-              <h3>About</h3>
-              <HiMiniQuestionMarkCircle size={30}></HiMiniQuestionMarkCircle>
-            </HeaderButton>
-          </NavLink>
           <NavLink to="/code-editor">
             <HeaderButton>
               <h3>Code Editor</h3>
               <HiMiniCog6Tooth size={30}></HiMiniCog6Tooth>
+            </HeaderButton>
+          </NavLink>
+          <NavLink to="/info">
+            <HeaderButton>
+              <h3>About</h3>
+              <HiMiniQuestionMarkCircle size={30}></HiMiniQuestionMarkCircle>
             </HeaderButton>
           </NavLink>
           {/* <NavLink to="/settings">

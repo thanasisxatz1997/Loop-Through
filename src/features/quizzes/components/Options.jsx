@@ -17,7 +17,7 @@ function Options({ question }) {
             hasAnswer &&
             (index === question.correctOption ? "correct" : "wrong")
           }`}
-          key={option}
+          key={option + index}
           onClick={() =>
             dispatch({
               type: "newAnswer",

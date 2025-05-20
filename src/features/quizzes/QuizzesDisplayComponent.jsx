@@ -24,11 +24,10 @@ const StyledQuizzesContainer = styled.div`
   /* background-color: var(--bg-color-light-0); */
   height: 92vh;
   background: linear-gradient(
-      rgba(255, 255, 255, 0.9),
-      rgba(255, 255, 255, 0.9)
+      rgba(255, 255, 255, 0.3),
+      rgba(255, 255, 255, 0.3)
     ),
-    /* Transparent white overlay */
-      url("/BLUE_GEOMETRIC_FLAT_LIQUID_BACKGROUND_generated.jpg");
+    /* Transparent white overlay */ url("/r31.jpg");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;

@@ -192,7 +192,6 @@ function UserCourses() {
             ))}
             <li>
               <Row content="center">
-                {/* <StyledLink></StyledLink> */}
                 <Modal.Open opens="newCourseModal">
                   <Button variation="transparent" size="large" shadow="none">
                     <Row>
@@ -208,9 +207,9 @@ function UserCourses() {
                     user={user}
                   ></CreateCourseForm>
                 </Modal.Window>
-                <Modal.Window name="test">
+                {/* <Modal.Window name="test">
                   <div>TESTING</div>
-                </Modal.Window>
+                </Modal.Window> */}
                 <Modal.Window name="addTagsModal">
                   <TagsAddFrom
                     usedTags={currentTags}
