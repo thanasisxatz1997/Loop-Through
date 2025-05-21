@@ -31,6 +31,8 @@ const StyledToggle = styled.button`
 
 const StyledList = styled.ul`
   position: fixed;
+  max-height: calc(100vh - ${(props) => props.position.y + 16}px);
+  overflow-y: auto;
 
   background-color: var(--color-grey-0);
   box-shadow: var(--shadow-md);
@@ -85,7 +87,6 @@ function Toggle({ id }) {
   const { openId, open, close, setPosition } = useContext(MenuContext);
   function handleClick(e) {
     const rect = e.target.closest("button").getBoundingClientRect();
-    console.log(rect);
     setPosition({
       x: window.innerWidth - rect.width - rect.x,
       y: rect.y + rect.height + 8,

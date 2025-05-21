@@ -7,7 +7,7 @@ import { NavLink } from "react-router-dom";
 import {
   HiOutlineHome,
   HiAcademicCap,
-  HiMiniCog6Tooth,
+  HiCodeBracket,
   HiPencilSquare,
   HiMiniUser,
   HiMiniQuestionMarkCircle,
@@ -55,7 +55,7 @@ function Header() {
           <NavLink to="/code-editor">
             <HeaderButton>
               <h3>Code Editor</h3>
-              <HiMiniCog6Tooth size={30}></HiMiniCog6Tooth>
+              <HiCodeBracket size={30}></HiCodeBracket>
             </HeaderButton>
           </NavLink>
           <NavLink to="/info">

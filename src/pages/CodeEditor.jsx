@@ -8,6 +8,8 @@ import toast from "react-hot-toast";
 import Heading from "../styles/Heading";
 import StyledFormTextArea from "../styles/StyledFormTextArea";
 import styled from "styled-components";
+import { HiMiniPlay } from "react-icons/hi2";
+import { HiMiniXCircle } from "react-icons/hi2";
 
 const StyledCodeEditorContainer = styled.div`
   /* background-color: var(--bg-color-light-0); */
@@ -34,13 +36,17 @@ function CodeEditor() {
     const output = await runPythonCode(code);
     setOutput(() => output);
   }
+  function handleClear() {
+    setCode("");
+  }
 
   return (
     <StyledCodeEditorContainer>
-      <Row type="vertical" padding="1rem">
+      <Row type="vertical" padding="1rem" gap="0.5rem">
         <CodeMirror
           value={code}
-          height="300px"
+          minHeight="300px"
+          height="50vh"
           padding={10}
           onChange={(code) => setCode(code)}
           style={{
@@ -55,15 +61,33 @@ function CodeEditor() {
         <StyledFormTextArea
           value={output}
           disabled
-          style={{ height: "150px", backgroundColor: "var(--color-grey-100)" }}
+          style={{
+            minHeight: "150px",
+            height: "20vh",
+            backgroundColor: "var(--color-grey-100)",
+            margin: "0rem",
+          }}
         ></StyledFormTextArea>
-        <Row style={{ padding: "1rem" }}>
+        <Row style={{ padding: "0.5rem" }} content="start" gap="1rem">
           <Button
             variation="success"
             onClick={() => handleRunCode(code)}
             disabled={isRunningPythonCode}
           >
-            Run
+            <Row content="center" gap="0.5rem">
+              Run
+              <HiMiniPlay size={20}></HiMiniPlay>
+            </Row>
+          </Button>
+          <Button
+            variation="danger"
+            onClick={handleClear}
+            disabled={isRunningPythonCode}
+          >
+            <Row content="center" gap="0.5rem">
+              Clear
+              <HiMiniXCircle size={20}></HiMiniXCircle>
+            </Row>
           </Button>
         </Row>
       </Row>
