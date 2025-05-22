@@ -16,6 +16,7 @@ import SelectBox from "../../ui/SelectBox";
 import CourseButton from "./CourseButton";
 import Button from "../../styles/StyledButton";
 import { useEffect, useState } from "react";
+import CreateCourseForm from "./CreateCourseForm";
 
 function UserCourseDisplayComponent({
   course,
@@ -27,6 +28,8 @@ function UserCourseDisplayComponent({
   function handleReset() {
     setNewCourse(course);
   }
+
+  function handleChangeImage() {}
 
   useEffect(() => {
     setNewCourse(course);
@@ -114,12 +117,17 @@ function UserCourseDisplayComponent({
                 <HiMiniArrowPath size={20}></HiMiniArrowPath>
               </Row>
             </Button>
-            <Button>
-              <Row gap="5px">
-                Change Image
-                <HiMiniDocumentArrowUp size={20}></HiMiniDocumentArrowUp>
-              </Row>
-            </Button>
+            <Modal.Open
+              opens="changeCourseImageModal"
+              fun={() => setTargetCourseId(course.id)}
+            >
+              <Button>
+                <Row gap="5px">
+                  Change Image
+                  <HiMiniDocumentArrowUp size={20}></HiMiniDocumentArrowUp>
+                </Row>
+              </Button>
+            </Modal.Open>
             <Button>
               <Row gap="5px">
                 Make private <HiEyeSlash size={20}></HiEyeSlash>

@@ -29,6 +29,7 @@ import { useState } from "react";
 import TagsAddFrom from "../ui/TagsAddFrom";
 import { useEditCourse } from "../features/courses/useEditCourse";
 import UserCourseDisplayComponent from "../features/courses/UserCourseDisplayComponent";
+import ChangeCourseImageForm from "../features/courses/ChangeCourseImageForm";
 
 const StyledCoursesContainer = styled.div`
   background-color: var(--bg-color-light-0);
@@ -128,6 +129,10 @@ function UserCourses() {
       userCourses.find((course) => course.id === targetCourseId)?.tags) ||
     [];
 
+  const currentCourse =
+    targetCourseId &&
+    userCourses.find((course) => course.id === targetCourseId);
+
   function handleEditCourse(course) {
     editCourse(course);
   }
@@ -207,6 +212,7 @@ function UserCourses() {
                     user={user}
                   ></CreateCourseForm>
                 </Modal.Window>
+
                 {/* <Modal.Window name="test">
                   <div>TESTING</div>
                 </Modal.Window> */}
@@ -215,6 +221,13 @@ function UserCourses() {
                     usedTags={currentTags}
                     handleSaveTags={handleSaveTags}
                   ></TagsAddFrom>
+                </Modal.Window>
+                <Modal.Window name="changeCourseImageModal">
+                  <ChangeCourseImageForm
+                    course={currentCourse}
+                    userId={user.id}
+                    user={user}
+                  ></ChangeCourseImageForm>
                 </Modal.Window>
                 <Modal.Window name="deleteCourseConfirmationModal">
                   <DeleteConfirmation

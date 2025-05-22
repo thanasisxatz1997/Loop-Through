@@ -31,6 +31,38 @@ export async function getCoursesByAuthorId(authorId) {
   }
 }
 
+export async function changeCourseImageRequest(course, newImage) {
+  console.log("IN REQUEST", course, newImage);
+  const previousImageName = course.image.split("/").pop();
+  const imageName = `${Math.random()}-${newImage.name}`.replaceAll("/", "");
+  const imagePath = `${supabaseUrl}/storage/v1/object/public/course-images/${course.authorId}/${imageName}`;
+
+  // 1. Upload image
+  const { error: uploadStorageError } = await supabase.storage
+    .from(`course-images/${course.authorId}`)
+    .upload(imageName, newImage);
+  if (uploadStorageError) {
+    throw new Error("Image could not be uploaded");
+  }
+  console.log("Image uploaded");
+
+  const newCourse = { ...course, image: imagePath };
+  console.log("The NEW course is: ", newCourse);
+  updateCourse(newCourse);
+  console.log("course updated");
+
+  // 2. Delete the first image
+  console.log("Previous image name to be deleted: ", previousImageName);
+  const { error: deleteStorageError } = await supabase.storage
+    .from(`course-images`)
+    .remove([`${course.authorId}/previousImageName`]);
+
+  if (deleteStorageError) {
+    throw new Error("Image could not be deleted");
+  }
+  console.log("image deleted");
+}
+
 export async function createCourse(newCourse) {
   const token = getAuthToken();
   const imageName = `${Math.random()}-${newCourse.image.name}`.replaceAll(
@@ -80,6 +112,7 @@ export async function createCourse(newCourse) {
 }
 
 export async function updateCourse(course) {
+  console.log("Inside the updateCOurse: ", course);
   const token = getAuthToken();
   const courseBody = {
     name: `${course.name}`,
@@ -95,7 +128,7 @@ export async function updateCourse(course) {
   const url = `${apiUrl}/courses/updateCourseById?id=${course.id}`;
   try {
     const response = await fetch(url, {
-      method: "PUT",
+      method: "PATCH",
       body: JSON.stringify(courseBody),
       headers: reqHeaders,
     });

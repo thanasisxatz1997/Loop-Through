@@ -66,7 +66,7 @@ const SelectBox = forwardRef(
     ref
   ) => {
     return (
-      <StyledSelectBox ref={ref} onChange={onChange} {...props} value={value}>
+      <StyledSelectBox ref={ref} onChange={onChange} value={value} {...props}>
         {selectTitle !== "none" && (
           <option value={""} className="selected" disabled>
             {selectTitle}

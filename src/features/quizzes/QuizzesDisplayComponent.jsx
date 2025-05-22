@@ -19,6 +19,7 @@ import CreateQuizForm from "./CreateQuizForm";
 import { useUser } from "../authentication/useUser";
 import { useUserData } from "../../hooks/user/useUserData";
 import Spinner from "../../ui/Spinner";
+import { useState } from "react";
 
 const StyledQuizzesContainer = styled.div`
   /* background-color: var(--bg-color-light-0); */
@@ -96,13 +97,15 @@ const StyledLink = styled(Link)`
 
 const dificultyOptions = [
   { value: "Easy", name: "Easy" },
-  { value: "Easy", name: "Medium" },
-  { value: "Easy", name: "Hard" },
+  { value: "Medium", name: "Medium" },
+  { value: "Hard", name: "Hard" },
+  { value: "All", name: "All" },
 ];
 
 const statusOptions = [
   { value: "Completed", name: "Completed" },
-  { value: "Completed", name: "Unsolved" },
+  { value: "Unsolved", name: "Unsolved" },
+  { value: "All", name: "All" },
 ];
 
 const tagsOptions = [
@@ -124,10 +127,11 @@ function QuizzesDisplayComponent({
     isFetching: isFetchingUser,
   } = useUser();
 
+  const [searchText, setSearchText] = useState("");
+  const [searchedDifficulty, setSearchedDifficulty] = useState("");
+  const [searchedStatus, setSearchedStatus] = useState("");
+
   const { userData, isLoadingUserData } = useUserData(user?.id);
-  if (isPendingUser || isFetchingUser || isLoadingUserData) {
-    return <Spinner></Spinner>;
-  }
 
   function hasCompletedQuiz(quizId) {
     if (userData?.completedQuizzes?.find((quiz) => quiz.quizId === quizId)) {
@@ -137,6 +141,47 @@ function QuizzesDisplayComponent({
     }
 
     return userData?.completedQuizzes?.find((quiz) => quiz.quizId === quizId);
+  }
+
+  const displayedQuizzes = checkFilters();
+
+  function checkFilters() {
+    return quizzes
+      .filter(checkSearchTextFilter)
+      .filter(checkStatusFilter)
+      .filter(checkDifficultyFilter);
+  }
+
+  function checkSearchTextFilter(quiz) {
+    if (searchText !== "") {
+      return quiz.name
+        .toLocaleLowerCase()
+        .includes(searchText.toLocaleLowerCase())
+        ? quiz
+        : null;
+    } else {
+      return quiz;
+    }
+  }
+
+  function checkStatusFilter(quiz) {
+    if (searchedStatus === "Completed") {
+      return hasCompletedQuiz(quiz.id) ? quiz : null;
+    } else if (searchedStatus === "Unsolved") {
+      return !hasCompletedQuiz(quiz.id) ? quiz : null;
+    }
+    return quiz;
+  }
+
+  function checkDifficultyFilter(quiz) {
+    if (!searchedDifficulty || searchedDifficulty === "All") {
+      return quiz;
+    }
+    return quiz.difficulty === searchedDifficulty ? quiz : null;
+  }
+
+  if (isPendingUser || isFetchingUser || isLoadingUserData) {
+    return <Spinner></Spinner>;
   }
 
   function getQuizRating(quizId) {
@@ -156,13 +201,20 @@ function QuizzesDisplayComponent({
               <SelectBox
                 options={dificultyOptions}
                 selectTitle="Dificulty"
+                value={searchedDifficulty}
+                onChange={(e) => setSearchedDifficulty(e.target.value)}
               ></SelectBox>
               <SelectBox
                 options={statusOptions}
+                value={searchedStatus}
                 selectTitle="Status"
+                onChange={(e) => setSearchedStatus(e.target.value)}
               ></SelectBox>
-              <SelectBox options={tagsOptions} selectTitle="Tags"></SelectBox>
-              <SearchBar></SearchBar>
+              {/* <SelectBox options={tagsOptions} selectTitle="Tags"></SelectBox> */}
+              <SearchBar
+                searchText={searchText}
+                setSearchText={setSearchText}
+              ></SearchBar>
             </Row>
             <StyledTable>
               <StyledThead>
@@ -191,7 +243,7 @@ function QuizzesDisplayComponent({
               </StyledThead>
 
               <tbody>
-                {quizzes.map((quiz) => (
+                {displayedQuizzes.map((quiz) => (
                   <StyledTr key={quiz.id}>
                     <StyledTd>
                       <StyledLink to={`/quiz/${quiz.id}`}>
