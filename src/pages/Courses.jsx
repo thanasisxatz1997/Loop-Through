@@ -88,9 +88,9 @@ function Courses() {
         <StyledCoursesContainer>
           <Sidebar courses={courses} searchTags={searchTags}></Sidebar>
           <div style={{ paddingTop: "2rem" }}>
-            <Row content="center">
+            {/* <Row content="center">
               <Heading textShadow="white">Recommended</Heading>
-            </Row>
+            </Row> */}
             <StyledCoursesMainContainer>
               {courses.map((course, index) => (
                 <CourseButton

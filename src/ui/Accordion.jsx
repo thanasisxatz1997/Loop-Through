@@ -3,15 +3,15 @@ import { useState } from "react";
 const faqs = [
   {
     title: "What is the purpose of our site?",
-    text: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Accusantium, quaerat temporibus quas dolore provident nisi ut aliquid ratione beatae sequi aspernatur veniam repellendus.",
+    text: "The purpose of our platform, Stark Gript, is to provide an engaging and supportive environment for learning programming and tech-related topics. We guide learners from foundational concepts through interactive lectures, quizzes to test understanding, and even a code editor to practice in real time. Whether you're a beginner or looking to sharpen your skills, our goal is to help you learn effectively and confidently.",
   },
   {
     title: "How can i optimize my learning process?",
-    text: "Pariatur recusandae dignissimos fuga voluptas unde optio nesciunt commodi beatae, explicabo natus.",
+    text: "To get the most out of your learning experience on our platform start with the lectures to build your foundational knowledge. Practice regularly using the built-in code editor. Take quizzes to reinforce what you've learned and identify areas for improvement. Don’t hesitate to ask for help—our authors are available for support if you get stuck or need clarification. Review your progress and revisit topics as needed. Consistency and active engagement are key to mastering new skills!",
   },
   {
     title: "Is it possible to make my own courses?",
-    text: "Excepturi velit laborum, perspiciatis nemo perferendis reiciendis aliquam possimus dolor sed! Dolore laborum ducimus veritatis facere molestias!",
+    text: "Yes, absolutely! Our platform allows users to create and publish their own courses. Whether you want to share your expertise, build a learning path for others, or contribute to the community, you can design your own lectures, quizzes, and materials. Get started by visiting the course creation section in your user dashboard.",
   },
 ];
 

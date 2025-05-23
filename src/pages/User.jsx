@@ -5,6 +5,7 @@ import Button from "../styles/StyledButton";
 import { Link, useNavigate } from "react-router-dom";
 import { logout } from "../services/apiAuth";
 import { useQueryClient } from "@tanstack/react-query";
+import { useUser } from "../features/authentication/useUser";
 
 const StyledUserContainer = styled.div`
   /* background: radial-gradient(
@@ -41,6 +42,8 @@ const StyledSettingsMain = styled.main`
 function User() {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
+  const { user, isAuthenticated, isPending, isFetching } = useUser();
+  console.log(user);
 
   async function handleLogOut() {
     try {
@@ -62,7 +65,7 @@ function User() {
             <Heading as="h2">User</Heading>
           </Row>
           <Row content="start">
-            <Heading as="h3">Username: Thanasis </Heading>
+            <Heading as="h3">Username: {user.user_metadata.username} </Heading>
             {/* <StyledButton size="small">Change</StyledButton> */}
           </Row>
           <Row content="start">

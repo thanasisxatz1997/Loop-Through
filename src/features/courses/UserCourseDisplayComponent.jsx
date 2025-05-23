@@ -128,7 +128,7 @@ function UserCourseDisplayComponent({
                 </Row>
               </Button>
             </Modal.Open>
-            <Button>
+            <Button disabled>
               <Row gap="5px">
                 Make private <HiEyeSlash size={20}></HiEyeSlash>
               </Row>

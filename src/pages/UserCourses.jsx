@@ -169,7 +169,7 @@ function UserCourses() {
           <Row content="center">
             <Heading>My Courses</Heading>
           </Row>
-          <Row content="start" gap="10px">
+          {/* <Row content="start" gap="10px">
             <label>Dificulty:</label>
             <SelectBox
               onChange={(e) => setDifficultyFilter(e.target.value)}
@@ -185,7 +185,7 @@ function UserCourses() {
               onChange={(e) => setTagsFilter(e.target.value)}
             ></SelectBox>
             <SearchBar></SearchBar>
-          </Row>
+          </Row> */}
           <StyledCourseList>
             {displayedCourses.map((course) => (
               <UserCourseDisplayComponent

@@ -17,12 +17,12 @@ const StyledHomeContainer = styled.div`
 function Home() {
   return (
     <StyledHomeContainer>
-      <TextModal width="300px" height="400px" margin="200px 20px">
-        One of the best platforms for learning programming concepts! Start your
-        journey by completing some lectures and then test your skills by solving
-        some of our quizes! If you ever feel like you need help or that you dont
-        understand a courses matterial dont you worry! You always have the
-        option of contacting the author for some help!
+      <TextModal width="300px" height="360px" margin="200px 20px">
+        One of the best learning platforms! Start your journey by completing
+        some lectures and then test your skills by solving some of our quizes!
+        If you ever feel like you need help or that you dont understand a
+        courses matterial dont you worry! You always have the option of
+        contacting the author for some help!
       </TextModal>
 
       <TextModal width="200px" height="200px">

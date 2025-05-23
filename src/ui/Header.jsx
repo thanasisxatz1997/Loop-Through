@@ -21,15 +21,22 @@ const StyledHeader = styled.header`
   min-width: 1200px;
 `;
 
+const Logo = styled.img`
+  height: 6.6rem;
+  width: auto;
+  object-fit: contain;
+  margin-right: 1.2rem;
+`;
+
 function Header() {
   const { isAuthenticated } = useUser();
   return (
     <StyledHeader>
       <Row type="horizontal">
         <Row>
-          <img src="/LoopThroughLogoResizedSmall.png" alt=""></img>
+          <Logo src="/startGriptLogo_cropped.jpg" alt=""></Logo>
           <Heading as="h1" userselect="false">
-            Loop Through
+            Stark Gript
           </Heading>
         </Row>
 

@@ -21,7 +21,7 @@ const StyledSidebarLessonItem = styled.button`
   padding-left: 16px;
   padding-right: 16px;
   position: relative;
-  text-align: left;
+  text-align: center;
   text-decoration: none;
   transition: box-shadow 0.15s, transform 0.15s;
   user-select: none;
