@@ -18,6 +18,7 @@ import EditQuizPage from "./pages/EditQuizPage";
 import UserCourses from "./pages/UserCourses";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import CodeEditor from "./pages/CodeEditor";
+import AdminPanel from "./pages/AdminPanel";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -59,6 +60,9 @@ function App() {
           </Route>
           <Route element={<AppLayout />}>
             <Route path="login" element={<Login />}></Route>
+          </Route>
+          <Route element={<AppLayout />}>
+            <Route path="admin" element={<AdminPanel />}></Route>
           </Route>
         </Routes>
       </BrowserRouter>
