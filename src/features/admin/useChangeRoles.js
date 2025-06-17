@@ -3,7 +3,7 @@ import { changeRolesRequest } from "../../services/apiSettings";
 import toast from "react-hot-toast";
 
 export function useChangeRoles() {
-  const queryClient = useQueryClient;
+  const queryClient = useQueryClient();
 
   const { mutate: changeRoles, isPending: isChangingRoles } = useMutation({
     mutationFn: (roles) => changeRolesRequest(roles),
@@ -12,7 +12,8 @@ export function useChangeRoles() {
       queryClient.invalidateQueries({ queryKey: ["settings"] });
     },
     onError: (err) => {
-      toast.error("Error while updating roles.");
+      console.log(err.message);
+      toast.error("Error while updating roles.", err.message);
       throw new Error(err);
     },
   });

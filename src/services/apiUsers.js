@@ -80,6 +80,13 @@ export async function deleteUser(id) {
   }
 }
 
+export async function changeUserRoles(user, newRoles) {
+  const requestBody = {
+    roles: newRoles,
+  };
+  updateUser(user.id, requestBody);
+}
+
 export async function addUserCourse(courseId, user) {
   const oldCourses = user.courses;
   const newCourses = [...oldCourses, courseId];

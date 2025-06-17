@@ -46,11 +46,13 @@ export async function changeRolesRequest(roles) {
       headers: reqHeaders,
     });
     if (!response.ok) {
+      console.log("response not ok throwing error");
       throw new Error(`Response status: ${response.status}`);
     }
     const data = await response.json();
     return data;
   } catch (error) {
+    console.log("on chatch error");
     throw new Error(`Error while changing roles.`);
   }
 }
