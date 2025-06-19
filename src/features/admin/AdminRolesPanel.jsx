@@ -15,8 +15,7 @@ import Modal from "../../ui/Modal";
 import CreateRoleForm from "./CreateRoleForm";
 import { useChangeRoles } from "./useChangeRoles";
 
-function AdminRolesPanel() {
-  const { settings, isFetchingSettings } = useSettings();
+function AdminRolesPanel({ settings }) {
   const [editedRoles, setEditedRoles] = useState([]);
   const { changeRoles, isChangingRoles } = useChangeRoles();
   const currentRoles = settings?.roles;
@@ -40,7 +39,7 @@ function AdminRolesPanel() {
     }
   }, [settings]);
 
-  if (isFetchingSettings || isChangingRoles)
+  if (isChangingRoles)
     return (
       <StyledAdminPanelContainer>
         <Spinner></Spinner>
@@ -94,12 +93,6 @@ function AdminRolesPanel() {
             <Row gap="5px">
               Save
               <HiOutlineCheckCircle size={20}></HiOutlineCheckCircle>
-            </Row>
-          </Button>
-          <Button>
-            <Row gap="5px">
-              Cancel
-              <HiNoSymbol size={20}></HiNoSymbol>
             </Row>
           </Button>
         </Row>

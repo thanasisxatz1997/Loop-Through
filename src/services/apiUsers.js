@@ -1,9 +1,11 @@
+import { getAuthToken } from "./apiAuth";
 import { apiUrl } from "./mongoApi";
 
-export async function createUser(userId, userName) {
+export async function createUser(userId, userName, email) {
   const user = {
     id: userId,
     userName: userName,
+    email: email,
     completedQuizzes: [],
   };
   const url = `${apiUrl}/users/new`;
@@ -42,10 +44,34 @@ export async function getUserById(id) {
   }
 }
 
+export async function getAllUsers() {
+  const token = getAuthToken();
+  const reqHeaders = new Headers();
+  reqHeaders.append("Content-Type", "application/json");
+  reqHeaders.append("Authorization", `Bearer ${token}`);
+  const url = `${apiUrl}/users/all`;
+  try {
+    const response = await fetch(url, {
+      headers: reqHeaders,
+    });
+    if (!response.ok) {
+      throw new Error(`Response status: ${response.status}`);
+    } else {
+      const data = await response.json();
+      return data;
+    }
+  } catch (error) {
+    console.log("Error while fetching users. ", error.messsage);
+  }
+}
+
 export async function updateUser(id, user = {}) {
+  console.log("The id: ", id);
+  const token = getAuthToken();
   const url = `${apiUrl}/users/updateUserById?id=${id}`;
   const reqHeaders = new Headers();
   reqHeaders.append("Content-Type", "application/json");
+  reqHeaders.append("Authorization", `Bearer ${token}`);
   try {
     const response = await fetch(url, {
       method: "PUT",
@@ -76,14 +102,17 @@ export async function deleteUser(id) {
       return data;
     }
   } catch (error) {
-    console.log("Error while creating user. ", error.messsage);
+    console.log("Error while deleting user. ", error.messsage);
   }
 }
 
 export async function changeUserRoles(user, newRoles) {
+  console.log(user, newRoles);
   const requestBody = {
+    ...user,
     roles: newRoles,
   };
+  console.log(requestBody);
   updateUser(user.id, requestBody);
 }
 

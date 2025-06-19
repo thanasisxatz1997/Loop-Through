@@ -6,19 +6,37 @@ import { useState } from "react";
 import AdminCodeEditorPanel from "../features/admin/AdminCodeEditorPanel";
 import AdminUsersPanel from "../features/admin/AdminUsersPanel";
 import AdminCoursesPanel from "../features/admin/AdminCoursesPanel";
+import Modal from "../ui/Modal";
+import { useSettings } from "../features/admin/useSettings";
+import Spinner from "../ui/Spinner";
 
 function AdminPanel() {
   const [selectedTab, setSelectedTab] = useState("roles");
+  const { settings, isFetchingSettings } = useSettings();
+
   const tabs = [
-    { name: "Roles", key: "roles", component: <AdminRolesPanel /> },
-    { name: "Users", key: "users", component: <AdminUsersPanel /> },
-    { name: "Courses", key: "courses", component: <AdminCoursesPanel /> },
+    {
+      name: "Roles",
+      key: "roles",
+      component: <AdminRolesPanel settings={settings} />,
+    },
+    {
+      name: "Users",
+      key: "users",
+      component: <AdminUsersPanel settings={settings} />,
+    },
+    {
+      name: "Courses",
+      key: "courses",
+      component: <AdminCoursesPanel settings={settings} />,
+    },
     {
       name: "Code Editor",
       key: "code-editor",
-      component: <AdminCodeEditorPanel />,
+      component: <AdminCodeEditorPanel settings={settings} />,
     },
   ];
+  if (isFetchingSettings) return <Spinner></Spinner>;
   return (
     <Row
       type="vertical"

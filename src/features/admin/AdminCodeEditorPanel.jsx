@@ -8,9 +8,8 @@ import Spinner from "../../ui/Spinner";
 import { useEnableCodeEditor } from "./useEnableEditor";
 import { useDisableCodeEditor } from "./useDisableCodeEditor";
 
-function AdminCodeEditorPanel() {
+function AdminCodeEditorPanel({ settings }) {
   const [checked, setChecked] = useState(false);
-  const { settings, isFetchingSettings, error } = useSettings();
   const { enableCodeEditor, isEnablingCodeEditor } = useEnableCodeEditor();
   const { disableCodeEditor, isDisablingCodeEditor } = useDisableCodeEditor();
 
@@ -29,8 +28,7 @@ function AdminCodeEditorPanel() {
     setChecked((checked) => !checked);
   }
 
-  if (error) return <div>Error</div>;
-  if (isFetchingSettings || isDisablingCodeEditor || isEnablingCodeEditor) {
+  if (isDisablingCodeEditor || isEnablingCodeEditor) {
     return (
       <StyledAdminPanelContainer>
         <Spinner></Spinner>

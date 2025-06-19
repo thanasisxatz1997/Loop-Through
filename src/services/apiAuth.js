@@ -36,7 +36,11 @@ export async function signUp({ email, password, metadata }) {
         data: metadata,
       },
     });
-    await createUser(data.user.id, data.user.user_metadata.username);
+    await createUser(
+      data.user.id,
+      data.user.user_metadata.username,
+      data.user.email
+    );
     return data;
   } catch (healthError) {
     throw new Error("Could not connect to back end", healthError.message);
