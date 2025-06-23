@@ -29,6 +29,7 @@ import supabase from "../services/supabase";
 import Button from "../styles/StyledButton";
 import { HiChatBubbleLeftRight } from "react-icons/hi2";
 import ChatWindow from "../features/chat/ChatWindow";
+import { useUserData } from "../hooks/user/useUserData";
 
 const StyledCourseContainer = styled.div`
   display: grid;
@@ -119,7 +120,7 @@ function Course() {
   const currentRating = courseRatings?.find(
     (rating) => rating.courseId === courseId
   )?.rating;
-
+  const { userData, isLoadingUserData } = useUserData(user?.id);
   const { courses, isLoadingCourses } = useCourses();
   console.log("courses ", courses);
   const course = courses?.find((course) => course.id === courseId);
@@ -134,7 +135,8 @@ function Course() {
   console.log("course: ", course);
   console.log("authorId ", course?.authorId);
   console.log("userId ", user?.id);
-  const editable = course?.authorId === user?.id;
+  const editable =
+    course?.authorId === user?.id || userData?.roles.includes("admin");
 
   function handleRateCourse(rating) {
     const courseRating = {

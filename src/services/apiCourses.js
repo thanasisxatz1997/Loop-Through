@@ -4,14 +4,18 @@ import { apiUrl } from "./mongoApi";
 import supabase, { supabaseUrl } from "./supabase";
 
 export async function getCourses() {
+  const token = getAuthToken();
+  const reqHeaders = new Headers();
+  reqHeaders.append("Content-Type", "application/json");
+  reqHeaders.append("Authorization", `Bearer ${token}`);
   const url = `${apiUrl}/courses/`;
   try {
-    const response = await fetch(url);
+    const response = await fetch(url, { headers: reqHeaders });
     if (!response.ok) {
       throw new Error(`Response status: ${response.status}`);
     }
     const data = await response.json();
-    return data;
+    return data.body;
   } catch (error) {
     console.log(error.message);
   }

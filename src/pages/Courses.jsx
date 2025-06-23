@@ -92,7 +92,7 @@ function Courses() {
               <Heading textShadow="white">Recommended</Heading>
             </Row> */}
             <StyledCoursesMainContainer>
-              {courses.map((course, index) => (
+              {courses?.map((course, index) => (
                 <CourseButton
                   key={`${course.id}-${index}`}
                   id={course.id}
