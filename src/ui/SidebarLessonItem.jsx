@@ -20,7 +20,7 @@ function SidebarLessonItem({ lesson, active }) {
                 replace: true,
               })
         }
-        data-tooltip-id="lesson-name-tooltip"
+        data-tooltip-id={`${lesson?.name}-tooltip`}
       >
         <Heading
           as="h3"
@@ -35,7 +35,7 @@ function SidebarLessonItem({ lesson, active }) {
           {lesson?.name ? lesson.name : "no title"}
         </Heading>
       </StyledSidebarLessonItem>
-      <Tooltip id="lesson-name-tooltip" place="top">
+      <Tooltip id={`${lesson?.name}-tooltip`} place="top">
         {lesson?.name ? lesson.name : "no title"}
       </Tooltip>
     </>
