@@ -15,6 +15,9 @@ import ToggleSwitch from "../../ui/ToggleSwitch";
 import Modal from "../../ui/Modal";
 import RollesAddForm from "../../ui/RolesAddForm";
 import { updateCourseVisibleRoles } from "../../services/apiCourses";
+import { useDeleteCourse } from "../courses/useDeleteCourse";
+import { Link } from "react-router-dom";
+import DeleteConfirmation from "../../ui/DeleteConfirmation";
 
 function AdminCoursesPanel({ settings }) {
   const [searchedText, setSearchedText] = useState("");
@@ -23,6 +26,7 @@ function AdminCoursesPanel({ settings }) {
   const currentRoles = settings?.roles;
 
   const displayedCourses = getFilteredCourses();
+  const { deleteCourse, isDeletingCourse } = useDeleteCourse();
 
   function getFilteredCourses() {
     if (!courses) return [];
@@ -60,20 +64,27 @@ function AdminCoursesPanel({ settings }) {
                 <Row gap="2rem">
                   <Row gap="1rem">
                     <Heading as="h4">Visible:</Heading>
-                    <ToggleSwitch></ToggleSwitch>
+                    <ToggleSwitch checked={true}></ToggleSwitch>
                   </Row>
-                  <Button variation="primary" size="small">
-                    <Row gap="5px">
-                      Edit
-                      <HiPencilSquare size={15}></HiPencilSquare>
-                    </Row>
-                  </Button>
-                  <Button variation="danger" size="small">
-                    <Row gap="5px">
-                      Delete
-                      <HiMiniTrash size={15}></HiMiniTrash>
-                    </Row>
-                  </Button>
+                  <Link to={`/course/:${course.id}`}>
+                    <Button variation="primary" size="small">
+                      <Row gap="5px">
+                        Edit
+                        <HiPencilSquare size={15}></HiPencilSquare>
+                      </Row>
+                    </Button>
+                  </Link>
+                  <Modal.Open
+                    opens="deleteCourseConfirmationModal"
+                    fun={(e) => e.preventDefault()}
+                  >
+                    <Button variation="danger" size="small">
+                      <Row gap="5px">
+                        Delete
+                        <HiMiniTrash size={15}></HiMiniTrash>
+                      </Row>
+                    </Button>
+                  </Modal.Open>
                 </Row>
               </Row>
               <Row gap="1rem" content="start" style={{ paddingLeft: "4rem" }}>
@@ -85,6 +96,11 @@ function AdminCoursesPanel({ settings }) {
                     allRoles={currentRoles}
                     item={course}
                   ></RollesAddForm>
+                </Modal.Window>
+                <Modal.Window name="deleteCourseConfirmationModal">
+                  <DeleteConfirmation
+                    onConfirm={() => deleteCourse(course.id)}
+                  ></DeleteConfirmation>
                 </Modal.Window>
                 <Modal.Open
                   opens="rolesAddModal"

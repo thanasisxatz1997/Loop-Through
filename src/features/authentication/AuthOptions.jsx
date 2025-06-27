@@ -28,7 +28,7 @@ function Selector({ children }) {
   const { openName, open } = useContext(AuthOptionsContext);
   return (
     <Row>
-      <StyledButton
+      {/* <StyledButton
         size="fill"
         borderradius="9px 0px 0px 0px"
         selectedoptionbutton={openName === "signIn" ? "true" : "false"}
@@ -47,7 +47,7 @@ function Selector({ children }) {
         onClick={() => open("register")}
       >
         Register
-      </StyledButton>
+      </StyledButton> */}
     </Row>
   );
 }

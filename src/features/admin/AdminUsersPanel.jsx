@@ -5,9 +5,11 @@ import { useAllUsers } from "./useAllUsers";
 import Spinner from "../../ui/Spinner";
 import RollesAddForm from "../../ui/RolesAddForm";
 import { HiMiniPencilSquare } from "react-icons/hi2";
+import { HiMiniPlus } from "react-icons/hi2";
 import Button from "../../styles/StyledButton";
 import Modal from "../../ui/Modal";
 import { changeUserRoles } from "../../services/apiUsers";
+import RegisterForm from "../authentication/RegisterForm";
 
 function AdminUsersPanel({ settings }) {
   const { users, isFetchingUsers, error } = useAllUsers();
@@ -57,6 +59,18 @@ function AdminUsersPanel({ settings }) {
             <hr></hr>
           </Row>
         ))}
+        <Row content="center" style={{ marginTop: "10px" }}>
+          <Modal.Open opens="registerFormModal" fun={(e) => e.preventDefault()}>
+            <Button size="small">
+              <Row style={{ alignItems: "center" }}>
+                <HiMiniPlus size={20}></HiMiniPlus>New User
+              </Row>
+            </Button>
+          </Modal.Open>
+        </Row>
+        <Modal.Window name="registerFormModal" transparent="true">
+          <RegisterForm></RegisterForm>
+        </Modal.Window>
       </Modal>
     </StyledAdminPanelContainer>
   );

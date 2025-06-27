@@ -75,12 +75,18 @@ function Open({ children, opens: opensWindowName, fun }) {
   });
 }
 
-function Window({ children, name }) {
+function Window({ children, name, transparent = "false" }) {
   const { openName, close } = useContext(ModalContext);
   if (name !== openName) return;
   return createPortal(
     <Overlay>
-      <StyledModal>
+      <StyledModal
+        style={
+          transparent === "true"
+            ? { backgroundColor: "var(--backdrop-color)", boxShadow: "none" }
+            : {}
+        }
+      >
         <Button onClick={close}>
           <HiXMark></HiXMark>
         </Button>
