@@ -63,7 +63,6 @@ function LessonElementCreateForm({
     { name: "Title", id: 0 },
     { name: "Paragraph", id: 1 },
     { name: "Image", id: 2 },
-    { name: "Other", id: 3 },
   ];
   const newElementId = create === "below" ? elementId + 1 : elementId;
 
