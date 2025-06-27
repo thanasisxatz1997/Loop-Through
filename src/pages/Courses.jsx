@@ -31,7 +31,7 @@ const StyledCoursesContainer = styled.div`
       rgba(255, 255, 255, 0.3),
       rgba(255, 255, 255, 0.3)
     ),
-    /* Transparent white overlay */ url("/2.jpg");
+    /* Transparent white overlay */ url("/r31.jpg");
   background-size: cover; /* Ensures the image covers the div */
   background-position: center; /* Centers the image */
   background-repeat: no-repeat; /* Prevents tiling */
