@@ -6,6 +6,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { logout } from "../services/apiAuth";
 import { useQueryClient } from "@tanstack/react-query";
 import { useUser } from "../features/authentication/useUser";
+import { useIsAdmin } from "../features/admin/useIsAdmin";
 
 const StyledUserContainer = styled.div`
   /* background: radial-gradient(
@@ -43,6 +44,7 @@ function User() {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const { user, isAuthenticated, isPending, isFetching } = useUser();
+  const { isAdmin, isPendingisAdmin } = useIsAdmin();
   console.log(user);
 
   async function handleLogOut() {
@@ -71,6 +73,11 @@ function User() {
           <Row content="start">
             <Heading as="h3">Password: ******* </Heading>
             {/* <StyledButton size="small">Change</StyledButton> */}
+          </Row>
+          <Row content="start">
+            {isAdmin && (
+              <Button onClick={navigate("/admin")}>Admin Panel</Button>
+            )}
           </Row>
           <br></br>
           <hr></hr>
