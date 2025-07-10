@@ -36,7 +36,7 @@ function AdminUsersPanel({ settings }) {
               <Heading as="h4">Roles:</Heading>
               <Row gap="1rem">
                 {user.roles.map((role) => (
-                  <div>{role}</div>
+                  <div key={role}>{role}</div>
                 ))}
               </Row>
               <Modal.Window name="rolesAddModal">

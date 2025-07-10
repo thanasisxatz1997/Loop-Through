@@ -13,6 +13,7 @@ export async function isAdminRequest() {
       throw new Error(`Response status: ${response.status}`);
     }
     const data = await response;
+    console.log(data);
     return data;
   } catch (error) {
     console.log(error.message);

@@ -46,6 +46,7 @@ function User() {
   const { user, isAuthenticated, isPending, isFetching } = useUser();
   const { isAdmin, isPendingisAdmin } = useIsAdmin();
   console.log(user);
+  console.log(isAdmin);
 
   async function handleLogOut() {
     try {
@@ -76,7 +77,7 @@ function User() {
           </Row>
           <Row content="start">
             {isAdmin && (
-              <Button onClick={navigate("/admin")}>Admin Panel</Button>
+              <Button onClick={() => navigate("/admin")}>Admin Panel</Button>
             )}
           </Row>
           <br></br>

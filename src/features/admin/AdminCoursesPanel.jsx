@@ -64,7 +64,10 @@ function AdminCoursesPanel({ settings }) {
                 <Row gap="2rem">
                   <Row gap="1rem">
                     <Heading as="h4">Visible:</Heading>
-                    <ToggleSwitch checked={true}></ToggleSwitch>
+                    <ToggleSwitch
+                      checked={true}
+                      onChange={() => {}}
+                    ></ToggleSwitch>
                   </Row>
                   <Link to={`/course/:${course.id}`}>
                     <Button variation="primary" size="small">
@@ -88,7 +91,7 @@ function AdminCoursesPanel({ settings }) {
                 </Row>
               </Row>
               <Row gap="1rem" content="start" style={{ paddingLeft: "4rem" }}>
-                Visible to roles: {course.visibleTo.map((role) => role)}
+                Visible to roles: {course.visibleTo.map((role) => `${role} `)}
                 <Modal.Window name="rolesAddModal">
                   <RollesAddForm
                     usedRoles={course.visibleTo}
