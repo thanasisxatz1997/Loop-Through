@@ -57,6 +57,7 @@ function RollesAddForm({
   const [editedRoles, setEditedRoles] = useState(usedRoles);
 
   console.log("allroles: ", allRoles);
+  console.log(item);
   const displayedRoles = allRoles.filter(
     (role) =>
       role.toLowerCase().startsWith(searchText.toLowerCase()) &&

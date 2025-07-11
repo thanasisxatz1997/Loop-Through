@@ -14,7 +14,10 @@ import {
 import ToggleSwitch from "../../ui/ToggleSwitch";
 import Modal from "../../ui/Modal";
 import RollesAddForm from "../../ui/RolesAddForm";
-import { updateCourseVisibleRoles } from "../../services/apiCourses";
+import {
+  updateCourseEditableRoles,
+  updateCourseVisibleRoles,
+} from "../../services/apiCourses";
 import { useDeleteCourse } from "../courses/useDeleteCourse";
 import { Link } from "react-router-dom";
 import DeleteConfirmation from "../../ui/DeleteConfirmation";
@@ -22,6 +25,7 @@ import DeleteConfirmation from "../../ui/DeleteConfirmation";
 function AdminCoursesPanel({ settings }) {
   const [searchedText, setSearchedText] = useState("");
   const { courses, isLoadingCourses, error } = useCourses();
+  const [selectedCourse, setSelectedCourse] = useState();
 
   const currentRoles = settings?.roles;
 
@@ -90,24 +94,39 @@ function AdminCoursesPanel({ settings }) {
                   </Modal.Open>
                 </Row>
               </Row>
-              <Row gap="1rem" content="start" style={{ paddingLeft: "4rem" }}>
+              <Row
+                gap="1rem"
+                content="start"
+                style={{ paddingLeft: "4rem", paddingTop: "0.5rem" }}
+              >
                 Visible to roles: {course.visibleTo.map((role) => `${role} `)}
-                <Modal.Window name="rolesAddModal">
-                  <RollesAddForm
-                    usedRoles={course.visibleTo}
-                    handleSaveRoles={updateCourseVisibleRoles}
-                    allRoles={currentRoles}
-                    item={course}
-                  ></RollesAddForm>
-                </Modal.Window>
-                <Modal.Window name="deleteCourseConfirmationModal">
-                  <DeleteConfirmation
-                    onConfirm={() => deleteCourse(course.id)}
-                  ></DeleteConfirmation>
-                </Modal.Window>
                 <Modal.Open
-                  opens="rolesAddModal"
-                  fun={(e) => e.preventDefault()}
+                  opens="visibilityRolesAddModal"
+                  fun={(e) => {
+                    setSelectedCourse(course);
+                    e.preventDefault();
+                  }}
+                >
+                  <Button size="small">
+                    <Row>
+                      Manage Roles
+                      <HiMiniPencilSquare size={15}></HiMiniPencilSquare>
+                    </Row>
+                  </Button>
+                </Modal.Open>
+              </Row>
+              <Row
+                gap="1rem"
+                content="start"
+                style={{ paddingLeft: "4rem", paddingTop: "0.5rem" }}
+              >
+                Editable by roles: {course.editableBy.map((role) => `${role} `)}
+                <Modal.Open
+                  opens="editableRolesAddModal"
+                  fun={(e) => {
+                    setSelectedCourse(course);
+                    e.preventDefault();
+                  }}
                 >
                   <Button size="small">
                     <Row>
@@ -120,6 +139,27 @@ function AdminCoursesPanel({ settings }) {
               <hr></hr>
             </Row>
           ))}
+          <Modal.Window name="visibilityRolesAddModal">
+            <RollesAddForm
+              usedRoles={selectedCourse?.visibleTo}
+              handleSaveRoles={updateCourseVisibleRoles}
+              allRoles={currentRoles}
+              item={selectedCourse}
+            ></RollesAddForm>
+          </Modal.Window>
+          <Modal.Window name="editableRolesAddModal">
+            <RollesAddForm
+              usedRoles={selectedCourse?.editableBy}
+              handleSaveRoles={updateCourseEditableRoles}
+              allRoles={currentRoles}
+              item={selectedCourse}
+            ></RollesAddForm>
+          </Modal.Window>
+          <Modal.Window name="deleteCourseConfirmationModal">
+            <DeleteConfirmation
+              onConfirm={() => deleteCourse(selectedCourse.id)}
+            ></DeleteConfirmation>
+          </Modal.Window>
         </Row>
       </Modal>
     </StyledAdminPanelContainer>

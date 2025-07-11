@@ -10,9 +10,11 @@ import Button from "../../styles/StyledButton";
 import Modal from "../../ui/Modal";
 import { changeUserRoles } from "../../services/apiUsers";
 import RegisterForm from "../authentication/RegisterForm";
+import { useState } from "react";
 
 function AdminUsersPanel({ settings }) {
   const { users, isFetchingUsers, error } = useAllUsers();
+  const [selectedUser, setSelectedUser] = useState();
 
   const currentRoles = settings?.roles;
 
@@ -39,15 +41,13 @@ function AdminUsersPanel({ settings }) {
                   <div key={role}>{role}</div>
                 ))}
               </Row>
-              <Modal.Window name="rolesAddModal">
-                <RollesAddForm
-                  usedRoles={user.roles}
-                  handleSaveRoles={changeUserRoles}
-                  allRoles={currentRoles}
-                  item={user}
-                ></RollesAddForm>
-              </Modal.Window>
-              <Modal.Open opens="rolesAddModal" fun={(e) => e.preventDefault()}>
+              <Modal.Open
+                opens="rolesAddModal"
+                fun={(e) => {
+                  setSelectedUser(user);
+                  e.preventDefault();
+                }}
+              >
                 <Button size="small">
                   <Row>
                     Manage Roles
@@ -59,6 +59,14 @@ function AdminUsersPanel({ settings }) {
             <hr></hr>
           </Row>
         ))}
+        <Modal.Window name="rolesAddModal">
+          <RollesAddForm
+            usedRoles={selectedUser?.roles}
+            handleSaveRoles={changeUserRoles}
+            allRoles={currentRoles}
+            item={selectedUser}
+          ></RollesAddForm>
+        </Modal.Window>
         <Row content="center" style={{ marginTop: "10px" }}>
           <Modal.Open opens="registerFormModal" fun={(e) => e.preventDefault()}>
             <Button size="small">

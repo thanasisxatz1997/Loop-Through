@@ -121,6 +121,12 @@ export async function updateCourseVisibleRoles(course, editedRoles) {
   updateCourse(newCourse);
 }
 
+export async function updateCourseEditableRoles(course, editedRoles) {
+  console.log(course, editedRoles);
+  const newCourse = { ...course, editableBy: editedRoles };
+  updateCourse(newCourse);
+}
+
 export async function updateCourse(course) {
   console.log("Inside the updateCOurse: ", course);
   const token = getAuthToken();
@@ -132,6 +138,7 @@ export async function updateCourse(course) {
     rating: course.rating,
     tags: course.tags,
     visibleTo: course.visibleTo,
+    editableBy: course.editableBy,
   };
   const reqHeaders = new Headers();
   reqHeaders.append("Content-Type", "application/json");

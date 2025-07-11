@@ -132,11 +132,10 @@ function Course() {
     queryKey: ["lessons"],
     queryFn: () => getLessonsByCourseId(courseId),
   });
-  console.log("course: ", course);
-  console.log("authorId ", course?.authorId);
-  console.log("userId ", user?.id);
   const editable =
-    course?.authorId === user?.id || userData?.roles.includes("admin");
+    course?.authorId === user?.id ||
+    userData?.roles.includes("admin") ||
+    userData?.roles?.some((role) => course?.editableBy?.includes(role));
 
   function handleRateCourse(rating) {
     const courseRating = {
