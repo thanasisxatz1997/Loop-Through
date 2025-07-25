@@ -11,8 +11,12 @@ import LessonElementCreateForm from "../features/lessons/LessonElementCreateForm
 import { HiMiniPlusCircle } from "react-icons/hi2";
 import Button from "../styles/StyledButton";
 import { HiArchiveBoxXMark } from "react-icons/hi2";
+import { HiDocumentText } from "react-icons/hi2";
 import DeleteConfirmation from "./DeleteConfirmation";
 import { useDeleteLesson } from "../features/lessons/useDeleteLesson";
+import StyledFormTextInput from "../styles/StyledFormTextInput";
+import RenameLessonModal from "./RenameLessonModal";
+import { useEditLesson } from "../features/lessons/useEditLesson";
 
 const FloatingDiv = styled.div`
   top: 0px;
@@ -54,13 +58,26 @@ function LessonContent({ lesson, editable }) {
   const [lastHoveredId, setLastHoveredId] = useState("");
   const [deleteLesson, isDeleting] = useDeleteLesson();
   const activeContentElements = lesson.content;
+  const [editLesson, isEditing] = useEditLesson();
+
+  function handleRenameLesson(newLessonName) {
+    console.log("renaming lesson: ", lesson.id, " to: ", newLessonName);
+    const newLesson = { ...lesson, name: newLessonName };
+    console.log(newLesson);
+    editLesson(newLesson);
+  }
 
   return (
     <Row type="vertical" style={{ height: "88vh" }}>
       <Row content="center" gap="10px">
         <LessonTitle title={`${lesson.name}`}></LessonTitle>
         {editable && (
-          <Row>
+          <Row gap="1rem">
+            <Modal.Open opens="renameLessonModal">
+              <Button size="small">
+                <HiDocumentText size={20} />
+              </Button>
+            </Modal.Open>
             <Modal.Open opens="deleteLessonConfirmationModal">
               <Button variation="danger" size="small">
                 <HiArchiveBoxXMark size={20} />
@@ -154,6 +171,12 @@ function LessonContent({ lesson, editable }) {
             onConfirm={() => deleteLesson(lesson.id)}
             isDeleting={isDeleting}
           ></DeleteConfirmation>
+        </Modal.Window>
+        <Modal.Window name="renameLessonModal">
+          <RenameLessonModal
+            currentName={lesson.name}
+            handleRenameLesson={handleRenameLesson}
+          ></RenameLessonModal>
         </Modal.Window>
       </StyledLessonContent>
       {/* <LessonQuizesContainer quizes={[]}></LessonQuizesContainer> */}
