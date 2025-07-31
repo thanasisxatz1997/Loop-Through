@@ -110,11 +110,14 @@ function Toggle({ id }) {
   );
 }
 function List({ id, children }) {
-  const { openId, position } = useContext(MenuContext);
+  const { openId, position, close } = useContext(MenuContext);
   if (openId !== id) return null;
 
   return createPortal(
-    <StyledList position={{ x: position.x, y: position.y }}>
+    <StyledList
+      position={{ x: position.x, y: position.y }}
+      onMouseLeave={close}
+    >
       {children}
     </StyledList>,
     document.body

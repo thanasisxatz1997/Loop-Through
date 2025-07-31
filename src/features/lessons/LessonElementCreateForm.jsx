@@ -50,6 +50,7 @@ function LessonElementCreateForm({
     { type: "i", key: 2 },
     { type: "o", key: 3 },
   ];
+  console.log("ElementId: ", elementId);
   const [editLesson, isEditing] = useEditLesson();
   const { user, isPending, isAuthenticated, isFetching } = useUser();
   const startingType = edit
@@ -65,6 +66,7 @@ function LessonElementCreateForm({
     { name: "Image", id: 2 },
   ];
   const newElementId = create === "below" ? elementId + 1 : elementId;
+  console.log("create here: ", create, "newElementId: ", newElementId);
 
   function onLessonEdited(newElementData) {
     const updatedLessonContent = newLessonContent.map((item) =>

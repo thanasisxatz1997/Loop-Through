@@ -59,7 +59,6 @@ function LessonContent({ lesson, editable }) {
   const [deleteLesson, isDeleting] = useDeleteLesson();
   const activeContentElements = lesson.content;
   const [editLesson, isEditing] = useEditLesson();
-
   function handleRenameLesson(newLessonName) {
     console.log("renaming lesson: ", lesson.id, " to: ", newLessonName);
     const newLesson = { ...lesson, name: newLessonName };
@@ -97,6 +96,7 @@ function LessonContent({ lesson, editable }) {
               }}
               onMouseLeave={() => {
                 editable && setHoveredId("");
+                console.log("left", hoveredId);
               }}
               border={
                 editable && hoveredId === element.id && "1px dashed  #000000;"
@@ -130,7 +130,15 @@ function LessonContent({ lesson, editable }) {
           ))}
         </Menus>
         {editable && (
-          <Row content="center">
+          <Row
+            content="center"
+            onMouseEnter={() => {
+              editable && setLastHoveredId(activeContentElements.length);
+            }}
+            onMouseLeave={() => {
+              console.log("left", hoveredId);
+            }}
+          >
             <Modal.Open opens="lessonElementModalCreateBelow">
               <StyledLessonElementCreateButton>
                 <HiMiniPlusCircle size={25} />

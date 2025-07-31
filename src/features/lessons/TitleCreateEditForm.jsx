@@ -12,6 +12,12 @@ const StyledFormContainer = styled.form`
   padding: 10px;
 `;
 
+const alignmentOptions = [
+  { value: "start", name: "start" },
+  { value: "center", name: "center" },
+  { value: "end", name: "end" },
+];
+
 const titleOptions = [
   {
     value: "h1",
@@ -37,6 +43,7 @@ function TitleCreateEditForm({
     defaultValues: {
       content: startingContent ? startingContent.content : "",
       size: startingContent ? startingContent.size : "",
+      textAlign: startingContent?.textAlign ?? "",
     },
   });
 
@@ -68,6 +75,16 @@ function TitleCreateEditForm({
           id="size"
           name="size"
           {...register("size", { required: "This field is required" })}
+        ></SelectBox>
+      </Row>
+      <Row content="flex-start" gap="10px" margin="10px 0px">
+        <StyledFormLabel>Align:</StyledFormLabel>
+        <SelectBox
+          selectTitle="Select alignment"
+          options={alignmentOptions}
+          id="textAlign"
+          name="textAlign"
+          {...register("textAlign", { required: "This field is required" })}
         ></SelectBox>
       </Row>
       <Row content="flex-start" margin="10px 0px" gap="10px">
