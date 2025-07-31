@@ -14,6 +14,7 @@ const StyledSidebarLessonItem = styled.button`
   display: inline-flex;
   font-family: "JetBrains Mono", monospace;
   height: 48px;
+  min-height: 48px;
   justify-content: center;
   line-height: 1;
   list-style: none;

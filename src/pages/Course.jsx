@@ -30,10 +30,12 @@ import Button from "../styles/StyledButton";
 import { HiChatBubbleLeftRight } from "react-icons/hi2";
 import ChatWindow from "../features/chat/ChatWindow";
 import { useUserData } from "../hooks/user/useUserData";
+import { useEditLesson } from "../features/lessons/useEditLesson";
 
 const StyledCourseContainer = styled.div`
   display: grid;
   height: 92vh;
+
   grid-template-rows: auto 1fr;
   grid-template-columns: 26rem 1fr;
   /* grid-row: 1; */
@@ -122,7 +124,8 @@ function Course() {
   )?.rating;
   const { userData, isLoadingUserData } = useUserData(user?.id);
   const { courses, isLoadingCourses } = useCourses();
-  console.log("courses ", courses);
+  const [editLesson, isEditing] = useEditLesson();
+
   const course = courses?.find((course) => course.id === courseId);
   const {
     isLoading,
@@ -156,6 +159,9 @@ function Course() {
     setIsShowingChat(!isShowingChat);
   }
 
+  function handleMoveLessonAbove(lessonId) {}
+  function handleMoveLessonBelow(lessonId) {}
+
   if (isLoading || isLoadingCourses) return <Spinner></Spinner>;
   if (error) console.log(error);
   if (courseId === ":-1") return <CourseCreate></CourseCreate>;
@@ -175,6 +181,7 @@ function Course() {
           <Heading as={"h3"} textalign="left" userselect="false">
             Lessons:
           </Heading>
+
           {lessons.map((lesson) => (
             <SidebarLessonItem
               key={lesson.id}
@@ -182,6 +189,7 @@ function Course() {
               active={lesson.id === activeLessonId ? "true" : "false"}
             ></SidebarLessonItem>
           ))}
+
           {editable && (
             <>
               <Modal.Open opens="newLessonModal">

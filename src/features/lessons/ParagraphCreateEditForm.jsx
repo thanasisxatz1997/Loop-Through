@@ -77,10 +77,13 @@ function ParagraphCreateEditForm({
   }
 
   return (
-    <StyledFormContainer onSubmit={handleSubmit(onSubmit, onError)}>
+    <StyledFormContainer
+      onSubmit={handleSubmit(onSubmit, onError)}
+      style={{ maxHeight: "60vh", overflowX: "auto" }}
+    >
       <StyledFormLabel>Text:</StyledFormLabel>
       <StyledFormTextArea
-        style={{ height: "400px" }}
+        style={{ height: "250px" }}
         {...register("content", { required: "This field is required" })}
       ></StyledFormTextArea>
       <Row content="flex-start" gap="10px" margin="10px 0px">
@@ -120,7 +123,13 @@ function ParagraphCreateEditForm({
               setValue("backgroundColor", backgroundColor);
             }}
           />
-          <h5>{backgroundColor}</h5>
+          <Row content="start" style={{ padding: "0.5rem" }} gap="1rem">
+            <StyledFormTextInput
+              placeholder="Color code"
+              value={backgroundColor}
+              onChange={(e) => setBackgroundColor(e.target.value)}
+            ></StyledFormTextInput>
+          </Row>
         </>
       )}
       <Row content="flex-start" margin="10px 0px" gap="10px">

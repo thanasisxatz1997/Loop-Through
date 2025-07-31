@@ -16,6 +16,9 @@ const StyledSidebar = styled.aside`
   box-shadow: 0px 4px 3px 1px var(--color-grey-700);
   /* box-shadow: 12px 0px 15px -5px var(--color-grey-700); */
   position: relative;
+
+  max-height: 92vh;
+  overflow: auto;
 `;
 
 StyledSidebar.defaultProps = {

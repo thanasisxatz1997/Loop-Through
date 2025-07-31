@@ -17,6 +17,7 @@ import { useDeleteLesson } from "../features/lessons/useDeleteLesson";
 import StyledFormTextInput from "../styles/StyledFormTextInput";
 import RenameLessonModal from "./RenameLessonModal";
 import { useEditLesson } from "../features/lessons/useEditLesson";
+import { HiChevronUp, HiChevronDown } from "react-icons/hi2";
 
 const FloatingDiv = styled.div`
   top: 0px;
@@ -59,11 +60,49 @@ function LessonContent({ lesson, editable }) {
   const [deleteLesson, isDeleting] = useDeleteLesson();
   const activeContentElements = lesson.content;
   const [editLesson, isEditing] = useEditLesson();
+
   function handleRenameLesson(newLessonName) {
     console.log("renaming lesson: ", lesson.id, " to: ", newLessonName);
     const newLesson = { ...lesson, name: newLessonName };
     console.log(newLesson);
     editLesson(newLesson);
+  }
+
+  function handleMoveLessonElementAbove(elementId) {
+    if (elementId === 1) {
+      return;
+    } else {
+      const aboveElement = {
+        ...activeContentElements[elementId - 2],
+        id: elementId,
+      };
+      const currentElement = {
+        ...activeContentElements[elementId - 1],
+        id: elementId - 1,
+      };
+      const updatedElements = [...activeContentElements];
+      updatedElements[elementId - 2] = currentElement;
+      updatedElements[elementId - 1] = aboveElement;
+      editLesson({ ...lesson, content: updatedElements });
+    }
+  }
+  function handleMoveLessonElementBelow(elementId) {
+    if (elementId === activeContentElements.length) {
+      return;
+    } else {
+      const belowElement = {
+        ...activeContentElements[elementId],
+        id: elementId,
+      };
+      const currentElement = {
+        ...activeContentElements[elementId - 1],
+        id: elementId + 1,
+      };
+      const updatedElements = [...activeContentElements];
+      updatedElements[elementId] = currentElement;
+      updatedElements[elementId - 1] = belowElement;
+      editLesson({ ...lesson, content: updatedElements });
+    }
   }
 
   return (
@@ -105,25 +144,49 @@ function LessonContent({ lesson, editable }) {
               <LessonElement element={element}></LessonElement>
               {editable && (
                 <FloatingDiv display="block">
-                  <Menus.Menu>
+                  <Row style={{ marginTop: "3px" }}>
                     {hoveredId === element.id && (
-                      <Menus.Toggle id={element.id} />
+                      <Row gap="0.5rem">
+                        <Button
+                          style={{ padding: "2px" }}
+                          onClick={() =>
+                            handleMoveLessonElementAbove(element.id)
+                          }
+                        >
+                          <HiChevronUp size={20}></HiChevronUp>
+                        </Button>
+                        <Button
+                          style={{ padding: "2px" }}
+                          onClick={() =>
+                            handleMoveLessonElementBelow(element.id)
+                          }
+                        >
+                          <HiChevronDown size={20}></HiChevronDown>
+                        </Button>
+                      </Row>
                     )}
-                    <Menus.List id={element.id}>
-                      <Modal.Open opens="lessonElementModalCreateAbove">
-                        <Menus.Button>Create Above</Menus.Button>
-                      </Modal.Open>
-                      <Modal.Open opens="lessonElementModalCreateBelow">
-                        <Menus.Button>Create Below</Menus.Button>
-                      </Modal.Open>
-                      <Modal.Open opens="lessonElementModalEdit">
-                        <Menus.Button>Edit</Menus.Button>
-                      </Modal.Open>
-                      <Modal.Open opens="deleteConfirmationModal">
-                        <Menus.Button>Delete</Menus.Button>
-                      </Modal.Open>
-                    </Menus.List>
-                  </Menus.Menu>
+                    <Menus.Menu>
+                      {hoveredId === element.id && (
+                        <Row gap="1px">
+                          <Menus.Toggle id={element.id} />
+                        </Row>
+                      )}
+                      <Menus.List id={element.id}>
+                        <Modal.Open opens="lessonElementModalCreateAbove">
+                          <Menus.Button>Create Above</Menus.Button>
+                        </Modal.Open>
+                        <Modal.Open opens="lessonElementModalCreateBelow">
+                          <Menus.Button>Create Below</Menus.Button>
+                        </Modal.Open>
+                        <Modal.Open opens="lessonElementModalEdit">
+                          <Menus.Button>Edit</Menus.Button>
+                        </Modal.Open>
+                        <Modal.Open opens="deleteConfirmationModal">
+                          <Menus.Button>Delete</Menus.Button>
+                        </Modal.Open>
+                      </Menus.List>
+                    </Menus.Menu>
+                  </Row>
                 </FloatingDiv>
               )}
             </Container>
