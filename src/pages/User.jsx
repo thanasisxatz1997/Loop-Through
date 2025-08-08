@@ -45,8 +45,6 @@ function User() {
   const queryClient = useQueryClient();
   const { user, isAuthenticated, isPending, isFetching } = useUser();
   const { isAdmin, isPendingisAdmin } = useIsAdmin();
-  console.log(user);
-  console.log(isAdmin);
 
   async function handleLogOut() {
     try {
