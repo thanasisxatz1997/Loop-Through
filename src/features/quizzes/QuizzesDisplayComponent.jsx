@@ -6,6 +6,7 @@ import {
   HiMiniChevronUpDown,
   HiPencilSquare,
   HiMiniPlusCircle,
+  HiCheck,
 } from "react-icons/hi2";
 
 import SelectBox from "../../ui/SelectBox";
@@ -251,13 +252,30 @@ function QuizzesDisplayComponent({
                       </StyledLink>
                     </StyledTd>
                     <StyledTd>
-                      {edit
-                        ? "Created"
-                        : !hasCompletedQuiz(quiz.id)
-                        ? "Unsolved"
-                        : `Best score: ${Math.ceil(getQuizRating(quiz.id))}%`}
+                      {edit ? (
+                        "Created"
+                      ) : !hasCompletedQuiz(quiz.id) ? (
+                        "Unsolved"
+                      ) : (
+                        <div style={{ color: "var(--color-brand-500)" }}>
+                          <HiCheck></HiCheck>
+                          {`Completed! Best score: 
+                          ${Math.ceil(getQuizRating(quiz.id))}`}
+                          %
+                        </div>
+                      )}
                     </StyledTd>
-                    <StyledTd>{quiz.difficulty}</StyledTd>
+                    <StyledTd>
+                      {quiz.difficulty === "Easy" ? (
+                        <div style={{ color: "green" }}>Easy</div>
+                      ) : quiz.difficulty === "Medium" ? (
+                        <div style={{ color: "orange" }}>Medium</div>
+                      ) : quiz.difficulty === "Hard" ? (
+                        <div style={{ color: "red" }}>Hard</div>
+                      ) : (
+                        quiz.difficulty
+                      )}
+                    </StyledTd>
                     {edit && (
                       <StyledTd>
                         <Row margin="0px 5px 0px 0px" content="center">

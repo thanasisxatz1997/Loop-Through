@@ -31,6 +31,11 @@ const StyledSidebarLessonItem = styled.button`
   white-space: nowrap;
   will-change: box-shadow, transform;
   font-size: 18px;
+  .moveLessonButtonRow {
+    position: fixed;
+    right: 5px;
+    visibility: hidden;
+  }
 
   ${(props) =>
     css`
@@ -50,6 +55,9 @@ const StyledSidebarLessonItem = styled.button`
           box-shadow: var(--color-grey-800) 0 4px 8px,
           var(--color-grey-800) 0 7px 13px -3px, var(--color-blue-700) 0 -3px 0 inset;
           transform: translateY(-2px);
+          .moveLessonButtonRow{
+            visibility:visible
+          }
         }
       `}
     `}/* &:active {

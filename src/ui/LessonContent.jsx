@@ -135,7 +135,6 @@ function LessonContent({ lesson, editable }) {
               }}
               onMouseLeave={() => {
                 editable && setHoveredId("");
-                console.log("left", hoveredId);
               }}
               border={
                 editable && hoveredId === element.id && "1px dashed  #000000;"
