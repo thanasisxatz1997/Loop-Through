@@ -11,6 +11,7 @@ const initialState = {
   questions: [],
   //'loading','error','ready','active','finished'
   status: "loading",
+  quizName: "",
   index: 0,
   answer: null,
   points: 0,
@@ -22,10 +23,12 @@ const initialState = {
 function reducer(state, action) {
   switch (action.type) {
     case "dataReceived":
+      console.log(action.payload.name);
       return {
         ...state,
         questions: action.payload.questions,
         quizId: action.payload.quizId,
+        quizName: action.payload.name,
         status: "ready",
       };
     case "dataFailed":
@@ -84,6 +87,7 @@ function QuizProvider({ children }) {
   const { id } = useParams();
   const [
     {
+      quizName,
       questions,
       status,
       index,
@@ -111,7 +115,11 @@ function QuizProvider({ children }) {
         .then((data) =>
           dispatch({
             type: "dataReceived",
-            payload: { questions: data.questions, quizId: data.id },
+            payload: {
+              questions: data.questions,
+              quizId: data.id,
+              name: data.name,
+            },
           })
         )
         .catch((err) => dispatch({ type: "dataFailed" }));
@@ -121,6 +129,7 @@ function QuizProvider({ children }) {
   return (
     <QuizContext.Provider
       value={{
+        quizName,
         questions,
         status,
         index,
@@ -132,7 +141,6 @@ function QuizProvider({ children }) {
         maxPossiblePoints,
         answers,
         quizId,
-
         dispatch,
       }}
     >

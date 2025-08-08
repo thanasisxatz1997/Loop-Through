@@ -135,6 +135,7 @@ function Course() {
     queryKey: ["lessons"],
     queryFn: () => getLessonsByCourseId(courseId),
   });
+
   const editable =
     course?.authorId === user?.id ||
     userData?.roles.includes("admin") ||
@@ -158,9 +159,63 @@ function Course() {
     }
     setIsShowingChat(!isShowingChat);
   }
-
-  function handleMoveLessonAbove(lessonId) {}
-  function handleMoveLessonBelow(lessonId) {}
+  const sortedLessons = lessons?.sort(
+    (a, b) => a.lessonNumber - b.lessonNumber
+  );
+  console.log(sortedLessons);
+  function handleMoveLessonElementAbove(lessonNumber) {
+    if (lessonNumber === 1) {
+      return;
+    } else {
+      const aboveLesson = lessons.find(
+        (lesson) => lesson.lessonNumber + 1 === lessonNumber
+      );
+      editLesson({
+        ...aboveLesson,
+        lessonNumber: aboveLesson.lessonNumber + 1,
+      });
+      console.log("Above Lesson: ", {
+        ...aboveLesson,
+        lessonNumber: aboveLesson.lessonNumber + 1,
+      });
+      const belowLesson = lessons.find(
+        (lesson) => lesson.lessonNumber === lessonNumber
+      );
+      editLesson({ ...belowLesson, lessonNumber: lessonNumber - 1 });
+      console.log("Below Lesson: ", {
+        ...belowLesson,
+        lessonNumber: lessonNumber - 1,
+      });
+    }
+  }
+  function handleMoveLessonElementBelow(lessonNumber) {
+    if (lessonNumber === lessons.length) {
+      return;
+    } else {
+      const aboveLesson = lessons.find(
+        (lesson) => lesson.lessonNumber === lessonNumber
+      );
+      console.log("new above: ", {
+        ...aboveLesson,
+        lessonNumber: aboveLesson.lessonNumber + 1,
+      });
+      editLesson({
+        ...aboveLesson,
+        lessonNumber: aboveLesson.lessonNumber + 1,
+      });
+      const belowLesson = lessons.find(
+        (lesson) => lesson.lessonNumber - 1 === lessonNumber
+      );
+      console.log("new below: ", {
+        ...belowLesson,
+        lessonNumber: belowLesson.lessonNumber - 1,
+      });
+      editLesson({
+        ...belowLesson,
+        lessonNumber: belowLesson.lessonNumber - 1,
+      });
+    }
+  }
 
   if (isLoading || isLoadingCourses) return <Spinner></Spinner>;
   if (error) console.log(error);
@@ -181,12 +236,14 @@ function Course() {
           <Heading as={"h3"} textalign="left" userselect="false">
             Lessons:
           </Heading>
-
           {lessons.map((lesson) => (
             <SidebarLessonItem
               key={lesson.id}
               lesson={lesson}
               active={lesson.id === activeLessonId ? "true" : "false"}
+              editable={editable}
+              handleMoveLessonElementAbove={handleMoveLessonElementAbove}
+              handleMoveLessonElementBelow={handleMoveLessonElementBelow}
             ></SidebarLessonItem>
           ))}
 
