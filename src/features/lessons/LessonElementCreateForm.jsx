@@ -8,6 +8,7 @@ import { useEditLesson } from "./useEditLesson";
 import DeleteConfirmation from "../../ui/DeleteConfirmation";
 import { deleteLessonImage } from "../../services/imageService";
 import { useUser } from "../authentication/useUser";
+import QuizLinkCreateEditForm from "./quizLinkCreateEditForm";
 
 const StyledContainer = styled.div`
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
@@ -64,6 +65,7 @@ function LessonElementCreateForm({
     { name: "Title", id: 0 },
     { name: "Paragraph", id: 1 },
     { name: "Image", id: 2 },
+    { name: "Quiz link", id: 3 },
   ];
   const newElementId = create === "below" ? elementId + 1 : elementId;
   console.log("create here: ", create, "newElementId: ", newElementId);
@@ -143,6 +145,17 @@ function LessonElementCreateForm({
           isEditing={isEditing}
           lesson={lesson}
         ></ImageCreateEditForm>
+      ),
+    },
+    {
+      id: 3,
+      elem: (
+        <QuizLinkCreateEditForm
+          startingContent={startingContent}
+          onCloseModal={onCloseModal}
+          onLessonEdited={onLessonEdited}
+          isEditing={isEditing}
+        ></QuizLinkCreateEditForm>
       ),
     },
   ];
