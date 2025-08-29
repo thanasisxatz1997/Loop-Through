@@ -8,7 +8,7 @@ import { useEditLesson } from "./useEditLesson";
 import DeleteConfirmation from "../../ui/DeleteConfirmation";
 import { deleteLessonImage } from "../../services/imageService";
 import { useUser } from "../authentication/useUser";
-import QuizLinkCreateEditForm from "./quizLinkCreateEditForm";
+import QuizLinkCreateEditForm from "./QuizLinkCreateEditForm";
 
 const StyledContainer = styled.div`
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
